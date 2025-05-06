@@ -64,14 +64,20 @@
         </a-entity>
     </a-scene>
 
-    <script>
-        const scene = document.querySelector('a-scene');
-        scene.addEventListener('targetFound', () => {
-            document.getElementById('scanning-overlay').classList.remove('active');
-        });
-        scene.addEventListener('targetLost', () => {
-            document.getElementById('scanning-overlay').classList.add('active');
-        });
-    </script>
+<script>
+  const scene = document.querySelector('a-scene');
+
+  scene.addEventListener('loaded', () => {
+    console.log('Scene fully loaded, safe to interact with elements.');
+    
+    scene.addEventListener('targetFound', () => {
+      document.getElementById('scanning-overlay').classList.remove('active');
+    });
+
+    scene.addEventListener('targetLost', () => {
+      document.getElementById('scanning-overlay').classList.add('active');
+    });
+  });
+</script>
 </body>
-</html>
+</html>s
