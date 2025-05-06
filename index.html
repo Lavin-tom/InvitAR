@@ -1,52 +1,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>AR Invitation Card (NFT Marker)</title>
-
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+    <title>MindAR Invitation Card</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes">	
+    <script src="script/aframe.min.js"></script>
+    <script src="script/mindar-image-aframe.prod.js"></script>
+    <link rel="shortcut icon" type="image/png" href="assets/favicon.png">
     <style>
-        body { margin: 0; overflow: hidden; }
+        body { margin: 0; }
+        #scanning-overlay {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        #scanning-overlay.active { display: flex; }
+        .scan-box {
+            width: 80%;
+            max-width: 300px;
+            border: 2px dashed white;
+            aspect-ratio: 1;
+            position: relative;
+        }
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: red;
+            animation: scan 2s linear infinite;
+        }
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
     </style>
 </head>
 <body>
-
+    <div id="scanning-overlay" class="active">
+        <div class="scan-box">
+            <div class="scan-line"></div>
+        </div>
+    </div>
     <a-scene 
-        vr-mode-ui="enabled: false"
+        mindar-image="imageTargetSrc: targets.mind; showStats: true; uiScanning: #scanning-overlay;" 
         embedded 
-        arjs="trackingMethod: best; debugUIEnabled: false;"
-        renderer="logarithmicDepthBuffer: true;">
+        vr-mode-ui="enabled: false"
+    >
+        <a-assets>
+            <img id="card" src="assets/card.jpg" />
+            <img id="ar-content" src="assets/ar1.jpg" />
+        </a-assets>
 
-
-        <a-nft 
-            type="nft" 
-            url="VR"  
-            smooth="true" 
-            smoothCount="10" 
-            smoothTolerance="0.01">
-
-
-            <a-entity position="0 0 0" scale="0.5 0.5 0.5">
-
-                <a-text 
-                    value="You're Invited!" 
-                    color="#FF0066" 
-                    align="center" 
-                    position="0 1 0" 
-                    scale="3 3 3">
-                </a-text>
-
-                <a-box 
-                    position="0 0 0" 
-                    color="#FFCC00" 
-                    scale="0.3 0.3 0.3">
-                </a-box>
-            </a-entity>
-        </a-nft>
-
-
-        <a-entity camera></a-entity>
+        <a-entity mindar-image-target="targetIndex: 0">
+            <a-plane src="#card" position="0 0 0" width="1" height="0.5"></a-plane>
+            <a-text value="You're Invited!" color="black" position="0 0.3 0" scale="2 2 2"></a-text>
+        </a-entity>
     </a-scene>
+
+    <script>
+        const scene = document.querySelector('a-scene');
+        scene.addEventListener('targetFound', () => {
+            document.getElementById('scanning-overlay').classList.remove('active');
+        });
+        scene.addEventListener('targetLost', () => {
+            document.getElementById('scanning-overlay').classList.add('active');
+        });
+    </script>
 </body>
 </html>
