@@ -4,9 +4,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tickjs/tick@1.0.4/dist/tick.min.js"></script>
     <link rel="shortcut icon" type="image/png" href="assets/favicon.png">
     <style>
-        body { margin: 0; }
+        body { 
+            margin: 0;
+            background: transparent !important;
+            overflow: hidden;
+        }
 
         /* Scanning Overlay */
         #scanning-overlay {
@@ -41,21 +46,33 @@
             100% { top: 100%; }
         }
 
-        /* Flip Clock Styles */
+        /* Flip Clock Container */
+        #flip-clock-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background: transparent;
+            pointer-events: none;
+        }
+        
+        /* Custom Flip Clock Styles */
         .tick {
             font-size: 1rem;
             white-space: nowrap;
             font-family: arial, sans-serif;
         }
         .tick-flip, .tick-text-inline {
-            font-size: 2.5em;
+            font-size: 1.5em;
         }
         .tick-label {
-            margin-top: 1em;
-            font-size: 1em;
+            margin-top: 0.5em;
+            font-size: 0.8em;
         }
         .tick-char {
-            width: 1.5em;
+            width: 1em;
         }
         .tick-text-inline {
             display: inline-block;
@@ -66,17 +83,14 @@
             margin-left: -0.325em;
         }
         .tick-group {
-            margin: 0 .5em;
+            margin: 0 .3em;
             text-align: center;
         }
-        body {
-            background-color: #fff !important;
-        }
         .tick-text-inline {
-            color: #595d63 !important;
+            color: #fff !important;
         }
         .tick-label {
-            color: #595d63 !important;
+            color: #fff !important;
         }
         .tick-flip-panel {
             color: #fff !important;
@@ -93,16 +107,6 @@
         .tick-flip {
             border-radius: 0.12em !important;
         }
-
-        /* Make sure timer is positioned correctly in front of the target */
-        #countdownTimer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            color: #fff;
-            font-size: 0.25em; /* Adjust size to fit within the target */
-            align-self: center;
-        }
     </style>
 </head>
 <body>
@@ -114,78 +118,68 @@
         </div>
     </div>
 
-    <!-- A-Frame Scene with MindAR Integration -->
+
+    <div id="flip-clock-container"></div>
+
+
     <a-scene mindar-image="imageTargetSrc: targets.mind; showStats: false; uiScanning: #scanning-overlay;" 
              embedded 
              color-space="sRGB" 
              renderer="colorManagement: true, physicallyCorrectLights: true"
              vr-mode-ui="enabled: false">
       
-      <!-- Camera -->
+
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-      <!-- Entity with MindAR Image Target -->
-      <a-entity mindar-image-target="targetIndex: 0" id="targetEntity">
-        
-        <!-- Target Image (Card) -->
-        <a-plane src="assets/card.jpg" position="0 0 0" width="1" height="0.5" id="targetImage"></a-plane>
 
-        <!-- Countdown Timer Text (Initially hidden) -->
-        <a-text id="countdownTimer" value="Countdown Timer" color="black" position="0 0 0.05" scale="0.5 0.5 0.5"></a-text>
+      <a-entity mindar-image-target="targetIndex: 0" id="targetEntity">
+
+        <a-plane src="assets/card.jpg" position="0 0 0" width="1" height="0.5" id="targetImage"></a-plane>
       </a-entity>
     </a-scene>
 
     <script>
       const scene = document.querySelector('a-scene');
-      const countdownTimer = document.getElementById('countdownTimer');
       const targetImage = document.getElementById('targetImage');
+      const flipClockContainer = document.getElementById('flip-clock-container');
+      const scanningOverlay = document.getElementById('scanning-overlay');
 
 
-      function startCountdown(endTime) {
-          const interval = setInterval(() => {
-              const now = new Date().getTime();
-              const distance = endTime - now;
+      const clock = Tick.Countdown.create({
+        target: flipClockContainer,
+        format: ['d', 'h', 'm', 's'],
+        leadingZeros: true
+      });
 
-              if (distance <= 0) {
-                  clearInterval(interval);
-                  countdownTimer.setAttribute('value', "Time's up!");
-              } else {
-                  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                  countdownTimer.setAttribute('value', `${days}d ${hours}h ${minutes}m ${seconds}s`);
-              }
-          }, 1000);
-      }
-
+      const nextYear = new Date().getFullYear() + 1;
+      clock.set({
+        until: new Date(`${nextYear}-01-01T00:00:00+01:00`)
+      });
 
       scene.addEventListener('loaded', () => {
         console.log('Scene fully loaded, safe to interact with elements.');
 
-        scene.addEventListener('targetFound', () => {
-          document.getElementById('scanning-overlay').classList.remove('active');
+        scene.addEventListener('targetFound', (event) => {
+          scanningOverlay.classList.remove('active');
+          targetImage.setAttribute('visible', 'false');
           
 
-          const nextYear = new Date().getFullYear() + 1;
-          const endTime = new Date(`${nextYear}-01-01T00:00:00+01:00`).getTime();
-          startCountdown(endTime);
+          flipClockContainer.style.display = 'flex';
+          
 
-
-          targetImage.setAttribute('visible', 'false');
-          countdownTimer.setAttribute('visible', 'true');
+          clock.options.formatElements = {
+            d: { label: 'Days' },
+            h: { label: 'Hours' },
+            m: { label: 'Minutes' },
+            s: { label: 'Seconds' }
+          };
         });
 
         scene.addEventListener('targetLost', () => {
-          document.getElementById('scanning-overlay').classList.add('active');
-          
-
-          countdownTimer.setAttribute('value', "Waiting for target...");
-
-
+          scanningOverlay.classList.add('active');
+          flipClockContainer.style.display = 'none';
           targetImage.setAttribute('visible', 'true');
-          countdownTimer.setAttribute('visible', 'false');
         });
       });
     </script>
