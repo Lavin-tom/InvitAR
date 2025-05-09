@@ -1,155 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<html>
+  <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/dist/mindar-image.prod.js"></script>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-    <script src="https://unpkg.com/@tickjs/tick@1.0.4/dist/tick.min.js"></script>
-    <link rel="shortcut icon" type="image/png" href="assets/favicon.png">
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+	<link rel="shortcut icon" type="image/png" href="assets/favicon.png">
     <style>
-        body { 
-            margin: 0;
-            background: transparent !important;
-            overflow: hidden;
-        }
-
-        /* Scanning Overlay */
-        #scanning-overlay {
-            display: flex;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-        }
-        .scan-box {
-            width: 80%;
-            max-width: 300px;
-            border: 2px dashed white;
-            aspect-ratio: 1;
-            position: relative;
-        }
-        .scan-line {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: red;
-            animation: scan 2s linear infinite;
-        }
-        @keyframes scan {
-            0% { top: 0; }
-            100% { top: 100%; }
-        }
-
-        /* Flip Clock Container */
-        #flip-clock-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            background: transparent;
-            pointer-events: none;
-        }
-
-        .tick {
-            font-family: Arial, sans-serif;
-        }
-        .tick-flip, .tick-text-inline {
-            font-size: 1.2em;
-        }
-        .tick-label {
-            margin-top: 0.5em;
-            font-size: 0.7em;
-        }
-        .tick-char {
-            width: 1em;
-        }
-        .tick-text-inline {
-            color: white !important;
-        }
-        .tick-label {
-            color: white !important;
-        }
-        .tick-flip-panel {
-            background-color: #3c3e3c !important;
-            color: white !important;
-        }
-        .tick-flip {
-            border-radius: 0.12em !important;
-        }
-    </style>
-</head>
-<body>
-    <div id="scanning-overlay">
-        <div class="scan-box">
-            <div class="scan-line"></div>
-        </div>
-    </div>
-
-    <div id="flip-clock-container"></div>
-
-    <a-scene mindar-image="imageTargetSrc: targets.mind; showStats: false; uiScanning: #scanning-overlay;" 
-             embedded 
-             color-space="sRGB" 
-             renderer="colorManagement: true, physicallyCorrectLights: true"
-             vr-mode-ui="enabled: false">
-      
+  </head>
+  <body>
+    <a-scene mindar-image="imageTargetSrc: targets.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-
-      <a-entity mindar-image-target="targetIndex: 0" id="targetEntity">
-        <a-plane src="assets/card.jpg" position="0 0 0" width="1" height="0.5" id="targetImage"></a-plane>
+      <a-entity mindar-image-target="targetIndex: 0">
+        <a-plane color="green" opaciy="0.5" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
       </a-entity>
     </a-scene>
-
-    <script>
-      function checkTickLoaded() {
-        if (typeof Tick !== 'undefined') {
-          initApp();
-        } else {
-          setTimeout(checkTickLoaded, 100);
-        }
-      }
-      function initApp() {
-        const scene = document.querySelector('a-scene');
-        const targetImage = document.getElementById('targetImage');
-        const flipClockContainer = document.getElementById('flip-clock-container');
-        const scanningOverlay = document.getElementById('scanning-overlay');
-        const clock = Tick.Countdown.create({
-          target: flipClockContainer,
-          format: ['d', 'h', 'm', 's'],
-          leadingZeros: true
-        });
-        const nextYear = new Date().getFullYear() + 1;
-        clock.set({
-          until: new Date(`${nextYear}-01-01T00:00:00`),
-          format: ['d', 'h', 'm', 's']
-        });
-        clock.options.formatElements = {
-          d: { label: 'Days' },
-          h: { label: 'Hours' },
-          m: { label: 'Minutes' },
-          s: { label: 'Seconds' }
-        };
-        scene.addEventListener('targetFound', () => {
-          scanningOverlay.style.display = 'none';
-          targetImage.setAttribute('visible', 'false');
-          flipClockContainer.style.display = 'flex';
-        });
-
-        scene.addEventListener('targetLost', () => {
-          scanningOverlay.style.display = 'flex';
-          flipClockContainer.style.display = 'none';
-          targetImage.setAttribute('visible', 'true');
-        });
-      }
-      checkTickLoaded();
-    </script>
-
-</body>
+  </body>
 </html>
