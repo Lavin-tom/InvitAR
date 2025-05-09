@@ -4,8 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-    <!-- Load Tick.js library from CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@tickjs/tick@1.0.4/dist/tick.min.js"></script>
+    <script src="https://unpkg.com/@tickjs/tick@1.0.4/dist/tick.min.js"></script>
     <link rel="shortcut icon" type="image/png" href="assets/favicon.png">
     <style>
         body { 
@@ -57,8 +56,7 @@
             background: transparent;
             pointer-events: none;
         }
-        
-        /* Custom Flip Clock Styles */
+
         .tick {
             font-family: Arial, sans-serif;
         }
@@ -88,18 +86,14 @@
     </style>
 </head>
 <body>
-
-    <!-- Scanning Overlay -->
     <div id="scanning-overlay">
         <div class="scan-box">
             <div class="scan-line"></div>
         </div>
     </div>
 
-    <!-- Flip Clock Container -->
     <div id="flip-clock-container"></div>
 
-    <!-- A-Frame Scene -->
     <a-scene mindar-image="imageTargetSrc: targets.mind; showStats: false; uiScanning: #scanning-overlay;" 
              embedded 
              color-space="sRGB" 
@@ -114,34 +108,34 @@
     </a-scene>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
+      function checkTickLoaded() {
+        if (typeof Tick !== 'undefined') {
+          initApp();
+        } else {
+          setTimeout(checkTickLoaded, 100);
+        }
+      }
+      function initApp() {
         const scene = document.querySelector('a-scene');
         const targetImage = document.getElementById('targetImage');
         const flipClockContainer = document.getElementById('flip-clock-container');
         const scanningOverlay = document.getElementById('scanning-overlay');
-
-
         const clock = Tick.Countdown.create({
           target: flipClockContainer,
           format: ['d', 'h', 'm', 's'],
           leadingZeros: true
         });
-
-
         const nextYear = new Date().getFullYear() + 1;
         clock.set({
           until: new Date(`${nextYear}-01-01T00:00:00`),
           format: ['d', 'h', 'm', 's']
         });
-
-
         clock.options.formatElements = {
           d: { label: 'Days' },
           h: { label: 'Hours' },
           m: { label: 'Minutes' },
           s: { label: 'Seconds' }
         };
-
         scene.addEventListener('targetFound', () => {
           scanningOverlay.style.display = 'none';
           targetImage.setAttribute('visible', 'false');
@@ -153,7 +147,8 @@
           flipClockContainer.style.display = 'none';
           targetImage.setAttribute('visible', 'true');
         });
-      });
+      }
+      checkTickLoaded();
     </script>
 
 </body>
