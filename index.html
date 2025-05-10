@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Augmental-Reality-Frame</title>
+    <title>Augmental-Reality-Frame with Webpage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <script src="script/aframe.min.js"></script>
@@ -9,16 +9,10 @@
     <link rel="shortcut icon" type="image/png" href="assets/favicon.png">
     
     <script>
-        const showPortfolio = (done) => {
+        const showWebpage = (done) => {
             const portfolio = document.querySelector("#portfolio-panel");
             let y = -0.5;
             portfolio.setAttribute("visible", true);
-
-            const showPortfolioItem = (item) => {
-                for (let i = 0; i <= 8; i++) {
-                    document.querySelector("#portfolio-item" + (i + 1)).setAttribute("visible", i === item);
-                }
-            };
 
             const id = setInterval(() => {
                 y += 0.008;
@@ -33,9 +27,9 @@
         AFRAME.registerComponent('mytarget', {
             init: function() {
                 this.el.addEventListener('targetFound', () => {
-                    console.log("target found");
+                    console.log("Target found");
                     setTimeout(() => {
-                        showPortfolio(() => {});
+                        showWebpage(() => {});
                     }, 300);
                 });
             }
@@ -65,37 +59,6 @@
             bottom: 0;
             background: transparent;
             z-index: 2;
-        }
-
-        @media (min-aspect-ratio: 1/1) {
-            #example-scanning-overlay .inner {
-                width: 50vh;
-                height: 50vh;
-            }
-        }
-
-        @media (max-aspect-ratio: 1/1) {
-            #example-scanning-overlay .inner {
-                width: 80vw;
-                height: 80vw;
-            }
-        }
-
-        #example-scanning-overlay .inner {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            background: linear-gradient(to right, white 10px, transparent 10px) 0 0,
-                        linear-gradient(to right, white 10px, transparent 10px) 0 100%,
-                        linear-gradient(to left, white 10px, transparent 10px) 100% 0,
-                        linear-gradient(to left, white 10px, transparent 10px) 100% 100%,
-                        linear-gradient(to bottom, white 10px, transparent 10px) 0 0,
-                        linear-gradient(to bottom, white 10px, transparent 10px) 100% 0,
-                        linear-gradient(to top, white 10px, transparent 10px) 0 100%,
-                        linear-gradient(to top, white 10px, transparent 10px) 100% 100%;
-            background-repeat: no-repeat;
-            background-size: 40px 40px;
         }
 
         #example-scanning-overlay.hidden {
@@ -130,21 +93,25 @@
                 <div class="scanline"></div>
             </div>
         </div>
-        
+
         <a-scene mindar-image="imageTargetSrc: targets.mind; showStats: false; uiScanning: #example-scanning-overlay;" embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights"
             vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
 
             <a-assets>
-                <img id="card0" src="assets/ar1.jpg"/>
+                <!-- Preload any images or assets you might need -->
             </a-assets>
 
             <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable"></a-camera>
 
+            <!-- AR Target -->
             <a-entity id="mytarget" mytarget mindar-image-target="targetIndex: 0">
                 <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
-                    <a-entity id="portfolio-item0">
-                        <a-image class="clickable insta-post" src="#card0" alpha-test="0.5" position="0 0 0" height="1.2" width="1.2"></a-image>
+
+                    <!-- Webpage as iframe -->
+                    <a-entity id="webpage-iframe" position="0 0 0" scale="4 2 1">
+                        <a-iframe src="https://www.example.com" width="4" height="2" border="0" frameborder="0"></a-iframe>
                     </a-entity>
+
                 </a-entity>
             </a-entity>
         </a-scene>
