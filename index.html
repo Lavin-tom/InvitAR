@@ -1,136 +1,104 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AR-Invite</title>
+    <title>AR Webpage Viewer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r17/Stats.min.js"></script>
-    <script src="script/aframe.min.js"></script>
-    <script src="script/mindar-image-aframe.prod.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.js"></script>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
     <script src="https://aframe.io/releases/1.5.0/aframe-extras.min.js"></script>
     
-    <link rel="shortcut icon" type="image/png" href="assets/favicon.png">
-    
     <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-        }
-
-        .example-container {
+        body { margin: 0; overflow: hidden; }
+        
+        #scanning-overlay {
             position: absolute;
             width: 100%;
             height: 100%;
-        }
-
-        #example-scanning-overlay {
+            background: rgba(0,0,0,0.7);
             display: flex;
-            align-items: center;
             justify-content: center;
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
+            align-items: center;
             z-index: 100;
         }
-
-        #example-scanning-overlay.hidden {
-            display: none;
-        }
-
-        #example-scanning-overlay .inner {
-            position: relative;
+        
+        .scan-box {
             width: 80%;
-            max-width: 400px;
-            aspect-ratio: 1;
+            max-width: 300px;
             border: 2px dashed white;
+            aspect-ratio: 1;
+            position: relative;
         }
-
-        #example-scanning-overlay .scanline {
+        
+        .scan-line {
             position: absolute;
             width: 100%;
             height: 2px;
             background: red;
-            animation: move 2s linear infinite;
+            animation: scan 2s linear infinite;
         }
-
-        @keyframes move {
-            0%, 100% { top: 0%; }
-            50% { top: calc(100% - 2px); }
+        
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
         }
-
+        
         #webpage-container {
+            display: none;
             width: 4m;
-            height: 2m;
-            border: 0.05m solid #ccc;
+            height: 3m;
         }
     </style>
 </head>
 <body>
-    <div class="example-container">
-        <!-- Scanning Overlay -->
-        <div id="example-scanning-overlay">
-            <div class="inner">
-                <div class="scanline"></div>
-            </div>
+    <!-- Scanning Overlay -->
+    <div id="scanning-overlay">
+        <div class="scan-box">
+            <div class="scan-line"></div>
         </div>
-
-        <!-- AR Scene -->
-        <a-scene 
-            mindar-image="imageTargetSrc: targets.mind; showStats: false; uiScanning: #example-scanning-overlay;" 
-            embedded 
-            color-space="sRGB" 
-            renderer="colorManagement: true, physicallyCorrectLights"
-            vr-mode-ui="enabled: false"
-            device-orientation-permission-ui="enabled: false"
-        >
-            <a-assets>
-
-            </a-assets>
-
-            <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-
-            <a-entity id="mytarget" mindar-image-target="targetIndex: 0">
-
-                <a-entity id="webpage-container" position="0 0 0" scale="1 1 1" visible="false">
-                    <a-iframe 
-                        src="https://en.wikipedia.org/wiki/Augmented_reality" 
-                        width="4" 
-                        height="2"
-                        position="0 0 0.01"
-                    ></a-iframe>
-                </a-entity>
-            </a-entity>
-        </a-scene>
     </div>
 
+    <!-- AR Scene -->
+    <a-scene 
+        mindar-image="imageTargetSrc: targets.mind; showStats: false; uiScanning: #scanning-overlay;"
+        embedded
+        vr-mode-ui="enabled: false"
+    >
+        <a-assets>
+        </a-assets>
+
+        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+        <a-entity mindar-image-target="targetIndex: 0">
+            <a-entity id="webpage-container" position="0 0 0" rotation="0 0 0">
+                <a-iframe 
+                    src="https://en.wikipedia.org/wiki/Augmented_reality" 
+                    width="4" 
+                    height="3"
+                    position="0 0 0.01"
+                ></a-iframe>
+            </a-entity>
+        </a-entity>
+    </a-scene>
+
     <script>
-
-        document.querySelector('a-scene').addEventListener('loaded', function() {
-            const target = document.querySelector('#mytarget');
-            const webpage = document.querySelector('#webpage-container');
-            const overlay = document.querySelector('#example-scanning-overlay');
-
-            target.addEventListener('targetFound', (event) => {
-                console.log('Target found!');
-                overlay.classList.add('hidden');
-                webpage.setAttribute('visible', 'true');
-
-                webpage.setAttribute('scale', '0.1 0.1 0.1');
-                let scale = 0.1;
-                const growInterval = setInterval(() => {
-                    scale += 0.05;
-                    webpage.setAttribute('scale', `${scale} ${scale} ${scale}`);
-                    if (scale >= 1) clearInterval(growInterval);
-                }, 20);
+        document.addEventListener('DOMContentLoaded', () => {
+            const scene = document.querySelector('a-scene');
+            const overlay = document.getElementById('scanning-overlay');
+            const webpage = document.getElementById('webpage-container');
+            
+            // When target is found
+            scene.addEventListener('targetFound', () => {
+                console.log('Target found - showing webpage');
+                overlay.style.display = 'none';
+                webpage.style.display = 'block';
             });
             
-            target.addEventListener('targetLost', (event) => {
-                console.log('Target lost');
-                overlay.classList.remove('hidden');
-                webpage.setAttribute('visible', 'false');
+            // When target is lost
+            scene.addEventListener('targetLost', () => {
+                console.log('Target lost - hiding webpage');
+                overlay.style.display = 'flex';
+                webpage.style.display = 'none';
             });
         });
     </script>
