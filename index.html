@@ -1,122 +1,157 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AR Target Detection</title>
+    <title>Augmental-Reality-Frame</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <script src="script/aframe.min.js"></script>
+    <script src="script/mindar-image-aframe.prod.js"></script>
+    <link rel="shortcut icon" type="image/png" href="assets/favicon.png">
+    
+    <script>
+        const showPortfolio = (done) => {
+            const portfolio = document.querySelector("#portfolio-panel");
+            let y = -0.5;
+            portfolio.setAttribute("visible", true);
+
+            const id = setInterval(() => {
+                y += 0.008;
+                if (y >= 0) {
+                    clearInterval(id);
+                    setTimeout(done, 500);
+                }
+                portfolio.setAttribute("position", `0 ${y} -0.01`);
+            }, 10);
+        };
+
+        AFRAME.registerComponent('mytarget', {
+            init: function() {
+                this.el.addEventListener('targetFound', () => {
+                    console.log("target found");
+                    const audio = document.querySelector("#musicmp3");
+                    audio.play().catch(e => console.log("Audio play failed:", e));
+                    
+                    setTimeout(() => {
+                        showPortfolio(() => {});
+                    }, 300);
+                });
+                
+                // Optional: Pause audio when target is lost
+                this.el.addEventListener('targetLost', () => {
+                    const audio = document.querySelector("#musicmp3");
+                    audio.pause();
+                });
+            }
+        });
+    </script>
     
     <style>
-        body { 
-            margin: 0; 
+        body {
+            margin: 0;
+        }
+
+        .example-container {
             overflow: hidden;
-        }
-        
-        #scanning-overlay {
             position: absolute;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.7);
+        }
+
+        #example-scanning-overlay {
             display: flex;
-            justify-content: center;
             align-items: center;
-            z-index: 100;
+            justify-content: center;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: transparent;
+            z-index: 2;
         }
-        
-        .scan-box {
-            width: 80%;
-            max-width: 300px;
-            border: 2px dashed white;
-            aspect-ratio: 1;
+
+        @media (min-aspect-ratio: 1/1) {
+            #example-scanning-overlay .inner {
+                width: 50vh;
+                height: 50vh;
+            }
+        }
+
+        @media (max-aspect-ratio: 1/1) {
+            #example-scanning-overlay .inner {
+                width: 80vw;
+                height: 80vw;
+            }
+        }
+
+        #example-scanning-overlay .inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
+            background: linear-gradient(to right, white 10px, transparent 10px) 0 0,
+                        linear-gradient(to right, white 10px, transparent 10px) 0 100%,
+                        linear-gradient(to left, white 10px, transparent 10px) 100% 0,
+                        linear-gradient(to left, white 10px, transparent 10px) 100% 100%,
+                        linear-gradient(to bottom, white 10px, transparent 10px) 0 0,
+                        linear-gradient(to bottom, white 10px, transparent 10px) 100% 0,
+                        linear-gradient(to top, white 10px, transparent 10px) 0 100%,
+                        linear-gradient(to top, white 10px, transparent 10px) 100% 100%;
+            background-repeat: no-repeat;
+            background-size: 40px 40px;
         }
-        
-        .scan-line {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: red;
-            animation: scan 2s linear infinite;
-        }
-        
-        @keyframes scan {
-            0% { top: 0; }
-            100% { top: 100%; }
-        }
-        
-        #text-overlay {
-            position: absolute;
-            width: 100%;
-            height: 100%;
+
+        #example-scanning-overlay.hidden {
             display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 50;
-            pointer-events: none;
         }
-        
-        .hello-text {
-            font-size: 2rem;
-            color: white;
-            background: rgba(0,0,0,0.7);
-            padding: 20px;
-            border-radius: 10px;
+
+        #example-scanning-overlay img {
+            opacity: 0.6;
+            width: 90%;
+            align-self: center;
+        }
+
+        #example-scanning-overlay .inner .scanline {
+            position: absolute;
+            width: 100%;
+            height: 10px;
+            background: white;
+            animation: move 2s linear infinite;
+        }
+
+        @keyframes move {
+            0%, 100% { top: 0%; }
+            50% { top: calc(100% - 10px); }
         }
     </style>
 </head>
 <body>
-    <!-- Scanning Overlay -->
-    <div id="scanning-overlay">
-        <div class="scan-box">
-            <div class="scan-line"></div>
+    <div class="example-container">
+        <div id="example-scanning-overlay" class="hidden">
+            <div class="inner">
+                <img src="./assets/card.jpg" />
+                <div class="scanline"></div>
+            </div>
         </div>
+        
+        <a-scene mindar-image="imageTargetSrc: targets.mind; showStats: false; uiScanning: #example-scanning-overlay;" embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights"
+            vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+
+            <a-assets>
+                <img id="card0" src="assets/ar1.jpg"/>
+                <audio id="musicmp3" preload="auto" src="./assets/emotional-piano-music-256262.mp3"></audio>
+            </a-assets>
+
+            <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable"></a-camera>
+
+            <a-entity id="mytarget" mytarget mindar-image-target="targetIndex: 0">
+                <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
+                    <a-entity id="portfolio-item0">
+                        <a-image class="clickable insta-post" src="#card0" alpha-test="0.5" position="0 0 0" height="1.2" width="1.2"></a-image>
+                    </a-entity>
+                </a-entity>
+            </a-entity>
+        </a-scene>
     </div>
-
-    <div id="text-overlay">
-        <div class="hello-text">Hello World! Target Detected!</div>
-    </div>
-
-    <!-- AR Scene -->
-    <a-scene 
-        mindar-image="imageTargetSrc: targets.mind; showStats: false; uiScanning: #scanning-overlay;"
-        embedded
-        vr-mode-ui="enabled: false"
-    >
-        <a-assets>
-        </a-assets>
-
-        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-
-        <!-- AR Target -->
-        <a-entity mindar-image-target="targetIndex: 0">
-            <a-plane 
-                color="green" 
-                opacity="0.5" 
-                width="1" 
-                height="0.5"
-                position="0 0 0"
-            ></a-plane>
-        </a-entity>
-    </a-scene>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const scene = document.querySelector('a-scene');
-            const overlay = document.getElementById('scanning-overlay');
-            const textOverlay = document.getElementById('text-overlay');
-
-            scene.addEventListener('targetFound', () => {
-                console.log('Target found - showing text');
-                overlay.style.display = 'none';
-                textOverlay.style.display = 'flex';
-            });
-
-            scene.addEventListener('targetLost', () => {
-                console.log('Target lost - hiding text');
-                overlay.style.display = 'flex';
-                textOverlay.style.display = 'none';
-            });
-        });
-    </script>
 </body>
 </html>
