@@ -3,13 +3,16 @@
 <head>
     <title>AR Webpage Viewer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.js"></script>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
     <script src="https://aframe.io/releases/1.5.0/aframe-extras.min.js"></script>
     
     <style>
-        body { margin: 0; overflow: hidden; }
+        body { 
+            margin: 0; 
+            overflow: hidden;
+            background: black;
+        }
         
         #scanning-overlay {
             position: absolute;
@@ -42,12 +45,6 @@
             0% { top: 0; }
             100% { top: 100%; }
         }
-        
-        #webpage-container {
-            display: none;
-            width: 4m;
-            height: 3m;
-        }
     </style>
 </head>
 <body>
@@ -63,19 +60,29 @@
         mindar-image="imageTargetSrc: targets.mind; showStats: false; uiScanning: #scanning-overlay;"
         embedded
         vr-mode-ui="enabled: false"
+        renderer="colorManagement: true;"
     >
         <a-assets>
         </a-assets>
 
         <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
+        <!-- AR Target -->
         <a-entity mindar-image-target="targetIndex: 0">
-            <a-entity id="webpage-container" position="0 0 0" rotation="0 0 0">
+            <a-entity id="webpage-container" position="0 0 0" visible="false">
+                <a-plane 
+                    color="white" 
+                    width="4.1" 
+                    height="3.1" 
+                    position="0 0 -0.01"
+                ></a-plane>
+                
+                <!-- Webpage iframe -->
                 <a-iframe 
                     src="https://en.wikipedia.org/wiki/Augmented_reality" 
                     width="4" 
                     height="3"
-                    position="0 0 0.01"
+                    position="0 0 0"
                 ></a-iframe>
             </a-entity>
         </a-entity>
@@ -85,20 +92,20 @@
         document.addEventListener('DOMContentLoaded', () => {
             const scene = document.querySelector('a-scene');
             const overlay = document.getElementById('scanning-overlay');
-            const webpage = document.getElementById('webpage-container');
+            const webpageContainer = document.getElementById('webpage-container');
             
             // When target is found
             scene.addEventListener('targetFound', () => {
                 console.log('Target found - showing webpage');
                 overlay.style.display = 'none';
-                webpage.style.display = 'block';
+                webpageContainer.setAttribute('visible', 'true');
             });
             
             // When target is lost
             scene.addEventListener('targetLost', () => {
                 console.log('Target lost - hiding webpage');
                 overlay.style.display = 'flex';
-                webpage.style.display = 'none';
+                webpageContainer.setAttribute('visible', 'false');
             });
         });
     </script>
