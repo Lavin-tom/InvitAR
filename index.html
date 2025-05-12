@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AR Webpage Viewer</title>
+    <title>AR Target Detection</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-    <script src="https://aframe.io/releases/1.5.0/aframe-extras.min.js"></script>
     
     <style>
         body { 
             margin: 0; 
             overflow: hidden;
-            background: black;
         }
         
         #scanning-overlay {
@@ -45,6 +43,25 @@
             0% { top: 0; }
             100% { top: 100%; }
         }
+        
+        #text-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+            pointer-events: none;
+        }
+        
+        .hello-text {
+            font-size: 2rem;
+            color: white;
+            background: rgba(0,0,0,0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -55,12 +72,15 @@
         </div>
     </div>
 
+    <div id="text-overlay">
+        <div class="hello-text">Hello World! Target Detected!</div>
+    </div>
+
     <!-- AR Scene -->
     <a-scene 
         mindar-image="imageTargetSrc: targets.mind; showStats: false; uiScanning: #scanning-overlay;"
         embedded
         vr-mode-ui="enabled: false"
-        renderer="colorManagement: true;"
     >
         <a-assets>
         </a-assets>
@@ -69,22 +89,13 @@
 
         <!-- AR Target -->
         <a-entity mindar-image-target="targetIndex: 0">
-            <a-entity id="webpage-container" position="0 0 0" visible="false">
-                <a-plane 
-                    color="white" 
-                    width="4.1" 
-                    height="3.1" 
-                    position="0 0 -0.01"
-                ></a-plane>
-                
-                <!-- Webpage iframe -->
-                <a-iframe 
-                    src="https://en.wikipedia.org/wiki/Augmented_reality" 
-                    width="4" 
-                    height="3"
-                    position="0 0 0"
-                ></a-iframe>
-            </a-entity>
+            <a-plane 
+                color="green" 
+                opacity="0.5" 
+                width="1" 
+                height="0.5"
+                position="0 0 0"
+            ></a-plane>
         </a-entity>
     </a-scene>
 
@@ -92,20 +103,18 @@
         document.addEventListener('DOMContentLoaded', () => {
             const scene = document.querySelector('a-scene');
             const overlay = document.getElementById('scanning-overlay');
-            const webpageContainer = document.getElementById('webpage-container');
-            
-            // When target is found
+            const textOverlay = document.getElementById('text-overlay');
+
             scene.addEventListener('targetFound', () => {
-                console.log('Target found - showing webpage');
+                console.log('Target found - showing text');
                 overlay.style.display = 'none';
-                webpageContainer.setAttribute('visible', 'true');
+                textOverlay.style.display = 'flex';
             });
-            
-            // When target is lost
+
             scene.addEventListener('targetLost', () => {
-                console.log('Target lost - hiding webpage');
+                console.log('Target lost - hiding text');
                 overlay.style.display = 'flex';
-                webpageContainer.setAttribute('visible', 'false');
+                textOverlay.style.display = 'none';
             });
         });
     </script>
