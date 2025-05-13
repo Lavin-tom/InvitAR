@@ -24,6 +24,31 @@
             }, 10);
         };
 
+        // Countdown to Christmas Eve
+        function updateCountdown() {
+            const christmasEve = new Date("December 24, 2025 00:00:00");
+            const now = new Date();
+            const timeDiff = christmasEve - now;
+
+            if (timeDiff <= 0) {
+                document.querySelector("#countdown").setAttribute('value', "Merry Christmas!");
+                return;
+            }
+
+            // Calculate the remaining time
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+            const countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            const countdownElement = document.querySelector("#countdown");
+            countdownElement.setAttribute('value', countdownText);
+        }
+
+        setInterval(updateCountdown, 1000);
+
 		AFRAME.registerComponent('mytarget', {
 			init: function() {
 				this.el.addEventListener('targetFound', () => {
@@ -45,7 +70,7 @@
 								} else {
 									clearInterval(typingInterval);
 								}
-							}, 100); // Adjust speed as needed (milliseconds per character)
+							}, 100);
 						});
 					}, 300);
 				});
@@ -162,7 +187,7 @@
                 <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
                     <a-entity id="portfolio-item0">
                         <a-image class="clickable insta-post" src="#card0" alpha-test="0.5" position="0 0 0" height="1.2" width="1.2"></a-image>
-          		<a-text id="text" class="clickable" value="Testing" color="black" align="center" width="2" position="0 -1 0" geometry="primitive:plane; height: 0.1; width: 2;" material="opacity: 0.5"></a-text>
+                        <a-text id="countdown" class="clickable" value="Loading countdown..." color="black" align="center" width="2" position="0 -1 0" geometry="primitive:plane; height: 0.1; width: 2;" material="opacity: 0.5"></a-text>
                     </a-entity>
                 </a-entity>
             </a-entity>
