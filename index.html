@@ -6,7 +6,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <script src="script/aframe.min.js"></script>
     <script src="script/mindar-image-aframe.prod.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <link rel="shortcut icon" type="image/png" href="assets/favicon.png">
     
     <script>
@@ -25,32 +24,39 @@
             }, 10);
         };
 
-        AFRAME.registerComponent('mytarget', {
-            init: function() {
-                this.el.addEventListener('targetFound', () => {
-                    console.log("target found");
-                    const audio = document.querySelector("#musicmp3");
-                    audio.play().catch(e => console.log("Audio play failed:", e));
-                    
-                    setTimeout(() => {
-                        showPortfolio(() => {
-                            // Initialize typing animation after portfolio is shown
-                            const textElement = document.querySelector("#typing-text");
-                            new Typed(textElement.components.text.attrValue, {
-                                strings: ["Hello world this is testing"],
-                                typeSpeed: 50,
-                                showCursor: false
-                            });
-                        });
-                    }, 300);
-                });
-                
-                this.el.addEventListener('targetLost', () => {
-                    const audio = document.querySelector("#musicmp3");
-                    audio.pause();
-                });
-            }
-        });
+		AFRAME.registerComponent('mytarget', {
+			init: function() {
+				this.el.addEventListener('targetFound', () => {
+					console.log("target found");
+					const audio = document.querySelector("#musicmp3");
+					audio.play().catch(e => console.log("Audio play failed:", e));
+					
+					setTimeout(() => {
+						showPortfolio(() => {
+							// Custom typing animation
+							const textElement = document.querySelector("#typing-text");
+							const message = "Hello world this is testing";
+							let i = 0;
+							const typingInterval = setInterval(() => {
+								if (i < message.length) {
+									const currentText = textElement.getAttribute('text').value || '';
+									textElement.setAttribute('text', 'value', currentText + message[i]);
+									i++;
+								} else {
+									clearInterval(typingInterval);
+								}
+							}, 100); // Adjust speed as needed (milliseconds per character)
+						});
+					}, 300);
+				});
+				
+				this.el.addEventListener('targetLost', () => {
+					const audio = document.querySelector("#musicmp3");
+					audio.pause();
+					document.querySelector("#typing-text").setAttribute('text', 'value', '');
+				});
+			}
+		});
     </script>
     
     <style>
@@ -131,12 +137,6 @@
             0%, 100% { top: 0%; }
             50% { top: calc(100% - 10px); }
         }
-
-        /* Text styling */
-        a-entity[text] {
-            font-family: Arial, sans-serif;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
     </style>
 </head>
 <body>
@@ -162,7 +162,10 @@
                 <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
                     <a-entity id="portfolio-item0">
                         <a-image class="clickable insta-post" src="#card0" alpha-test="0.5" position="0 0 0" height="1.2" width="1.2"></a-image>
-                        <a-entity id="typing-text" position="0 -0.7 0.01" text="align: center; width: 1.5; color: white; value: "></a-entity>
+						<a-entity id="typing-text" 
+								position="0 -0.7 0.01" 
+								text="align: center; width: 1.5; color: white; value: ">
+						</a-entity>
                     </a-entity>
                 </a-entity>
             </a-entity>
