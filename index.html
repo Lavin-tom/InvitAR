@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Augmental-Reality-Frame</title>
+    <title>AR-Invite</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <script src="script/aframe.min.js"></script>
@@ -23,17 +23,27 @@
                 portfolio.setAttribute("position", `0 ${y} -0.01`);
             }, 10);
         };
-const showInfo = () => {
-    const locationButton = document.querySelector("#location-button");
-    locationButton.addEventListener('click', openGoogleMaps);  
-};
-
-function openGoogleMaps() {
-    const location = "Jerusalem Mar Thoma Syrian Church, Koothrapally"; 
-    const googleMapsUrl = `https://maps.app.goo.gl/3M8UD9NZdfzCyPJd6`;
-    
-    window.open(googleMapsUrl, '_blank');
-}
+		const showInfo = () => {
+			const locationButton = document.querySelector("#location-button");
+			const eventButton = document.querySelector("#event-button");
+			const contactButton = document.querySelector("#contact-button");
+			
+			contactButton.addEventListener('click', openContact);
+			eventButton.addEventListener('click', openCalendar);
+			locationButton.addEventListener('click', openGoogleMaps);  
+		};
+		function openContact(){
+		
+		}
+		function openCalendar(){
+		
+		}
+		function openGoogleMaps() {
+			const location = "Jerusalem Mar Thoma Syrian Church, Koothrapally"; 
+			const googleMapsUrl = `https://maps.app.goo.gl/3M8UD9NZdfzCyPJd6`;
+			
+			window.open(googleMapsUrl, '_blank');
+		}
 	  
         // Countdown to Christmas Eve
         function updateCountdown() {
@@ -188,8 +198,10 @@ function openGoogleMaps() {
             vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
 
             <a-assets>
-                <img id="card0" src="assets/ar1.jpg"/>
-                <img id="icon-location" src="assets/favicon.png"/>				
+                <img id="card0" src="assets/Base.jpg"/>
+                <img id="icon-location" src="assets/mdi--location.svg"/>				
+                <img id="icon-event" src="assets/mdi--event-outline.svg"/>				
+                <img id="icon-contact" src="assets/mdi--contact.svg"/>				
                 <audio id="musicmp3" preload="auto" src="./assets/emotional-piano-music-256262.mp3"></audio>
             </a-assets>
 
@@ -200,9 +212,15 @@ function openGoogleMaps() {
                     <a-entity id="portfolio-item0">
                         <a-image class="clickable insta-post" src="#card0" alpha-test="0.5" position="0 0 0" height="1.2" width="1.2"></a-image>
                         <a-text id="countdown" class="clickable" value="Loading countdown..." color="black" align="center" width="2" position="0 -1 0" geometry="primitive:plane; height: 0.1; width: 2;" material="opacity: 0.5"></a-text>
-          <a-image visible=true id="location-button" class="clickable" src="#icon-location" position="0.42 -0.5 0" height="0.15" width="0.15"
-            animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
-          ></a-image>						
+						<a-image visible=true id="location-button" class="clickable" src="#icon-location" position="0.42 -0.5 0" height="0.15" width="0.15"
+												animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
+						</a-image>
+						<a-image visible=true id="event-button" class="clickable" src="#icon-event" position="0.12 -0.5 0" height="0.15" width="0.15"
+												animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
+						</a-image>
+						<a-image visible=true id="contact-button" class="clickable" src="#icon-contact" position="0.22 -0.5 0" height="0.15" width="0.15"
+												animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
+						</a-image>						
                     </a-entity>
                 </a-entity>
             </a-entity>
