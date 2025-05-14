@@ -27,6 +27,7 @@
 			const locationButton = document.querySelector("#location-button");
 			const eventButton = document.querySelector("#event-button");
 			const contactButton = document.querySelector("#contact-button");
+			const text = document.querySelector("#text");
 			
 			contactButton.addEventListener('click', openContact);
 			eventButton.addEventListener('click', openCalendar);
@@ -103,7 +104,6 @@
 				this.el.addEventListener('targetLost', () => {
 					const audio = document.querySelector("#musicmp3");
 					audio.pause();
-					document.querySelector("#typing-text").setAttribute('text', 'value', '');
 				});
 			}
 		});
@@ -214,17 +214,27 @@
             <a-entity id="mytarget" mytarget mindar-image-target="targetIndex: 0">
                 <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
                     <a-entity id="portfolio-item0">
-                        <a-image class="clickable insta-post" src="#card0" alpha-test="0.5" position="0 0 0" height="1.2" width="1.2"></a-image>
+                        <a-image src="#card0" alpha-test="0.5" position="0 0 0" height="1.2" width="1"></a-image>
+						<!-- entity for Name -->						
+						<a-text value="N & B" color="black" align="center" width="2" position="0 0.4 0"></a-text>
+						
+						<!-- entity for countdown -->						
                         <a-text id="countdown" class="clickable" value="Loading countdown..." color="black" align="center" width="2" position="0 0 0" geometry="primitive:plane; height: 0.1; width: 2;" material="opacity: 0.0"></a-text>
-						<a-image visible=true id="location-button" class="clickable" src="#icon-location" position="0.42 -0.5 0" height="0.15" width="0.15"
-												animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
+						
+						<!-- Icon for location -->
+						<a-image id="location-button" src="#icon-location" position="0.42 -0.4 0" height="0.15" width="0.15"
+								animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
 						</a-image>
-						<a-image visible=true id="event-button" class="clickable" src="#icon-event" position="0.12 -0.5 0" height="0.15" width="0.15"
-												animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
+						
+						<!-- Icon for event -->
+						<a-image id="event-button" src="#icon-event" position="0.12 -0.4 0" height="0.15" width="0.15"
+								animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
 						</a-image>
-						<a-image visible=true id="contact-button" class="clickable" src="#icon-contact" position="0.22 -0.5 0" height="0.15" width="0.15"
-												animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
-						</a-image>						
+					
+						<!-- Icon for contact -->
+						<a-image id="contact-button" src="#icon-contact" position="0.22 -0.4 0" height="0.15" width="0.15"
+								animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
+						</a-image>					
                     </a-entity>
                 </a-entity>
             </a-entity>
