@@ -32,12 +32,27 @@
 			eventButton.addEventListener('click', openCalendar);
 			locationButton.addEventListener('click', openGoogleMaps);  
 		};
-		function openContact(){
+		function openContact() {
+			const phoneNumber = "1234567890"; 
+			const message = "Hello, I'd like to connect!"; 
 		
+			const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+			window.open(whatsappUrl, '_blank');
 		}
-		function openCalendar(){
+
+		function openCalendar() {
+			const eventTitle = "Christmas Eve Celebration";
+			const eventStartDate = "20251224T180000Z";
+			const eventEndDate = "20251224T220000Z";
+			const eventDescription = "Join us for a wonderful Christmas Eve celebration!";
+			const eventLocation = "Jerusalem Mar Thoma Syrian Church, Koothrapally";
 		
+			const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${eventStartDate}/${eventEndDate}&details=${encodeURIComponent(eventDescription)}&location=${encodeURIComponent(eventLocation)}&sf=true&output=xml`;
+		
+			window.open(googleCalendarUrl, '_blank');
 		}
+
 		function openGoogleMaps() {
 			const location = "Jerusalem Mar Thoma Syrian Church, Koothrapally"; 
 			const googleMapsUrl = `https://maps.app.goo.gl/3M8UD9NZdfzCyPJd6`;
@@ -80,20 +95,9 @@
 					setTimeout(() => {
 						showPortfolio(() => {
 							showInfo();						
-							const textElement = document.querySelector("#typing-text");
-							const message = "Hello world this is testing";
-							let i = 0;
-							const typingInterval = setInterval(() => {
-								if (i < message.length) {
-									const currentText = textElement.getAttribute('text').value || '';
-									textElement.setAttribute('text', 'value', currentText + message[i]);
-									i++;
-								} else {
-									clearInterval(typingInterval);
-								}
-							}, 100);
 						});
 					}, 300);
+
 				});
 				
 				this.el.addEventListener('targetLost', () => {
@@ -211,7 +215,7 @@
                 <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
                     <a-entity id="portfolio-item0">
                         <a-image class="clickable insta-post" src="#card0" alpha-test="0.5" position="0 0 0" height="1.2" width="1.2"></a-image>
-                        <a-text id="countdown" class="clickable" value="Loading countdown..." color="black" align="center" width="2" position="0 -1 0" geometry="primitive:plane; height: 0.1; width: 2;" material="opacity: 0.5"></a-text>
+                        <a-text id="countdown" class="clickable" value="Loading countdown..." color="black" align="center" width="2" position="0 0 0" geometry="primitive:plane; height: 0.1; width: 2;" material="opacity: 0.0"></a-text>
 						<a-image visible=true id="location-button" class="clickable" src="#icon-location" position="0.42 -0.5 0" height="0.15" width="0.15"
 												animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
 						</a-image>
