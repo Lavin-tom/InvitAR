@@ -4,6 +4,9 @@
     <title>AR-Invite</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Abel&family=Poppins:wght@100&display=swap" rel="stylesheet">	
     <script src="script/aframe.min.js"></script>
     <script src="script/mindar-image-aframe.prod.js"></script>
     <link rel="shortcut icon" type="image/png" href="assets/favicon.png">
@@ -61,14 +64,28 @@
 			window.open(googleMapsUrl, '_blank');
 		}
 	  
-        // Countdown to Christmas Eve
+        // Countdown to Event
         function updateCountdown() {
-            const christmasEve = new Date("December 24, 2025 00:00:00");
+            const eventDate = new Date("December 24, 2025 00:00:00");
             const now = new Date();
-            const timeDiff = christmasEve - now;
-
+            const timeDiff = eventDate - now;
+			
+            const countdownElement = document.querySelector("#countdown");
+			
             if (timeDiff <= 0) {
-                document.querySelector("#countdown").setAttribute('value', "Merry Christmas!");
+				const timePassed = now - eventDate;
+				const yearsPassed = Math.floor(timePassed / (1000 * 60 * 60 * 24 * 365));
+				const daysPassed = Math.floor((timePassed % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24));
+				const hoursPassed = Math.floor((timePassed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+				const minutesPassed = Math.floor((timePassed % (1000 * 60 * 60)) / (1000 * 60));
+				const secondsPassed = Math.floor((timePassed % (1000 * 60)) / 1000);
+				countdownElement.setAttribute('value', `Time Up! +${yearsPassed}y ${daysPassed}d ${hoursPassed}h ${minutesPassed}m ${secondsPassed}s`);
+				
+				// Show anniversary message
+				if (now.getMonth() === eventDate.getMonth() && now.getDate() === eventDate.getDate()) {
+					const countdownText = `Happy ${yearsPassed + 1} Year Anniversary!`;
+					countdownElement.setAttribute('value', countdownText);
+				}				
                 return;
             }
 
@@ -80,7 +97,6 @@
 
             const countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
-            const countdownElement = document.querySelector("#countdown");
             countdownElement.setAttribute('value', countdownText);
         }
 
@@ -115,12 +131,24 @@
         }
 
         .example-container {
+			font-family: 'Poppins', sans-serif;		
             overflow: hidden;
             position: absolute;
             width: 100%;
             height: 100%;
         }
-
+		#msgStyle{
+			font-family: 'Abel', sans-serif;
+		}
+		#nameStyle{
+			 font-family: monospace;
+		}
+		#STDStyle{
+			font-family: monospace;
+		}
+		#countdown{
+			font-family: monospace;
+		}
         #example-scanning-overlay {
             display: flex;
             align-items: center;
@@ -170,7 +198,7 @@
         }
 
         #example-scanning-overlay img {
-            opacity: 0.6;
+            opacity: 0.6;	
             width: 90%;
             align-self: center;
         }
@@ -202,7 +230,7 @@
             vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
 
             <a-assets>
-                <img id="card0" src="assets/Base.jpg"/>
+                <img id="Base" src="assets/Base.jpg"/>
                 <img id="icon-location" src="assets/mdi--location.png"/>				
                 <img id="icon-event" src="assets/mdi--event-outline.png"/>				
                 <img id="icon-contact" src="assets/mdi--contact.png"/>				
@@ -214,25 +242,35 @@
             <a-entity id="mytarget" mytarget mindar-image-target="targetIndex: 0">
                 <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
                     <a-entity id="portfolio-item0">
-                        <a-image src="#card0" alpha-test="0.5" position="0 0 0" height="1.2" width="1"></a-image>
+                        <a-image src="#Base" alpha-test="0.5" position="0 0 0" height="1.2" width="1"></a-image>
+						
+						<!-- entity for Message -->						
+						<a-text id= "STDStyle" value="SAVE THE DATE" color="black" align="center" width="1" position="0 0.5 0.1"></a-text>
+						
 						<!-- entity for Name -->						
-						<a-text value="N & B" color="black" align="center" width="2" position="0 0.4 0"></a-text>
+						<a-text id= "nameStyle" value="N & B" color="black" align="center" width="2" position="0 0.4 0.1"></a-text>
+						
+						<!-- entity for Message -->						
+						<a-text id= "msgStyle" value="We invite you to join us on our special day." color="black" align="center" width="1" position="0 0.3 0.1"></a-text>
+						
+						<!-- entity for Message -->						
+						<a-text id= "msgStyle" value="Let's celebrate love together!" color="black" align="center" width="1" position="0 0.2 0.1"></a-text>
 						
 						<!-- entity for countdown -->						
-                        <a-text id="countdown" class="clickable" value="Loading countdown..." color="black" align="center" width="2" position="0 0 0" geometry="primitive:plane; height: 0.1; width: 2;" material="opacity: 0.0"></a-text>
+                        <a-text id="countdown" class="clickable" value="" color="black" align="center" width="2" position="0 0 0.1" geometry="primitive:plane; height: 0.1; width: 2;" material="opacity: 0.0"></a-text>
 						
 						<!-- Icon for location -->
-						<a-image id="location-button" src="#icon-location" position="0.3 -0.4 0" height="0.1" width="0.1"
+						<a-image id="location-button" class="clickable" src="#icon-location" position="0.3 -0.4 0.1" height="0.1" width="0.1"
 								animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
 						</a-image>
 						
 						<!-- Icon for event -->
-						<a-image id="event-button" src="#icon-event" position="0.0 -0.4 0" height="0.1" width="0.1"
+						<a-image id="event-button" class="clickable" src="#icon-event" position="0.0 -0.4 0.1" height="0.1" width="0.1"
 								animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
 						</a-image>
 					
 						<!-- Icon for contact -->
-						<a-image id="contact-button" src="#icon-contact" position="-0.3 -0.4 0" height="0.1" width="0.1"
+						<a-image id="contact-button" class="clickable" src="#icon-contact" position="-0.3 -0.4 0.1" height="0.1" width="0.1"
 								animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
 						</a-image>					
                     </a-entity>
