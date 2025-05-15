@@ -288,7 +288,7 @@
             <a-assets>
                 <img id="Base" src="assets/Base.jpg"/>
 				<!--Video by cottonbro studio: https://www.pexels.com/video/blooming-sunflowers-in-a-vase-4272431/-->
-                <img id="Base-video" src="assets/4272431-hd_720_1366_50fps.mp4"/>
+                <video id="Base-video" src="assets/4272431-hd_720_1366_50fps.mp4" autoplay="true" loop="true"></video>
                 <img id="icon-location" src="assets/mdi--location.png"/>				
                 <img id="icon-event" src="assets/mdi--event-outline.png"/>				
                 <img id="icon-contact" src="assets/mdi--contact.png"/>				
@@ -301,7 +301,7 @@
                 <a-entity id="portfolio-panel"  position="0 -0.25 -0.01" visible="false">
                     <a-entity id="portfolio-item0" class="color-change-2x">
                         <!--<a-image src="#Base" alpha-test="0.5" position="0 0 0" height="1.2" width="1"></a-image>-->	
-                        <a-video src="#Base-video" position="0 0 0" height="1" width="1" autoplay="true" muted="true"></a-video>-->	
+                        <a-video src="#Base-video" position="0 0 0" height="1.2" width="1" autoplay="true" muted="true" preload="auto"></a-video>-->	
 						
 						<!-- entity for Message -->						
 						<a-text id= "STDStyle" value="SAVE THE DATE" color="black" align="center" width="1" position="0 0.5 0.1"></a-text>
