@@ -97,7 +97,7 @@
             const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
-            const countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            const countdownText = `${days}d ${hours}h ${minutes}m`;
 
             countdownElement.setAttribute('value', countdownText);
         }
@@ -243,6 +243,8 @@
                 <video id="Base-video" src="assets/Base_video.mp4" autoplay="true" loop="true"></video>
                 <img id="couplesName" src="assets/couplesName.png"/>		
                 <img id="MessageImage" src="assets/MessageImage.png"/>	
+                <img id="#SaveTheDate" src="assets/SaveTheDate.png"/>
+                <img id="#LocationImage" src="assets/LocationImage.png"/>                
                 <img id="icon-location" src="assets/mdi--location.png"/>			
                 <img id="icon-event" src="assets/mdi--event-outline.png"/>				
                 <img id="icon-contact" src="assets/mdi--contact.png"/>				
@@ -255,29 +257,29 @@
                 <a-entity id="portfolio-panel"  position="0 -0.25 -0.01" visible="false">
                     <a-entity id="portfolio-item0">
                         <!--<a-image src="#Base" alpha-test="0.5" position="0 0 0" height="1.2" width="1"></a-image>-->	
-                        <a-video src="#Base-video" position="0 0 0" width="1" height="1.527" autoplay="true" muted="true" preload="auto"></a-video>-->	
+                        <a-video src="#Base-video" position="0 0 0" width="1" height="1.527" autoplay="true" muted="true" preload="auto"></a-video>	
 						
 						<!-- entity for Message -->						
-						<a-text class = "customText" value="SAVE THE DATE" color="black" align="center" width="1" position="0 0.5 0.1"></a-text>
+						<!--<a-text class = "customText" value="SAVE THE DATE" color="black" align="center" width="1" position="0 0.5 0.1"></a-text>-->
+
+                        <a-image id=" " class="" src="#SaveTheDate" position="0.0 0.8 0.1" height="0.7" width="0.7"></a-image> 
 						
 						<!-- entity for Name -->						
 						<!--<a-text id= "nameStyle" class="customText" value="N & B" color="black" align="center" width="2" position="0 0.4 0.1"></a-text>-->
 
 						<!-- Image for couples Name-->
-						<a-image id=" " class="" src="#couplesName" position="0.0 0.1 0.1" height="1" width="1"
+						<a-image id=" " class="" src="#couplesName" position="0.0 0.1 0.1" height="0.7" width="0.7"
 								animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
 						</a-image>                        
 						
-						<!-- Image for couples Name-->
-						<a-image id=" " class="" src="#MessageImage" position="0.0 0.4 0.1" height="1" width="1"
-								animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
-						</a-image>                           
+						<!-- Image for Invitation-->
+						<a-image id=" " class="" src="#MessageImage" position="0.0 0.4 0.1" height="0.7" width="0.7"></a-image>                           
 						<!-- entity for Message -->						
 						<!--<a-text id= "msgStyle" value="We invite you to join us on our special day." color="black" align="center" width="1" position="0 0.3 0.1"></a-text>
 						
 						<!- entity for Message -->						
 						<!--<a-text id= "msgStyle" value="Let's celebrate love together!" color="black" align="center" width="1" position="0 0.2 0.1"></a-text>-->
-						
+						<a-image id=" " class="" src="#LocationImage" position="0.0 -0.3 0.1" height="0.7" width="0.7"></a-image> 						
 						<!-- entity for countdown -->						
                         <a-text id="countdown" class="clickable" value="" color="black" align="center" width="2" position="0 0 0.1" geometry="primitive:plane; height: 0.1; width: 2;" material="opacity: 0.0"></a-text>
 						
