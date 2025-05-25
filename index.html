@@ -14,6 +14,18 @@
     <link rel="shortcut icon" type="image/png" href="assets/favicon.png">
     
     <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.fonts.load('1em MyCustomFont').then(() => {
+        console.log('Custom font loaded');
+        
+        const customTexts = document.querySelectorAll('.customText');
+        customTexts.forEach(el => {
+            el.setAttribute('font', 'family: MyCustomFont');
+        });
+    }).catch(err => {
+        console.error('Font loading failed:', err);
+    });
+});        
         const showPortfolio = (done) => {
             const portfolio = document.querySelector("#portfolio-panel");
             let y = -0.5;
@@ -139,13 +151,13 @@
             width: 100%;
             height: 100%;
         }
-    @font-face {
-        font-family: 'MyCustomFont';
-        src: url('./assets/fonts/DopeltonPersonalUseOnly.ttf') format('truetype');
-        font-weight: normal;
-        font-style: normal;
-        font-display: swap;
-    }
+        @font-face {
+            font-family: 'MyCustomFont';
+            src: url('./assets/fonts/DopeltonPersonalUseOnly.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
         .customText {
             font-family: 'MyCustomFont';
         }
@@ -256,7 +268,7 @@
                         <a-video src="#Base-video" position="0 0 0" width="1" height="1.527" autoplay="true" muted="true" preload="auto"></a-video>-->	
 						
 						<!-- entity for Message -->						
-						<a-text class = "customText" value="SAVE THE DATE" color="black" align="center" width="1" position="0 0.5 0.1"></a-text>
+						<a-text class = "customText" value="SAVE THE DATE" font="family: MyCustomFont; weight: normal; style: normal" color="black" align="center" width="1" position="0 0.5 0.1"></a-text>
 						
 						<!-- entity for Name -->						
 						<a-text id= "nameStyle" class="customText" value="N & B" color="black" align="center" width="2" position="0 0.4 0.1"></a-text>
