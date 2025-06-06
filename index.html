@@ -29,8 +29,8 @@
             }, 10);
         };
 		const showInfo = () => {
-			const locationButton = document.querySelector("#location-button");
-			const eventButton = document.querySelector("#event-button");
+			const Location_Image = document.querySelector("#location-button");
+			const Event_Image = document.querySelector("#event-button");
 			const contactButton = document.querySelector("#contact-button");
 			const text = document.querySelector("#text");
 			
@@ -97,7 +97,7 @@
             const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
-            const countdownText = `${days}d ${hours}h ${minutes}m`;
+            const countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
             countdownElement.setAttribute('value', countdownText);
         }
@@ -257,8 +257,6 @@
                     <a-entity id="portfolio-item0">
                         <a-video src="#Base-video" position="0 0 0" width="1" height="1.527" autoplay="true" muted="true" preload="auto"></a-video>
 
-                        <!--<a-image id="Invitation" class="" src="#Invitation" position="0 0.4 0.1" height="1.527" width="1.0"></a-image>-->
-
                         <a-image id=" " class="" src="#SaveTheDate" position="0 0.5 0.1" height="0.317 " width="1.0"></a-image>	
 
 						<!-- Image for couples Name-->
@@ -269,24 +267,9 @@
                         <a-image id=" " class="" src="#MessageImage" position="0 0 0.1" height="0.317" width="1.0"></a-image>      
 
 						<!-- entity for countdown -->						
-                        <a-text id="countdown" class="clickable" value="" color="black" align="center" width="1.5" position="0 -0.05 0.1" geometry="primitive:plane; height: 0.1; width: 1.5;" material="opacity: 0.0"></a-text>
+                        <a-text id="countdown" class="clickable" value="" color="black" align="center" width="1.5" position="0 -0.05 0.1" geometry="primitive:plane; height: 0.1; width: 1.5;" material="opacity: 0.0" font-weight="bold"></a-text>></a-text>
                         
-                        <a-image id=" " class="" src="#LocationImage" position="0 -0.25 0.1" height="0.317" width="1.0"></a-image>
-
-						<!-- Icon for location -->
-						<!--<a-image id="location-button" class="clickable" src="#icon-location" position="0.3 -0.4 0.1" height="0.1" width="0.1"
-								animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
-						</a-image>-->
-						
-						<!--Icon for event -->
-						<!--<a-image id="event-button" class="clickable" src="#icon-event" position="0.0 -0.4 0.1" height="0.1" width="0.1"
-								animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
-						</a-image>-->
-					
-						<!-- Icon for contact -->
-						<!--<a-image id="contact-button" class="clickable" src="#icon-contact" position="-0.3 -0.4 0.1" height="0.1" width="0.1"
-								animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
-						</a-image>-->					
+                        <a-image id="Location_Image" class="" src="#LocationImage" position="0 -0.25 0.1" height="0.317" width="1.0"></a-image>					
                     </a-entity>
                 </a-entity>
             </a-entity>
