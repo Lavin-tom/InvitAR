@@ -4,10 +4,10 @@
     <title>AR-Invite</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Abel&family=Poppins:wght@100&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">	
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abel&family=Poppins:wght@100&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">    
     <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
     <script src="script/aframe.min.js"></script>
     <script src="script/mindar-image-aframe.prod.js"></script>
@@ -29,109 +29,123 @@
                 portfolio.setAttribute("position", `0 ${y} -0.01`);
             }, 10);
         };
-		const showInfo = () => {
-			const Location_Image = document.querySelector("#LocationImage");
-			const Event_Image = document.querySelector("#event-button");
-			const contactButton = document.querySelector("#contact-button");
-			const text = document.querySelector("#text");
-			
-			contactButton.addEventListener('click', openContact);
-			eventButton.addEventListener('click', openCalendar);
-			locationButton.addEventListener('click', openGoogleMaps);  
-		};
-		function openContact() {
-			const phoneNumber = "1234567890"; 
-			const message = "Hello, I'd like to connect!"; 
-		
-			const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
-			window.open(whatsappUrl, '_blank');
-		}
+        const showInfo = () => {
+            const locationImage = document.querySelector("#Location_Image");
+            const countdownElement = document.querySelector("#countdown");
+            
+            locationImage.addEventListener('click', openGoogleMaps);
+            countdownElement.addEventListener('click', openCalendar);
+        };
 
-		function openCalendar() {
-			const eventTitle = "Christmas Eve Celebration";
-			const eventStartDate = "20251224T180000Z";
-			const eventEndDate = "20251224T220000Z";
-			const eventDescription = "Join us for a wonderful Christmas Eve celebration!";
-			const eventLocation = "Jerusalem Mar Thoma Syrian Church, Koothrapally";
-		
-			const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${eventStartDate}/${eventEndDate}&details=${encodeURIComponent(eventDescription)}&location=${encodeURIComponent(eventLocation)}&sf=true&output=xml`;
-		
-			window.open(googleCalendarUrl, '_blank');
-		}
+        function openContact() {
+            const phoneNumber = "1234567890"; 
+            const message = "Hello, I'd like to connect!"; 
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
 
-		function openGoogleMaps() {
-			const location = "Jerusalem Mar Thoma Syrian Church, Koothrapally"; 
-			const googleMapsUrl = `https://maps.app.goo.gl/3M8UD9NZdfzCyPJd6`;
-			
-			window.open(googleMapsUrl, '_blank');
-		}
-	  
+        function openCalendar() {
+            // Add confetti when calendar is opened
+            confetti({
+                particleCount: 50,
+                spread: 60,
+                origin: { y: 0.6 }
+            });
+
+            const eventTitle = "Wedding Day";
+            const eventStartDate = "20250818T113000Z";
+            const eventEndDate = "20250818T220000Z";
+            const eventDescription = "Join us for a wonderful Christmas Eve celebration!";
+            const eventLocation = "Jerusalem Mar Thoma Syrian Church, Koothrapally";
+        
+            const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${eventStartDate}/${eventEndDate}&details=${encodeURIComponent(eventDescription)}&location=${encodeURIComponent(eventLocation)}&sf=true&output=xml`;
+        
+            window.open(googleCalendarUrl, '_blank');
+        }
+
+        function openGoogleMaps() {
+            // Add confetti when map is opened
+            confetti({
+                particleCount: 50,
+                spread: 60,
+                origin: { y: 0.6 },
+                colors: ['#00ff00', '#0000ff']
+            });
+
+            const googleMapsUrl = `https://maps.app.goo.gl/3M8UD9NZdfzCyPJd6`;
+            window.open(googleMapsUrl, '_blank');
+        }
+      
         // Countdown to Event
         function updateCountdown() {
             const eventDate = new Date("December 24, 2025 00:00:00");
             const now = new Date();
             const timeDiff = eventDate - now;
-			
+            
             const countdownElement = document.querySelector("#countdown");
-			
+            
             if (timeDiff <= 0) {
-				const timePassed = now - eventDate;
-				const yearsPassed = Math.floor(timePassed / (1000 * 60 * 60 * 24 * 365));
-				const daysPassed = Math.floor((timePassed % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24));
-				const hoursPassed = Math.floor((timePassed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-				const minutesPassed = Math.floor((timePassed % (1000 * 60 * 60)) / (1000 * 60));
-				const secondsPassed = Math.floor((timePassed % (1000 * 60)) / 1000);
-				countdownElement.setAttribute('value', `Time Up! +${yearsPassed}y ${daysPassed}d ${hoursPassed}h ${minutesPassed}m ${secondsPassed}s`);
-				
-				// Show anniversary message
-				if (now.getMonth() === eventDate.getMonth() && now.getDate() === eventDate.getDate()) {
-					const countdownText = `Happy ${yearsPassed + 1} Year Anniversary!`;
-					countdownElement.setAttribute('value', countdownText);
-				}				
+                const timePassed = now - eventDate;
+                const yearsPassed = Math.floor(timePassed / (1000 * 60 * 60 * 24 * 365));
+                const daysPassed = Math.floor((timePassed % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24));
+                const hoursPassed = Math.floor((timePassed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutesPassed = Math.floor((timePassed % (1000 * 60 * 60)) / (1000 * 60));
+                const secondsPassed = Math.floor((timePassed % (1000 * 60)) / 1000);
+                countdownElement.setAttribute('value', `Time Up! +${yearsPassed}y ${daysPassed}d ${hoursPassed}h ${minutesPassed}m ${secondsPassed}s`);
+                
+                if (now.getMonth() === eventDate.getMonth() && now.getDate() === eventDate.getDate()) {
+                    const countdownText = `Happy ${yearsPassed + 1} Year Anniversary!`;
+                    countdownElement.setAttribute('value', countdownText);
+                    // Anniversary confetti
+                    confetti({
+                        particleCount: 200,
+                        spread: 100,
+                        origin: { y: 0.5 }
+                    });
+                }                
                 return;
             }
 
-            // Calculate the remaining time
             const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
             const countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-
             countdownElement.setAttribute('value', countdownText);
         }
 
         setInterval(updateCountdown, 1000);
 
-		AFRAME.registerComponent('mytarget', {
-			init: function() {
-				this.el.addEventListener('targetFound', () => {
-					console.log("target found");
-					const audio = document.querySelector("#musicmp3");
-					audio.play().catch(e => console.log("Audio play failed:", e));
-                    // Trigger confetti
-                        confetti({
+        AFRAME.registerComponent('mytarget', {
+            init: function() {
+                this.el.addEventListener('targetFound', () => {
+                    console.log("target found");
+                    const audio = document.querySelector("#musicmp3");
+                    audio.play().catch(e => console.log("Audio play failed:", e));
+                    
+                    // Trigger confetti when target is found
+                    confetti({
                         particleCount: 150,
                         spread: 70,
-                        origin: { y: 0.6 }
+                        origin: { y: 0.6 },
+                        colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00']
                     });
-					
-					setTimeout(() => {
-						showPortfolio(() => {
-							showInfo();						
-						});
-					}, 300);
-
-				});
-				
-				this.el.addEventListener('targetLost', () => {
-					const audio = document.querySelector("#musicmp3");
-					audio.pause();
-				});
-			}
-		});
+                    
+                    setTimeout(() => {
+                        showPortfolio(() => {
+                            showInfo();                        
+                        });
+                    }, 300);
+                });
+                
+                this.el.addEventListener('targetLost', () => {
+                    const audio = document.querySelector("#musicmp3");
+                    audio.pause();
+                });
+            }
+        });
     </script>
     
     <style>
@@ -140,12 +154,12 @@
         }
 
         .example-container {
-	    /*font-family: 'Poppins', sans-serif;	*/	
             overflow: hidden;
             position: absolute;
             width: 100%;
             height: 100%;
         }
+        
         @font-face {
             font-family: 'MyCustomFont';
             src: url('./assets/fonts/DopeltonPersonalUseOnly.ttf') format('truetype');
@@ -153,18 +167,28 @@
             font-style: normal;
             font-display: swap;
         }
+        
         .customText {
             font-family: 'MyCustomFont';
         }
+        
         #nameStyle {
             font-family: 'Great Vibes', cursive;
         }
-		#STDStyle{
-			font-family: 'Orbitron', monospace;
-		}
-		#countdown{
-			font-family: 'Orbitron', monospace;
-		}
+        
+        #STDStyle {
+            font-family: 'Orbitron', monospace;
+        }
+        
+        #countdown {
+            font-family: 'Orbitron', monospace;
+        }
+        
+        .clickable:hover {
+            opacity: 0.9;
+            cursor: pointer;
+        }
+        
         #example-scanning-overlay {
             display: flex;
             align-items: center;
@@ -214,7 +238,7 @@
         }
 
         #example-scanning-overlay img {
-            opacity: 0.6;	
+            opacity: 0.6;    
             width: 90%;
             align-self: center;
         }
@@ -225,7 +249,7 @@
             height: 10px;
             background: white;
             animation: move 2s linear infinite;
-        }		
+        }        
         @keyframes move {
             0%, 100% { top: 0%; }
             50% { top: calc(100% - 10px); }
@@ -246,37 +270,35 @@
 
             <a-assets>
                 <video id="Base-video" src="assets/Base_video.mp4" autoplay="true" loop="true"></video>
-                <img id="couplesName" src="assets/couplesName.png"/>		
-                <img id="MessageImage" src="assets/MessageImage.png"/>	
+                <img id="couplesName" src="assets/couplesName.png"/>        
+                <img id="MessageImage" src="assets/MessageImage.png"/>    
                 <img id="SaveTheDate" src="assets/SaveTheDate.png"/>
                 <img id="Invitation" src="assets/Invitation.jpg"/>
-                <img id="LocationImage" src="assets/LocationImage.png"/>                
-                <img id="icon-location" src="assets/mdi--location.png"/>			
-                <img id="icon-event" src="assets/mdi--event-outline.png"/>				
-                <img id="icon-contact" src="assets/mdi--contact.png"/>				
+                <img id="LocationImage" src="assets/LocationImage.png"/>                            
                 <audio id="musicmp3" preload="auto" src="./assets/emotional-piano-music-256262.mp3"></audio>
             </a-assets>
 
             <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable"></a-camera>
 
             <a-entity id="mytarget" mytarget mindar-image-target="targetIndex: 0">
-                <a-entity id="portfolio-panel"  position="0 -0.25 -0.01" visible="false">
+                <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
                     <a-entity id="portfolio-item0">
                         <a-video src="#Base-video" position="0 0 0" width="1" height="1.527" autoplay="true" muted="true" preload="auto"></a-video>
 
-                        <a-image id=" " class="" src="#SaveTheDate" position="0 0.6 0.1" height="0.317 " width="1.0"></a-image>	
+                        <a-image id="SaveTheDateImage" class="" src="#SaveTheDate" position="0 0.6 0.1" height="0.317" width="1.0"></a-image>    
 
-						<!-- Image for couples Name-->
-						<a-image id=" " class="" src="#couplesName" position="0.0 0.3 0.1" height="0.7" width="0.7"
-								animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
-						</a-image>    
-
-                        <a-image id=" " class="" src="#MessageImage" position="0 0 0.1" height="0.317" width="1.0"></a-image>      
-
-						<!-- entity for countdown -->						
-                        <a-text id="countdown" class="clickable" value="" color="black" align="center" width="1.5" position="0 -0.15 0.1" geometry="primitive:plane; height: 0.1; width: 1.5;" material="opacity: 0.0" font-weight="bold"></a-text>></a-text>
+                        <a-image id="MessageImageElement" class="" src="#MessageImage" position="0 0 0.1" height="0.317" width="1.0"></a-image>
                         
-                        <a-image id="Location_Image" class="clickable" src="#LocationImage" position="0 -0.25 0.1" height="0.317" width="1.0"></a-image>					
+                        <a-image id="CouplesImage" class="" src="#couplesName" position="0.0 0.3 0.1" height="0.7" width="0.7"
+                                animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
+                        </a-image>    
+
+                        <a-text id="countdown" class="clickable" value="" color="black" align="center" width="1.5" 
+                                position="0 -0.15 0.1" geometry="primitive:plane; height: 0.1; width: 1.5;" 
+                                material="opacity: 0.0" font-weight="bold" cursor="rayOrigin: mouse"></a-text>
+                        
+                        <a-image id="Location_Image" class="clickable" src="#LocationImage" position="0 -0.25 0.1" 
+                                height="0.317" width="1.0" cursor="rayOrigin: mouse"></a-image>                    
                     </a-entity>
                 </a-entity>
             </a-entity>
