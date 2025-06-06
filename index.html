@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
     <script src="script/aframe.min.js"></script>
     <script src="script/mindar-image-aframe.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link rel="shortcut icon" type="image/png" href="assets/favicon.png">
     
     <script>
@@ -29,7 +30,7 @@
             }, 10);
         };
 		const showInfo = () => {
-			const Location_Image = document.querySelector("#location-button");
+			const Location_Image = document.querySelector("#LocationImage");
 			const Event_Image = document.querySelector("#event-button");
 			const contactButton = document.querySelector("#contact-button");
 			const text = document.querySelector("#text");
@@ -110,6 +111,12 @@
 					console.log("target found");
 					const audio = document.querySelector("#musicmp3");
 					audio.play().catch(e => console.log("Audio play failed:", e));
+                    // Trigger confetti
+                        confetti({
+                        particleCount: 150,
+                        spread: 70,
+                        origin: { y: 0.6 }
+                    });
 					
 					setTimeout(() => {
 						showPortfolio(() => {
@@ -257,7 +264,7 @@
                     <a-entity id="portfolio-item0">
                         <a-video src="#Base-video" position="0 0 0" width="1" height="1.527" autoplay="true" muted="true" preload="auto"></a-video>
 
-                        <a-image id=" " class="" src="#SaveTheDate" position="0 0.5 0.1" height="0.317 " width="1.0"></a-image>	
+                        <a-image id=" " class="" src="#SaveTheDate" position="0 0.6 0.1" height="0.317 " width="1.0"></a-image>	
 
 						<!-- Image for couples Name-->
 						<a-image id=" " class="" src="#couplesName" position="0.0 0.3 0.1" height="0.7" width="0.7"
@@ -267,9 +274,9 @@
                         <a-image id=" " class="" src="#MessageImage" position="0 0 0.1" height="0.317" width="1.0"></a-image>      
 
 						<!-- entity for countdown -->						
-                        <a-text id="countdown" class="clickable" value="" color="black" align="center" width="1.5" position="0 -0.05 0.1" geometry="primitive:plane; height: 0.1; width: 1.5;" material="opacity: 0.0" font-weight="bold"></a-text>></a-text>
+                        <a-text id="countdown" class="clickable" value="" color="black" align="center" width="1.5" position="0 -0.15 0.1" geometry="primitive:plane; height: 0.1; width: 1.5;" material="opacity: 0.0" font-weight="bold"></a-text>></a-text>
                         
-                        <a-image id="Location_Image" class="" src="#LocationImage" position="0 -0.25 0.1" height="0.317" width="1.0"></a-image>					
+                        <a-image id="Location_Image" class="clickable" src="#LocationImage" position="0 -0.25 0.1" height="0.317" width="1.0"></a-image>					
                     </a-entity>
                 </a-entity>
             </a-entity>
