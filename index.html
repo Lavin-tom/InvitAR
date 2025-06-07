@@ -126,17 +126,19 @@
                     audio.play().catch(e => console.log("Audio play failed:", e));
                     
                     // Trigger confetti when target is found
-                    setInterval(() => {
-                      confetti({
-                        particleCount: 5,
-                        spread: 80,
-                        origin: { x: Math.random(), y: Math.random() * 0.4 + 0.4 },
-                        emojis: ['💖', '💘', '💕'],
+                    const myConfetti = confetti.create(document.body, {
+                        resize: true,
+                        useWorker: true,
+                    });
+
+                    myConfetti({
+                        particleCount: 50,
+                        spread: 60,
+                        origin: { y: 0.6 },
                         shapes: ['text'],
-                        scalar: 1.5 + Math.random(),
-                        ticks: 150 + Math.random() * 100
-                          });
-                    }, 200);
+                        emojis: ['❤️','💖', '💘', '💕'],
+                        scalar: 2
+                    });
 
                     setTimeout(() => {
                         showPortfolio(() => {
@@ -273,6 +275,7 @@
                 <img id="LocationImage" src="assets/LocationImage.png"/>                            
                 <audio id="musicmp3" preload="auto" src="./assets/emotional-piano-music-256262.mp3"></audio>
             </a-assets>
+            <a-asset-item id="boldFont" src="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-asset-item>
 
             <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable"></a-camera>
 
@@ -289,9 +292,9 @@
                                 animation="property: scale; to: 1.1 1.1 1.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
                         </a-image>    
 
-                        <a-text id="countdown" class="clickable" value="" color="black" align="center" width="1.5" 
+                        <a-text id="countdown" font="#boldFont" class="clickable" value="" color="black" align="center" width="1.5" 
                                 position="0 -0.15 0.1" geometry="primitive:plane; height: 0.1; width: 1.5;" 
-                                material="opacity: 0.0" font-weight="bold" cursor="rayOrigin: mouse"></a-text>
+                                material="opacity: 0.0"></a-text>
                         
                         <a-image id="Location_Image" class="clickable" src="#LocationImage" position="0 -0.25 0.1" 
                                 height="0.317" width="1.0" cursor="rayOrigin: mouse"></a-image>                    
