@@ -126,18 +126,14 @@
                     audio.play().catch(e => console.log("Audio play failed:", e));
                     
                     // Trigger confetti when target is found
-                    const myConfetti = confetti.create(document.body, {
-                        resize: true
-                    });
-
-                    myConfetti({
-                        particleCount: 50,
-                        spread: 60,
-                        origin: { y: 0.6 },
-                        shapes: ['text'],
-                        emojis: ['❤️','💖', '💘', '💕'],
-                        scalar: 2
-                    });
+confetti({
+  particleCount: 100,
+  spread: 70,
+  origin: { y: 0.6 },
+  shapes: ['text'],
+  emojis: ['💖', '💘', '💕', '❤️'],
+  scalar: 2
+});
 
                     setTimeout(() => {
                         showPortfolio(() => {
