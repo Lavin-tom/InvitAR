@@ -127,12 +127,14 @@
                     
                     // Trigger confetti when target is found
                     confetti({
-                        particleCount: 150,
-                        spread: 70,
-                        origin: { y: 0.6 },
-                        colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00']
+                          particleCount: 40,
+                          spread: 60,
+                          origin: { y: 0.6 },
+                          shapes: ['text'],
+                          emojis: ['❤️'],
+                          scalar: 1.5,
+                          ticks: 250,    
                     });
-                    
                     setTimeout(() => {
                         showPortfolio(() => {
                             showInfo();                        
@@ -289,7 +291,7 @@
 
                         <a-image id="MessageImageElement" class="" src="#MessageImage" position="0 0 0.1" height="0.317" width="1.0"></a-image>
                         
-                        <a-image id="CouplesImage" class="" src="#couplesName" position="0.0 0.3 0.1" height="0.5" width="0.5"
+                        <a-image id="CouplesImage" class="" src="#couplesName" position="0.0 0.3 0.1" height="0.6" width="0.6"
                                 animation="property: scale; to: 1.1 1.1 1.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
                         </a-image>    
 
