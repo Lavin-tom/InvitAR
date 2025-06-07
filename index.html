@@ -8,10 +8,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Abel&family=Poppins:wght@100&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">    
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <script src="script/aframe.min.js"></script>
     <script src="script/mindar-image-aframe.prod.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <link rel="shortcut icon" type="image/png" href="assets/favicon.png">
     
     <script>
@@ -126,15 +126,18 @@
                     audio.play().catch(e => console.log("Audio play failed:", e));
                     
                     // Trigger confetti when target is found
-                    confetti({
-                          particleCount: 40,
-                          spread: 60,
-                          origin: { y: 0.6 },
-                          shapes: ['text'],
-                          emojis: ['❤️'],
-                          scalar: 1.5,
-                          ticks: 250,    
-                    });
+                    setInterval(() => {
+                      confetti({
+                        particleCount: 5,
+                        spread: 80,
+                        origin: { x: Math.random(), y: Math.random() * 0.4 + 0.4 },
+                        emojis: ['💖', '💘', '💕'],
+                        shapes: ['text'],
+                        scalar: 1.5 + Math.random(),
+                        ticks: 150 + Math.random() * 100
+                          });
+                    }, 200);
+
                     setTimeout(() => {
                         showPortfolio(() => {
                             showInfo();                        
@@ -173,19 +176,10 @@
         .customText {
             font-family: 'MyCustomFont';
         }
-        
-        #nameStyle {
-            font-family: 'Great Vibes', cursive;
-        }
-        
-        #STDStyle {
-            font-family: 'Orbitron', monospace;
-        }
-        
         #countdown {
-            font-family: 'Orbitron', monospace;
+              font-family: 'Orbitron', monospace;
+              font-weight: bold;
         }
-        
         .clickable:hover {
             opacity: 0.9;
             cursor: pointer;
