@@ -13,7 +13,6 @@
     <script src="script/mindar-image-aframe.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <link rel="shortcut icon" type="image/png" href="assets/favicon.png">
-    
     <script>
         const showPortfolio = (done) => {
             const portfolio = document.querySelector("#portfolio-panel");
@@ -51,14 +50,11 @@
             const eventEndDate = "20250818T220000Z";
             const eventDescription = "Join us for a wonderful Christmas Eve celebration!";
             const eventLocation = "Jerusalem Mar Thoma Syrian Church, Koothrapally";
-        
             const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${eventStartDate}/${eventEndDate}&details=${encodeURIComponent(eventDescription)}&location=${encodeURIComponent(eventLocation)}&sf=true&output=xml`;
-        
             window.open(googleCalendarUrl, '_blank');
         }
 
         function openGoogleMaps() {
-
             const googleMapsUrl = `https://maps.app.goo.gl/3M8UD9NZdfzCyPJd6`;
             window.open(googleMapsUrl, '_blank');
         }
@@ -68,7 +64,6 @@
             const eventDate = new Date("August 18, 2025 11:30:00");
             const now = new Date();
             const timeDiff = eventDate - now;
-            
             const countdownElement = document.querySelector("#countdown");
             
             if (timeDiff <= 0) {
@@ -97,7 +92,6 @@
             const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-
             const countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
             countdownElement.setAttribute('value', countdownText);
         }
@@ -257,7 +251,6 @@ confetti({
                 <audio id="musicmp3" preload="auto" src="./assets/emotional-piano-music-256262.mp3"></audio>
             </a-assets>
             <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable"></a-camera>
-
             <a-entity id="mytarget" mytarget mindar-image-target="targetIndex: 0" smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5">
                 <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
                     <a-entity id="portfolio-item0">
@@ -270,7 +263,6 @@ confetti({
                         <a-text id="countdown" class="clickable" value="" color="black" align="center" width="1.5"
                                 position="0 -0.15 0.1" geometry="primitive:plane; height: 0.1; width: 1.5;"
                                 material="opacity: 0.0" font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt"></a-text>
-        
                         <a-image id="Location_Image" class="clickable" src="#LocationImage" position="0 -0.25 0.1" 
                                 height="0.317" width="1.0" cursor="rayOrigin: mouse"></a-image>                    
                     </a-entity>
