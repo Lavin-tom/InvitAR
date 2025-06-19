@@ -18,7 +18,6 @@
             const portfolio = document.querySelector("#portfolio-panel");
             let y = -0.5;
             portfolio.setAttribute("visible", true);
-
             const id = setInterval(() => {
                 y += 0.008;
                 if (y >= 0) {
@@ -28,7 +27,6 @@
                 portfolio.setAttribute("position", `0 ${y} -0.01`);
             }, 10);
         };
-
         const showInfo = () => {
             const locationImage = document.querySelector("#Location_Image");
             const countdownElement = document.querySelector("#countdown");
@@ -36,14 +34,12 @@
             locationImage.addEventListener('click', openGoogleMaps);
             countdownElement.addEventListener('click', openCalendar);
         };
-
         function openContact() {
             const phoneNumber = "1234567890"; 
             const message = "Hello, I'd like to connect!"; 
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
         }
-
         function openCalendar() {
             const eventTitle = "Wedding Day";
             const eventStartDate = "20250818T113000Z";
@@ -53,12 +49,10 @@
             const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${eventStartDate}/${eventEndDate}&details=${encodeURIComponent(eventDescription)}&location=${encodeURIComponent(eventLocation)}&sf=true&output=xml`;
             window.open(googleCalendarUrl, '_blank');
         }
-
         function openGoogleMaps() {
             const googleMapsUrl = `https://maps.app.goo.gl/3M8UD9NZdfzCyPJd6`;
             window.open(googleMapsUrl, '_blank');
-        }
-      
+        } 
         // Countdown to Event
         function updateCountdown() {
             const eventDate = new Date("August 18, 2025 11:30:00");
@@ -87,7 +81,6 @@
                 }                
                 return;
             }
-
             const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
@@ -95,16 +88,13 @@
             const countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
             countdownElement.setAttribute('value', countdownText);
         }
-
         setInterval(updateCountdown, 1000);
-
         AFRAME.registerComponent('mytarget', {
             init: function() {
                 this.el.addEventListener('targetFound', () => {
                     console.log("target found");
                     const audio = document.querySelector("#musicmp3");
-                    audio.play().catch(e => console.log("Audio play failed:", e));
-                    
+                    audio.play().catch(e => console.log("Audio play failed:", e));                  
 // Create multiple emoji shapes
 const emojis = ['💖', '💘', '💕', '❤️'];
 const shape = confetti.shapeFromText({ text: emojis[Math.floor(Math.random() * emojis.length)], scalar: 2 });
@@ -128,28 +118,24 @@ confetti({
                 });
             }
         });
-    </script>
-    
+    </script>    
     <style>
         body {
             margin: 0;
         }
-
         .example-container {
             overflow: hidden;
             position: absolute;
             width: 100%;
             height: 100%;
-        }
-        
+        }      
         @font-face {
             font-family: 'MyCustomFont';
             src: url('./assets/fonts/DopeltonPersonalUseOnly.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
             font-display: swap;
-        }
-        
+        }       
         .customText {
             font-family: 'MyCustomFont';
         }
@@ -160,8 +146,7 @@ confetti({
         .clickable:hover {
             opacity: 0.9;
             cursor: pointer;
-        }
-        
+        }      
         #example-scanning-overlay {
             display: flex;
             align-items: center;
@@ -205,7 +190,6 @@ confetti({
             background-repeat: no-repeat;
             background-size: 40px 40px;
         }
-
         #example-scanning-overlay.hidden {
             display: none;
         }
@@ -237,11 +221,9 @@ confetti({
                 <img src="./assets/InvitationCard.jpg" />
                 <div class="scanline"></div>
             </div>
-        </div>
-        
+        </div>      
         <a-scene mindar-image="imageTargetSrc: targets.mind; showStats: false; uiScanning: #example-scanning-overlay;" embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights"
             vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
-
             <a-assets>
                 <video id="Base-video" src="assets/Base_video.mp4" autoplay="true" loop="true"></video>
                 <img id="couplesName" src="assets/couplesName.png"/>        
