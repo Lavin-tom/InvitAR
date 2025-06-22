@@ -107,8 +107,7 @@ confetti({
                             showInfo();                        
                         });
                     }, 300);
-                });
-                
+                });   
                 this.el.addEventListener('targetLost', () => {
                     const audio = document.querySelector("#musicmp3");
                     audio.pause();
@@ -149,21 +148,18 @@ confetti({
             background: transparent;
             z-index: 2;
         }
-
         @media (min-aspect-ratio: 1/1) {
             #example-scanning-overlay .inner {
                 width: 50vh;
                 height: 50vh;
             }
         }
-
         @media (max-aspect-ratio: 1/1) {
             #example-scanning-overlay .inner {
                 width: 80vw;
                 height: 80vw;
             }
         }
-
         #example-scanning-overlay .inner {
             display: flex;
             align-items: center;
@@ -183,14 +179,12 @@ confetti({
         #example-scanning-overlay.hidden {
             display: none;
         }
-
         #example-scanning-overlay img {
             opacity: 0.6;    
             width: 70%;
             height: auto;
             align-self: center;
         }
-
         #example-scanning-overlay .inner .scanline {
             position: absolute;
             width: 100%;
