@@ -79,7 +79,7 @@
             const countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
             countdownElement.setAttribute('value', countdownText);
         }
-        setInterval(updateCountdown, 1000);
+        //setInterval(updateCountdown, 1000);
         AFRAME.registerComponent('mytarget', {
             init: function() {
                 this.el.addEventListener('targetFound', () => {
@@ -87,14 +87,14 @@
                     const audio = document.querySelector("#musicmp3");
                     audio.play().catch(e => console.log("Audio play failed:", e));                  
 
-const emojis = ['💖', '💘', '💕', '❤️'];
-const shape = confetti.shapeFromText({ text: emojis[Math.floor(Math.random() * emojis.length)], scalar: 2 });
-confetti({
-  particleCount: 150,
-  spread: 150,
-  origin: { y: 0.6 },
-  shapes: [shape]
-});
+                    const emojis = ['💖', '💘', '💕', '❤️'];
+                    const shape = confetti.shapeFromText({ text: emojis[Math.floor(Math.random() * emojis.length)], scalar: 2 });
+                    confetti({
+                    particleCount: 150,
+                    spread: 150,
+                    origin: { y: 0.6 },
+                    shapes: [shape]
+                    });
                     setTimeout(() => {
                         showPortfolio(() => {                     
                         });
