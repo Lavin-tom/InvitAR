@@ -6,15 +6,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Abel&family=Poppins:wght@100&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">    
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <script src="script/aframe.min.js"></script>
     <script src="script/mindar-image-aframe.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@pqina/flip/dist/tick.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script src="https://unpkg.com/aframe-html-shader@1.3.0/dist/aframe-html-shader.min.js"></script>
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
     <link rel="shortcut icon" type="image/png" href="assets/favicon.png">
     <script>
         const showPortfolio = (done) => {
+            document.querySelector("#flip-countdown").style.display = "block";
             const portfolio = document.querySelector("#portfolio-panel");
             let y = -0.5;
             portfolio.setAttribute("visible", true);
@@ -47,38 +48,6 @@
             window.open(googleMapsUrl, '_blank');
         } 
         // Countdown to Event
-        function updateCountdown() {
-            const eventDate = new Date("August 18, 2025 11:30:00");
-            const now = new Date();
-            const timeDiff = eventDate - now;
-            const countdownElement = document.querySelector("#countdown");          
-            if (timeDiff <= 0) {
-                const timePassed = now - eventDate;
-                const yearsPassed = Math.floor(timePassed / (1000 * 60 * 60 * 24 * 365));
-                const daysPassed = Math.floor((timePassed % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24));
-                const hoursPassed = Math.floor((timePassed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutesPassed = Math.floor((timePassed % (1000 * 60 * 60)) / (1000 * 60));
-                const secondsPassed = Math.floor((timePassed % (1000 * 60)) / 1000);
-                countdownElement.setAttribute('value', `Time Up! +${yearsPassed}y ${daysPassed}d ${hoursPassed}h ${minutesPassed}m ${secondsPassed}s`);                
-                if (now.getMonth() === eventDate.getMonth() && now.getDate() === eventDate.getDate()) {
-                    const countdownText = `Happy ${yearsPassed + 1} Year Anniversary!`;
-                    countdownElement.setAttribute('value', countdownText);
-                    // Anniversary confetti
-                    confetti({
-                        particleCount: 200,
-                        spread: 100,
-                        origin: { y: 0.5 }
-                    });
-                }                
-                return;
-            }
-            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-            const countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-            countdownElement.setAttribute('value', countdownText);
-        }
         //setInterval(updateCountdown, 1000);
         AFRAME.registerComponent('mytarget', {
             init: function() {
@@ -106,6 +75,16 @@
                 });
             }
         });
+        function handleTickInit(tick) {
+            var counter = Tick.count.down("2025-08-18T11:30:00+05:30"); // Change time zone if needed
+            counter.onupdate = function (value) {
+            tick.value = value;
+            };
+            counter.onended = function () {
+            tick.root.style.display = 'none';
+            document.querySelector('.tick-onended-message').style.display = '';
+            };
+        }        
     </script>    
     <style>
         body {
@@ -211,8 +190,65 @@
                         <a-image id="BaseImageND" class="" src="#BaseImageND" position="0 0 0" height="0.9" width="1.4"></a-image>                                                  
                     </a-entity>
                 </a-entity>
+                <a-entity 
+                geometry="primitive: plane; height: 0.4; width: 1.0" 
+                material="shader: html; target: #flip-countdown;" 
+                position="0 -0.6 0.01" 
+                html="fps: 30"
+                ></a-entity>
             </a-entity>
         </a-scene>
     </div>
+<div id="flip-countdown" style="display:none;">
+  <style>
+    .tick {
+      font-size:1rem; white-space:nowrap; font-family:arial,sans-serif;
+    }
+    .tick-flip,.tick-text-inline {
+      font-size:2.5em;
+    }
+    .tick-label {
+      margin-top:1em;font-size:1em;
+    }
+    .tick-char {
+      width:1.5em;
+    }
+    .tick-text-inline {
+      display:inline-block;text-align:center;min-width:1em;
+    }
+    .tick-text-inline+.tick-text-inline {
+      margin-left:-.325em;
+    }
+    .tick-group {
+      margin:0 .5em;text-align:center;
+    }
+    .tick-text-inline {
+      color: rgb(90, 93, 99) !important; 
+    }
+    .tick-label {
+      color: rgb(90, 93, 99) !important; 
+    }
+    .tick-flip-panel {
+      color: rgb(255, 255, 255) !important; 
+    }
+    .tick-flip-panel {
+      background-color: rgb(59, 61, 59) !important; 
+    }
+    .tick-flip {
+      border-radius:0.12em !important; 
+    }
+  </style>
+
+  <div class="tick" data-did-init="handleTickInit">
+    <div data-repeat="true" data-layout="horizontal fit" data-transform="preset(d, h, m, s) -> delay">
+      <div class="tick-group">
+        <div data-key="value" data-repeat="true" data-transform="pad(00) -> split -> delay">
+          <span data-view="flip"></span>
+        </div>
+        <span data-key="label" data-view="text" class="tick-label"></span>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
