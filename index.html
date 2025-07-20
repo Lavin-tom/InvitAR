@@ -81,8 +81,15 @@
         setInterval(updateCountdown, 1000);
         AFRAME.registerComponent('mytarget', {
             init: function() {
+                let hasActivated = false;
+
                 this.el.addEventListener('targetFound', () => {
-                    console.log("target found");
+
+                    if (hasActivated) return;
+                    hasActivated = true;
+                    
+                    console.log("Target found");
+
                     const audio = document.querySelector("#musicmp3");
                     audio.play().catch(e => console.log("Audio play failed:", e));                  
 
@@ -95,16 +102,16 @@
                     shapes: [shape]
                     });
                     setTimeout(() => {
-                        showPortfolio(() => {                     
+                        showPortfolio(() => {
                         });
                     }, 300);
-                });   
-                this.el.addEventListener('targetLost', () => {
-                    const audio = document.querySelector("#musicmp3");
-                    audio.pause();
-                });
-            }
-        });    
+                    });
+
+                    this.el.addEventListener('targetLost', () => {
+                    if (!hasActivated) return;
+                    });
+                }
+                });    
     </script>    
     <style>
         body {
@@ -208,8 +215,8 @@
                 <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
                     <a-entity id="portfolio-item0">
                         <a-image id="BaseImageND" class="" src="#BaseImageND" position="0 0 0" height="0.9" width="1.4"></a-image>    
-                        <a-text id="countdown" class="clickable" value="" color="black" align="center" width="1.5"
-                                position="0 -0.15 0.1" geometry="primitive:plane; height: 0.1; width: 1.5;"
+                        <a-text id="countdown" class="clickable" value="" color="black" width="1"
+                                position="0.3 0 0.1" geometry="primitive:plane; height: 0.1; width: 1;"
                                 material="opacity: 0.0" font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt">
                         </a-text>                                              
                     </a-entity>
