@@ -194,21 +194,37 @@ confetti({
     <div class="example-container">
         <div id="example-scanning-overlay" class="hidden">
             <div class="inner">
-                <img src="./assets/BaseImageND.jpg" />
+                <img src="./assets/InvitationCard1.jpg" />
                 <div class="scanline"></div>
             </div>
         </div>      
         <a-scene mindar-image="imageTargetSrc: targets.mind; showStats: false; uiScanning: #example-scanning-overlay;" embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights"
             vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
             <a-assets>
-                <img id="BaseImageND" src="assets/BaseImageND.jpg"/>                                 
+                <video id="Base-video" src="assets/Base_video.mp4" autoplay="true" loop="true"></video>
+                <img id="couplesName" src="assets/couplesName.png"/>        
+                <img id="MessageImage" src="assets/MessageImage.png"/>    
+                <img id="SaveTheDate" src="assets/SaveTheDate.png"/>
+                <img id="LocationImage" src="assets/LocationImage.png"/> 
+                <imge id="FloralImage" src="assets/FloralUpdated.png"/>                           
                 <audio id="musicmp3" preload="auto" src="./assets/emotional-piano-music-256262.mp3"></audio>
             </a-assets>
             <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable"></a-camera>
             <a-entity id="mytarget" mytarget mindar-image-target="targetIndex: 0" smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5">
                 <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
                     <a-entity id="portfolio-item0">
-                        <a-image id="BaseImageND" class="" src="#BaseImageND" position="0 0 0" height="0.9" width="1.4"></a-image>                                                  
+                        <a-video src="#Base-video" position="0 0 0" width="1" height="1.527" autoplay="true" muted="true" preload="auto"></a-video>
+                        <a-image id="FloralImage" class="" src="#FloralImage" position="0 0.6.6 0.1" height="0.317" width="1.0"></a-image>                            
+                        <a-image id="SaveTheDateImage" class="" src="#SaveTheDate" position="0 0.6 0.1" height="0.317" width="1.0"></a-image>                          
+                        <a-image id="MessageImageElement" class="" src="#MessageImage" position="0 0 0.1" height="0.317" width="1.0"></a-image>                  
+                        <a-image id="CouplesImage" class="" src="#couplesName" position="0.0 0.3 0.2" height="0.6" width="0.6"
+                                animation="property: scale; to: 1.1 1.1 1.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
+                        </a-image>    
+                        <a-text id="countdown" class="clickable" value="" color="black" align="center" width="1.5"
+                                position="0 -0.15 0.1" geometry="primitive:plane; height: 0.1; width: 1.5;"
+                                material="opacity: 0.0" font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt"></a-text>
+                        <a-image id="Location_Image" class="clickable" src="#LocationImage" position="0 -0.25 0.1" 
+                                height="0.317" width="1.0" cursor="rayOrigin: mouse"></a-image>                    
                     </a-entity>
                 </a-entity>
             </a-entity>
