@@ -76,21 +76,12 @@
             const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
             const countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
             countdownElement.setAttribute('value', countdownText);
-        }        
+        }
         setInterval(updateCountdown, 1000);
         AFRAME.registerComponent('mytarget', {
             init: function() {
-                let hasActivated = false;
-
                 this.el.addEventListener('targetFound', () => {
-
-                    if (hasActivated) return;
-                    hasActivated = true;
-                    
-                    console.log("Target found");
-
-                    this.el.removeAttribute("mindar-image-target");  
-
+                    console.log("target found");
                     const audio = document.querySelector("#musicmp3");
                     audio.play().catch(e => console.log("Audio play failed:", e));                  
 
@@ -103,16 +94,16 @@
                     shapes: [shape]
                     });
                     setTimeout(() => {
-                        showPortfolio(() => {
+                        showPortfolio(() => {                     
                         });
                     }, 300);
-                    });
-
-                    this.el.addEventListener('targetLost', () => {
-                    if (!hasActivated) return;
-                    });
-                }
-                });    
+                });   
+                this.el.addEventListener('targetLost', () => {
+                    const audio = document.querySelector("#musicmp3");
+                    audio.pause();
+                });
+            }
+        });
     </script>    
     <style>
         body {
