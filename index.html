@@ -193,26 +193,29 @@
         <div id="example-scanning-overlay" class="hidden">
             <div class="inner">
                 <img src="./assets/BaseImageFullND.jpg" />
+                <img src="./assets/CoupleName.png"/>
+                <img src="./assets/LocationImage.png"/>
                 <div class="scanline"></div>
             </div>
         </div>      
         <a-scene mindar-image="imageTargetSrc: targets.mind; showStats: false; uiScanning: #example-scanning-overlay;" embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights"
             vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
             <a-assets>
-                <img id="BaseImageND" src="assets/BaseImageND.jpg"/>                                 
+                <img id="BaseImageND" src="assets/BaseImageND.jpg"/> 
+                <img id="CouplesName" src="assets/CoupleName.png"/>        
+                <img id="MessageImage" src="assets/MessageImage.png"/>                                                   
                 <audio id="musicmp3" preload="auto" src="./assets/emotional-piano-music-256262.mp3"></audio>
             </a-assets>
             <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable"></a-camera>
             <a-entity id="mytarget" mytarget mindar-image-target="targetIndex: 0" smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5">
                 <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
                     <a-entity id="portfolio-item0">
-                        <a-image id="BaseImageND" class="" src="#BaseImageND" position="0 0 0" height="0.9" width="1.4"></a-image>    
+                        <a-image id="BaseImageND" class="" src="#BaseImageND" position="0 0 0" height="0.9" width="1.4"></a-image> 
+                        <a-image id="CoupleName" class="" src="#CoupleName" position="0 0 0" height="0.9" width="1.4"></a-image>  
                         <a-text id="countdown" class="clickable" value="" color="black" width="1"
                                 position="0.1 0 0.1" geometry="primitive:plane; height: 0.1; width: 0.5;"
                                 material="opacity: 0.0" font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt">
-                        </a-text>  
-                        <a-image id="Location_Image" class="clickable" src="#LocationImage" position="0 0.25 0.1" 
-                                height="0.317" width="1.0" cursor="rayOrigin: mouse"></a-image>                                                                     
+                        </a-text>                                                                       
                     </a-entity>
                 </a-entity>
             </a-entity>
