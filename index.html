@@ -201,7 +201,8 @@
             <a-assets>
                 <img id="BaseImageND" src="assets/BaseImageND.jpg"/> 
                 <img id="CoupleName" src="assets/CoupleName.png"/>        
-                <img id="MessageImage" src="assets/MessageImage.png"/>                                                   
+                <img id="MessageImage" src="assets/MessageImage.png"/> 
+                <img id="LocationImage" src="assets/Location.png"/>                                                                  
                 <audio id="musicmp3" preload="auto" src="./assets/emotional-piano-music-256262.mp3"></audio>
             </a-assets>
             <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable"></a-camera>
@@ -209,11 +210,13 @@
                 <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
                     <a-entity id="portfolio-item0">
                         <a-image id="BaseImageND" class="" src="#BaseImageND" position="0 0 0" height="0.9" width="1.4"></a-image> 
-                        <a-image id="CoupleName" class="" src="#CoupleName" position="0 0 0" height="0.9" width="1.4"></a-image>  
+                        <a-image id="CoupleName" class="" src="#CoupleName" position="0 0 0" height="0.9" width="1.4"
+                         animation="property: scale; to: 1.1 1.1 1.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
                         <a-text id="countdown" class="clickable" value="" color="black" width="1"
                                 position="0.1 0 0.1" geometry="primitive:plane; height: 0.1; width: 0.5;"
                                 material="opacity: 0.0" font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt">
-                        </a-text>                                                                       
+                        </a-text>     
+                        <a-image id="LocationImage" class="" src="#LocationImage" position="0 0 0" height="0.9" width="1.4"></a-image>                                                                                            
                     </a-entity>
                 </a-entity>
             </a-entity>
