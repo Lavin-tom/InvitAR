@@ -46,7 +46,7 @@
         } 
         // Countdown to Event
         function updateCountdown() {
-            const eventDate = new Date("August 18, 2025 11:30:00");
+            const eventDate = new Date("January 14, 2026 11:00:00");
             const now = new Date();
             const timeDiff = eventDate - now;
             const countdownElement = document.querySelector("#countdown");          
@@ -103,6 +103,10 @@
                     audio.pause();
                 });
             }
+        });
+        window.addEventListener('DOMContentLoaded', () => {
+            const locationImage = document.querySelector('#LocationImage');
+            locationImage.addEventListener('click', openGoogleMaps);
         });
     </script>    
     <style>
@@ -209,13 +213,13 @@
             <a-entity id="mytarget" mytarget mindar-image-target="targetIndex: 0" smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5">
                 <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
                     <a-entity id="portfolio-item0">
-                        <a-image id="BaseImageND" class="" src="#BaseImageND" position="0 0 0" height="0.9" width="1.4"></a-image> 
-                        <a-image id="CoupleName" class="" src="#CoupleName" position="0 0 0" height="0.9" width="1.4"></a-image>
+                        <a-image id="BaseImageND" class="" src="#BaseImageND" position="0 0 0.2" height="0.9" width="1.4"></a-image> 
+                        <a-image id="CoupleName" class="" src="#CoupleName" position="0 0 0.2" height="0.9" width="1.4"></a-image>
                         <a-text id="countdown" class="clickable" value="" color="black" width="1"
-                                position="0.1 0.5 0.1" geometry="primitive:plane; height: 0.1; width: 0.5;"
+                                position="0.3 0.0 0.1" geometry="primitive:plane; height: 0.1; width: 0.5;"
                                 material="opacity: 0.0" font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt">
                         </a-text>     
-                        <a-image id="LocationImage" class="clickable" src="#LocationImage" position="0 0 0" height="0.9" width="1.4"></a-image>                                                                                            
+                        <a-image id="LocationImage" class="clickable" src="#LocationImage" position="0 0 0.2" height="0.9" width="1.4"></a-image>                                                                                            
                     </a-entity>
                 </a-entity>
             </a-entity>
