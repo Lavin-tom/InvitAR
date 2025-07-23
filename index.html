@@ -88,7 +88,7 @@
                     const emojis = ['💖', '💘', '💕', '❤️'];
                     const shape = confetti.shapeFromText({ text: emojis[Math.floor(Math.random() * emojis.length)], scalar: 2 });
                     confetti({
-                    particleCount: 150,
+                    particleCount: 250,
                     spread: 150,
                     origin: { y: 0.6 },
                     shapes: [shape]
@@ -216,10 +216,10 @@
                         <a-image id="BaseImageND" class="" src="#BaseImageND" position="0 0 0.2" height="0.9" width="1.4"></a-image> 
                         <a-image id="CoupleName" class="" src="#CoupleName" position="0 0 0.2" height="0.9" width="1.4"></a-image>
                         <a-text id="countdown" class="" value="" color="black" width="1"
-                                position="0.3 0.0 0.25" geometry="primitive:plane; height: 0.1; width: 0.5;"
+                                position="0.3 0.0 0.25" geometry="primitive:plane; height: 0.1; width: 0.3;"
                                 material="opacity: 0.0" font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt">
                         </a-text>     
-                        <a-image id="LocationImage" class="clickable" src="#LocationImage" position="0 0 0.2" height="0.9" width="1.4"></a-image>                                                                                            
+                        <a-image id="LocationImage" class="clickable" src="#LocationImage" position="0 0 0.3" height="0.9" width="1.4"></a-image>                                                                                            
                     </a-entity>
                 </a-entity>
             </a-entity>
