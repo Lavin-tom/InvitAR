@@ -83,7 +83,12 @@
                 this.el.addEventListener('targetFound', () => {
                     console.log("target found");
                     const audio = document.querySelector("#musicmp3");
-                    audio.play().catch(e => console.log("Audio play failed:", e));                  
+                    audio.play().catch(e => console.log("Audio play failed:", e));  
+                    
+                    // VIDEO
+                    const baseVideo = document.querySelector("#Base-video");
+                    baseVideo.currentTime = 0;
+                    baseVideo.play().catch(e => console.log("Video play failed:", e));
 
                     const emojis = ['💖', '💘', '💕', '❤️'];
                     const shape = confetti.shapeFromText({ text: emojis[Math.floor(Math.random() * emojis.length)], scalar: 2 });
@@ -214,7 +219,7 @@
             <a-entity id="mytarget" mytarget mindar-image-target="targetIndex: 0" smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5">
                 <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
                     <a-entity id="portfolio-item0">
-                        <a-video src="#Base-video" position="0 0 0" width="0.7" height="0.45" autoplay="true" muted="true" preload="auto"></a-video>                        
+                        <a-video src="#Base-video" position="0 0 0" width="0.7" height="0.45" autoplay="true" muted="true" preload="auto"></a-video>                       
                         <!--<a-image id="" class="" src="#BaseImageND" position="0 0 0.2" height="0.9" width="1.4"></a-image> 
                         <a-image id="" class="" src="#CoupleName" position="0 0 0.2" height="0.9" width="1.4"></a-image>--> 
                         <a-text id="countdown" class="" value="" color="black" width="1"
