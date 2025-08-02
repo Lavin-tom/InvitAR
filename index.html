@@ -203,6 +203,7 @@
         <a-scene mindar-image="imageTargetSrc: targets.mind; showStats: false; uiScanning: #example-scanning-overlay;" embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights"
             vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
             <a-assets>
+                <video id="Base-video" src="assets/BasePPT.mp4" autoplay="true" loop="false"></video>                
                 <img id="BaseImageND" src="assets/BaseImageND.jpg"/> 
                 <img id="CoupleName" src="assets/CoupleName.png"/>        
                 <img id="MessageImage" src="assets/MessageImage.png"/> 
@@ -213,13 +214,14 @@
             <a-entity id="mytarget" mytarget mindar-image-target="targetIndex: 0" smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5">
                 <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
                     <a-entity id="portfolio-item0">
-                        <a-image id="" class="" src="#BaseImageND" position="0 0 0.2" height="0.9" width="1.4"></a-image> 
+                        <a-video src="#Base-video" position="0 0 0" width="1.4" height="0.9" autoplay="true" muted="true" preload="auto"></a-video>                        
+                        <!--<a-image id="" class="" src="#BaseImageND" position="0 0 0.2" height="0.9" width="1.4"></a-image> 
                         <a-image id="" class="" src="#CoupleName" position="0 0 0.2" height="0.9" width="1.4"></a-image>
                         <a-text id="countdown" class="" value="" color="black" width="1"
                                 position="0.1 0.0 0.2" geometry="primitive:plane; height: 0.1; width: 0.3;"
                                 material="opacity: 0.0" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt">
                         </a-text>     
-                        <a-image id="LocationImageID" class="clickable" src="#LocationImage" position="0 0 0.3" height="0.9" width="1.4"></a-image>                                                                                            
+                        <a-image id="LocationImageID" class="clickable" src="#LocationImage" position="0 0 0.3" height="0.9" width="1.4"></a-image>-->                                                                                            
                     </a-entity>
                 </a-entity>
             </a-entity>
