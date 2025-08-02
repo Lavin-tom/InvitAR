@@ -90,6 +90,16 @@
                     baseVideo.currentTime = 0;
                     baseVideo.play().catch(e => console.log("Video play failed:", e));
 
+                    // Reset countdown visibility
+                    const countdownEl = document.querySelector("#countdown");
+                    countdownEl.setAttribute("visible", false);
+
+                    // Listen once for video end
+                    baseVideo.onended = () => {
+                    countdownEl.setAttribute("visible", true);
+                    updateCountdown(); 
+                    };
+
                     const emojis = ['💖', '💘', '💕', '❤️'];
                     const shape = confetti.shapeFromText({ text: emojis[Math.floor(Math.random() * emojis.length)], scalar: 2 });
                     confetti({
@@ -106,6 +116,12 @@
                 this.el.addEventListener('targetLost', () => {
                     const audio = document.querySelector("#musicmp3");
                     audio.pause();
+                
+                    const baseVideo = document.querySelector("#Base-video");
+                    baseVideo.pause();
+
+                    const countdownEl = document.querySelector("#countdown");
+                    countdownEl.setAttribute("visible", false);    
                 });
             }
         });
@@ -222,7 +238,7 @@
                         <a-video src="#Base-video" position="0 0 0" width="0.7" height="0.45" autoplay="true" muted="true" preload="auto"></a-video>                       
                         <!--<a-image id="" class="" src="#BaseImageND" position="0 0 0.2" height="0.9" width="1.4"></a-image> 
                         <a-image id="" class="" src="#CoupleName" position="0 0 0.2" height="0.9" width="1.4"></a-image>--> 
-                        <a-text id="countdown" class="" value="" color="black" width="1"
+                        <a-text id="countdown" class="" value="" color="black" width="1" align="center"
                                 position="0.1 0.0 0.2" geometry="primitive:plane; height: 0.1; width: 0.3;"
                                 material="opacity: 0.0" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt">
                         </a-text>     
