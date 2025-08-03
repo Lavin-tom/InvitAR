@@ -89,11 +89,9 @@
                     const baseVideo = document.querySelector("#Base-video");
                     baseVideo.currentTime = 0;
                     baseVideo.play().catch(e => console.log("Video play failed:", e));
-
                     // Reset countdown visibility
                     const countdownEl = document.querySelector("#countdown");
                     countdownEl.setAttribute("visible", false);
-
                     // Listen once for video end
                     baseVideo.onended = () => {
                     countdownEl.setAttribute("visible", true);
@@ -221,7 +219,7 @@
                 <div class="scanline"></div>
             </div>
         </div>      
-        <a-scene mindar-image="imageTargetSrc: targets.mind; showStats: false; uiScanning: #example-scanning-overlay;" embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights"
+        <a-scene mindar-image="imageTargetSrc: targets.mind; showStats: ,false; uiScanning: #example-scanning-overlay;" embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights"
             vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
             <a-assets>
                 <video id="Base-video" src="assets/BasePPT.mp4" autoplay="true" loop="false"></video>                
@@ -249,4 +247,4 @@
         </a-scene>
     </div>
 </body>
-</html>
+</html
