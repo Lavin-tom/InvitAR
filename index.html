@@ -94,6 +94,7 @@
                     document.querySelector("#locationbutton1").setAttribute("visible", false);
                     document.querySelector("#locationbutton2").setAttribute("visible", false);
                     document.querySelector("#whatsappbutton").setAttribute("visible", false);
+                    document.querySelector("#coupleNamebutton").setAttribute("visible",false);
                     // Listen once for video end
                     baseVideo.onended = () => {
                     countdownEl.setAttribute("visible", true);
@@ -102,6 +103,7 @@
                     document.querySelector("#locationbutton1").setAttribute("visible", true);
                     document.querySelector("#locationbutton2").setAttribute("visible", true);
                     document.querySelector("#whatsappbutton").setAttribute("visible", true);
+                    document.querySelector("#coupleNamebutton").setAttribute("visible",true);                    
                     };
 
                     const emojis = ['💖', '💘', '💕', '❤️'];
@@ -231,7 +233,6 @@
                 <video id="Base-video" src="assets/BaseTemplate.mp4" autoplay="true" loop="false"></video>                
                 <img id="BaseImageND" src="assets/BaseImageND.jpg"/> 
                 <img id="CoupleName" src="assets/CoupleName.png"/>        
-                <img id="MessageImage" src="assets/MessageImage.png"/> 
                 <img id="LocationImage" src="assets/Location.png"/> 
                 <img id="Clocation" src="./assets/location-pin.png"/>
                 <img id="whatsappicon" src="./assets/whatsapp.png"/>                                                                 
@@ -242,7 +243,7 @@
                 <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
                     <a-entity id="portfolio-item0">
                         <a-video src="#Base-video" position="0 0 0.1" width="0.84" height="0.54" autoplay="true" muted="true" preload="auto"></a-video>                        
-                        <a-image id="" class="" src="#CoupleName" position="0 0 0.2" height="0.9" width="1.4"></a-image>
+                        <a-image id="coupleNamebutton" class="" src="#CoupleName" position="0 0 0.2" height="0.9" width="1.4"></a-image>
                         <a-text id="countdown" class="clickable" value="" color="black" width="1" align="center"
                                                         position="0.0 0.1 0.2" geometry="primitive:plane; height: 0.1; width: 0.3;"
                                                                                         material="opacity: 0.0" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt">
