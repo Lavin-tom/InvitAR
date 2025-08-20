@@ -40,10 +40,13 @@
             const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${eventStartDate}/${eventEndDate}&details=${encodeURIComponent(eventDescription)}&location=${encodeURIComponent(eventLocation)}&sf=true&output=xml`;
             window.open(googleCalendarUrl, '_blank');
         }
-        function openGoogleMaps() {
+        function openGoogleMapsChurch() {
             const googleMapsUrl = `https://maps.app.goo.gl/3M8UD9NZdfzCyPJd6`;
             window.open(googleMapsUrl, '_blank');
         } 
+        function openGoogleMapsHall() {
+
+        }
         // Countdown to Event
         function updateCountdown() {
             const eventDate = new Date("January 14, 2026 11:00:00");
@@ -132,8 +135,12 @@
             }
         });
         window.addEventListener('DOMContentLoaded', () => {
-            const locationImage = document.querySelector('#countdown');
-            locationImage.addEventListener('click', openGoogleMaps);
+            const locationImage1 = document.querySelector('#locationbutton1');
+            locationImage.addEventListener('click', openGoogleMapsChurch);
+        });
+        window.addEventListener('DomContentLoaded', () => {
+            const locationImage2 = document.querySelector('#locationbutton2');
+            locationImage.addEventListener('click', openGoogleMapsHall);
         });
     </script>    
     <style>
@@ -233,7 +240,6 @@
                 <video id="Base-video" src="assets/BaseTemplate.mp4" autoplay="true" loop="false"></video>                
                 <img id="BaseImageND" src="assets/BaseImageND.jpg"/> 
                 <img id="CoupleName" src="assets/CoupleName.png"/>        
-                <img id="LocationImage" src="assets/Location.png"/> 
                 <img id="Clocation" src="./assets/location-pin.png"/>
                 <img id="whatsappicon" src="./assets/whatsapp.png"/>                                                                 
                 <audio id="musicmp3" preload="auto" src="./assets/emotional-piano-music-256262.mp3"></audio>
