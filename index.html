@@ -45,7 +45,8 @@
             window.open(googleMapsUrl, '_blank');
         } 
         function openGoogleMapsHall() {
-
+            const googleMapsUrl = `https://maps.app.goo.gl/EkU42vjUJ82Gnher8`;
+            window.open(googleMapsUrl, '_blank');
         }
         // Countdown to Event
         function updateCountdown() {
@@ -142,6 +143,10 @@
             const locationImage2 = document.querySelector('#locationbutton2');
             locationImage.addEventListener('click', openGoogleMapsHall);
         });
+        window.addEventListener('DomContentLoaded', () => {
+            const whatsappbutton = document.querySelector('#whatsappbutton');
+            locationImage.addEventListener('click', openContact);
+        });        
     </script>    
     <style>
         body {
