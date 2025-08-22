@@ -25,7 +25,7 @@
                 portfolio.setAttribute("position", `0 ${y} -0.01`);
             }, 10);
         };
-        function openContact() {
+        function openWhatsapp() {
             const phoneNumber = "1234567890"; 
             const message = "Hello, I'd like to connect!"; 
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
@@ -145,7 +145,7 @@
         });
         window.addEventListener('DomContentLoaded', () => {
             const whatsappbutton = document.querySelector('#whatsappbutton');
-            locationImage.addEventListener('click', openContact);
+            locationImage.addEventListener('click', openWhatsapp);
         });        
     </script>    
     <style>
@@ -158,9 +158,6 @@
             width: 100%;
             height: 100%;
         }       
-        .customText {
-            font-family: 'MyCustomFont';
-        }
         #countdown {
               font-family: 'Orbitron', monospace;
               font-weight: bold;
@@ -253,23 +250,22 @@
             <a-entity id="mytarget" mytarget mindar-image-target="targetIndex: 0" smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5">
                 <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
                     <a-entity id="portfolio-item0">
-                        <a-video src="#Base-video" position="0 0 0.1" width="0.84" height="0.54" autoplay="true" muted="true" preload="auto"></a-video>                        
+                        <a-video src="#Base-video" position="0 0 0.1" width="0.84" height="0.54" autoplay="true" muted="true" preload="auto"></a-video>
+                        
                         <a-image id="coupleNamebutton" class="" src="#CoupleName" position="0 0 0.2" height="0.9" width="1.4"></a-image>
-                        <a-text id="countdown" class="clickable" value="" color="black" width="1" align="center"
-                                                        position="0.0 0.1 0.2" geometry="primitive:plane; height: 0.1; width: 0.3;"
-                                                                                        material="opacity: 0.0" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt">
-                                                                                                                </a-text>   
-          <a-image visible=false id="locationbutton1" class="clickable" src="#Clocation" alpha-test="0.5" position="-0.14 0.2 0.2" height="0.1" width="0.1"
-            animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
-          ></a-image>
-
-          <a-image visible=false id="locationbutton2" class="clickable" src="#Clocation"  position="0.14 0.2 0.2" height="0.1" width="0.1"
-            animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
-          ></a-image>
-
-          <a-image visible=false id="whatsappbutton" class="clickable" src="#whatsappicon" position="0.42 0.2 0.2" height="0.1" width="0.1"
-            animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
-          ></a-image>                                                                                                                                                                                                       
+                        
+                        <a-text id="countdown" class="" value="" color="black" width="1" align="center"
+                        position="0.0 0.1 0.2" geometry="primitive:plane; height: 0.1; width: 0.3;"
+                        material="opacity: 0.0" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>   
+                        
+                        <a-image visible=false id="locationbutton1" class="clickable" src="#Clocation" alpha-test="0.5" position="-0.14 -0.2 0.2" height="0.01" width="0.01"
+                        animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
+                        
+                        <a-image visible=false id="locationbutton2" class="clickable" src="#Clocation"  position="0.14 -0.2 0.2" height="0.01" width="0.01"
+                        animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
+                        
+                        <a-image visible=false id="whatsappbutton" class="clickable" src="#whatsappicon" position="0.42 -0.2 0.2" height="0.01" width="0.01"
+                        animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>                                                                                                                                                                                                       
                     </a-entity>
                 </a-entity>
             </a-entity>
