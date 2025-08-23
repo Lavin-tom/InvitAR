@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AR-Invite</title>
+    <title>Lavin & Sujitha</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -110,11 +110,11 @@
                     document.querySelector("#coupleNamebutton").setAttribute("visible",true);                    
                     };
 
-                    const emojis = ['💖', '💘', '💕', '❤️'];
+                    const emojis = ['💖','💘','💕','❤️','💞','💝','💖','💓','❣️'];
                     const shape = confetti.shapeFromText({ text: emojis[Math.floor(Math.random() * emojis.length)], scalar: 2 });
                     confetti({
                     particleCount: 250,
-                    spread: 150,
+                    spread: 100,
                     origin: { y: 0.6 },
                     shapes: [shape]
                     });
@@ -232,7 +232,7 @@
     <div class="example-container">
         <div id="example-scanning-overlay" class="hidden">
             <div class="inner">
-                <img src="./assets/BaseImageFullND.jpg" />
+                <img src="./assets/Cardback.jpg" />
                 <div class="scanline"></div>
             </div>
         </div>      
@@ -240,8 +240,7 @@
             vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
             <a-assets>
                 <video id="Base-video" src="assets/BaseTemplate.mp4" autoplay="true" loop="false"></video>                
-                <img id="BaseImageND" src="assets/Cardback.jpg"/> 
-                <img id="CoupleName" src="assets/CoupleName.png"/>        
+                <img id="BaseImageND" src="assets/Cardback.jpg"/>        
                 <img id="Clocation" src="./assets/location-pin.png"/>
                 <img id="whatsappicon" src="./assets/whatsapp.png"/>                                                                 
                 <audio id="musicmp3" preload="auto" src="./assets/emotional-piano-music-256262.mp3"></audio>
