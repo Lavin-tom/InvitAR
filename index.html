@@ -26,19 +26,34 @@
             }, 10);
         };
         function openWhatsapp() {
-            const phoneNumber = "1234567890"; 
-            const message = "Hello, I'd like to connect!"; 
+            const phoneNumber = "+919539827508"; 
+            const message = "Hey Lavin & Sujitha! Excited for your big day! ❤️";
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
         }
         function openCalendar() {
-            const eventTitle = "Wedding Day";
-            const eventStartDate = "20250114T113000Z";
-            const eventEndDate = "20250114T220000Z";
-            const eventDescription = "Join us for a wonderful Christmas Eve celebration!";
-            const eventLocation = "Jerusalem Mar Thoma Syrian Church, Koothrapally";
-            const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${eventStartDate}/${eventEndDate}&details=${encodeURIComponent(eventDescription)}&location=${encodeURIComponent(eventLocation)}&sf=true&output=xml`;
-            window.open(googleCalendarUrl, '_blank');
+            const icsContent = `
+        BEGIN:VCALENDAR
+        VERSION:2.0
+        BEGIN:VEVENT
+        SUMMARY:Lavin & Sujitha Wedding Day
+        DESCRIPTION:Join us for a beautiful celebration of love!
+        LOCATION:Jerusalem Mar Thoma Syrian Church, Koothrapally
+        DTSTART:20250114T113000Z
+        DTEND:20250114T130000Z
+        END:VEVENT
+        END:VCALENDAR
+            `.trim();
+
+            const blob = new Blob([icsContent], { type: 'text/calendar' });
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "lavin-sujitha-wedding.ics";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
         function openGoogleMapsChurch() {
             const googleMapsUrl = `https://maps.app.goo.gl/3M8UD9NZdfzCyPJd6`;
@@ -46,6 +61,10 @@
         } 
         function openGoogleMapsHall() {
             const googleMapsUrl = `https://maps.app.goo.gl/EkU42vjUJ82Gnher8`;
+            window.open(googleMapsUrl, '_blank');
+        }
+        function openGoogleMapsReception() {
+            const googleMapsUrl = `https://maps.app.goo.gl/RYkDX36Jk4QCZmjw5`;
             window.open(googleMapsUrl, '_blank');
         }
         // Countdown to Event
@@ -117,6 +136,8 @@
                     document.querySelector("#locationbutton2").setAttribute("visible", false);
                     document.querySelector("#whatsappbutton").setAttribute("visible", false);
                     document.querySelector("#coupleNamebutton").setAttribute("visible", false);
+                    document.querySelector("#locationbutton3").setAttribute("visible", false);
+                    document.querySelector("#Calendarbutton").setAttribute("visible", false);
 
                     if (now < eventDate) {
                         // BEFORE EVENT: Play audio and video
@@ -134,12 +155,14 @@
                             document.querySelector("#coupleNamebutton").setAttribute("visible", true);
                             document.querySelector("#text-hall").setAttribute("visible", true);
                             document.querySelector("#text-church").setAttribute("visible", true);
-                            document.querySelector("#text-contact").setAttribute("visible", true);                            
+                            document.querySelector("#text-contact").setAttribute("visible", true); 
+                            document.querySelector("#locationbutton3").setAttribute("visible", true);
+                            document.querySelector("#Calendarbutton").setAttribute("visible", true);                           
                         };
 
                     } else {
                         // AFTER EVENT: Don't play video or audio
-                        audio.pause();
+                        //audio.pause();
                         baseVideo.pause();
 
                         // Show post-event panel and label with time passed
@@ -210,6 +233,8 @@
                 document.querySelector('#locationbutton1').addEventListener('click', openGoogleMapsChurch);
                 document.querySelector('#locationbutton2').addEventListener('click', openGoogleMapsHall);
                 document.querySelector('#whatsappbutton').addEventListener('click', openWhatsapp);
+                document.querySelector('#locationbutton3').addEventListener('click', openGoogleMapsReception);
+                document.querySelector('#Calendarbutton').addEventListener('click', openCalendar);                
             });
         });
     </script>    
@@ -307,7 +332,8 @@
                 <video id="Base-video" src="assets/BaseTemplate.mp4" autoplay="true" loop="false"></video>                
                 <img id="BaseImageND" src="assets/Cardback.jpg"/>        
                 <img id="Clocation" src="./assets/location-pin.png"/>
-                <img id="whatsappicon" src="./assets/whatsapp.png"/>                                                                 
+                <img id="whatsappicon" src="./assets/whatsapp.png"/>  
+                <img id="Calendar" src="./assets/calendar.png"/>                                                               
                 <audio id="musicmp3" preload="auto" src="./assets/emotional-piano-music-256262.mp3"></audio>
             </a-assets>
             <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable"></a-camera>
@@ -321,27 +347,37 @@
                         <a-text id="post-event-label" visible="false" value="" color="black" width="0.9" align="center" position="0 0 0.11" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
 
                         <!--<a-image id="coupleNamebutton" class="" src="#CoupleName" position="0 0 0.2" height="0.9" width="1.4"></a-image>-->
-                        <a-text id="coupleNamebutton" class="" value="Lavin & Sujitha" color="black" width="1" align="center" position="0 -0.1 0.35" shader="msdf"
+                        <a-text id="coupleNamebutton" class="" value="Lavin & Sujitha" color="black" width="1" align="center" position="0 0.0 0.25" shader="msdf"
                         font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/firasans/FiraSans-BlackItalic.json"></a-text> 
                         
                         <a-text id="countdown" class="" value="" color="black" width="1" align="center"
                         position="0.0 0.1 0.2" geometry="primitive:plane; height: 0.1; width: 0.3;"
                         material="opacity: 0.0" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>   
                         
-                        <a-image visible="false" id="locationbutton1" class="clickable" src="#Clocation" alpha-test="0.5" position="-0.23 -0.2 0.2" height="0.025" width="0.025"
+                        <a-image visible="false" id="locationbutton1" class="clickable" src="#Clocation" alpha-test="0.5" position="-0.2883 -0.15 0.2" height="0.025" width="0.025"
                         animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
 
-                        <a-text visible="false" value="Church" id="text-church" position="-0.23 -0.22 0.2" width="0.3" color="black" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
+                        <a-text visible="false" value="Wedding Venue" id="text-church" position="-0.23 -0.17 0.2" width="0.3" color="black" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
                         
-                        <a-image visible="false" id="locationbutton2" class="clickable" src="#Clocation"  position="-0.04 -0.2 0.2" height="0.025" width="0.025"
+                        <a-image visible="false" id="locationbutton2" class="clickable" src="#Clocation"  position="-0.1442 -0.15 0.2" height="0.025" width="0.025"
                         animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
 
-                        <a-text visible="false" id="text-hall" value="Hall" position="-0.04 -0.22 0.2" width="0.3" color="black" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
+                        <a-text visible="false" id="text-hall" value="Reception" position="-0.04 -0.17 0.2" width="0.3" color="black" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
 
-                        <a-image visible="false" id="whatsappbutton" class="clickable" src="#whatsappicon" position="0.15 -0.2 0.2" height="0.025" width="0.025"
+                        <a-image visible="false" id="whatsappbutton" class="clickable" src="#whatsappicon" position="0.0 -0.15 0.2" height="0.025" width="0.025"
                         animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>  
 
-                        <a-text visible="false" id="text-contact" value="contact" position="0.15 -0.22 0.2" width="0.3" color="black" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>                                                                                                                                                                                                                             
+                        <a-text visible="false" id="text-contact" value="Contact" position="0.15 -0.17 0.2" width="0.3" color="black" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>                                                                                                                                                                                                                             
+                        
+                        <a-image visible="false" id="Calendarbutton" class="clickable" src="#Calendar" position="0.1442 -0.15 0.2" height="0.025" width="0.025"
+                        animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>  
+
+                        <a-text visible="false" id="text-event" value="Contact" position="0.15 -0.17 0.2" width="0.3" color="black" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>                    
+                        
+                        <a-image visible="false" id="locationbutton3" class="clickable" src="#Clocation" position="0.2883 -0.15 0.2" height="0.025" width="0.025"
+                        animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>  
+
+                        <a-text visible="false" id="text-reception" value="Reception" position="0.15 -0.17 0.2" width="0.3" color="black" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>                    
                     </a-entity>
                 </a-entity>
             </a-entity>
