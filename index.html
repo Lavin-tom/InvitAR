@@ -139,11 +139,11 @@
             const locationImage1 = document.querySelector('#locationbutton1');
             locationImage1.addEventListener('click', openGoogleMapsChurch);
         });
-        window.addEventListener('DomContentLoaded', () => {
+        window.addEventListener('DOMContentLoaded', () => {
             const locationImage2 = document.querySelector('#locationbutton2');
             locationImage2.addEventListener('click', openGoogleMapsHall);
         });
-        window.addEventListener('DomContentLoaded', () => {
+        window.addEventListener('DOMContentLoaded', () => {
             const whatsappbutton = document.querySelector('#whatsappbutton');
             whatsappbutton.addEventListener('click', openWhatsapp);
         });        
@@ -252,20 +252,20 @@
                         <a-video src="#Base-video" position="0 0 0.1" width="0.84" height="0.54" autoplay="true" muted="true" preload="auto"></a-video>
                         
                         <!--<a-image id="coupleNamebutton" class="" src="#CoupleName" position="0 0 0.2" height="0.9" width="1.4"></a-image>-->
-                        <a-text id="coupleNamebutton" class="" value="Lavin & Sujitha" color="black" width="1" align="center" postion="0 0 0.3" 
-                        geometry="primitive:plane; height: 0.1; width: 0.3;" material="opacity: 0.0" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text> 
+                        <a-text id="coupleNamebutton" class="" value="Lavin & Sujitha" color="black" width="1.5" align="center" postion="0 2.0 0.3" 
+                        font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text> 
                         
                         <a-text id="countdown" class="" value="" color="black" width="1" align="center"
                         position="0.0 0.1 0.2" geometry="primitive:plane; height: 0.1; width: 0.3;"
                         material="opacity: 0.0" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>   
                         
-                        <a-image visible=false id="locationbutton1" class="clickable" src="#Clocation" alpha-test="0.5" position="-0.14 -0.2 0.2" height="0.1" width="0.1"
+                        <a-image visible=false id="locationbutton1" class="clickable" src="#Clocation" alpha-test="0.5" position="-0.14 -0.2 0.2" height="0.05" width="0.05"
                         animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
                         
-                        <a-image visible=false id="locationbutton2" class="clickable" src="#Clocation"  position="0.14 -0.2 0.2" height="0.1" width="0.1"
+                        <a-image visible=false id="locationbutton2" class="clickable" src="#Clocation"  position="0.14 -0.2 0.2" height="0.05" width="0.05"
                         animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
                         
-                        <a-image visible=false id="whatsappbutton" class="clickable" src="#whatsappicon" position="0.42 -0.2 0.2" height="0.1" width="0.1"
+                        <a-image visible=false id="whatsappbutton" class="clickable" src="#whatsappicon" position="0.42 -0.2 0.2" height="0.05" width="0.05"
                         animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>                                                                                                                                                                                                       
                     </a-entity>
                 </a-entity>
