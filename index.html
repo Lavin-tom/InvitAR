@@ -53,7 +53,8 @@
             const eventDate = new Date("January 14, 2026 11:00:00");
             const now = new Date();
             const timeDiff = eventDate - now;
-            const countdownElement = document.querySelector("#countdown");          
+            const countdownElement = document.querySelector("#countdown");
+            
             if (timeDiff <= 0) {
                 const timePassed = now - eventDate;
                 const yearsPassed = Math.floor(timePassed / (1000 * 60 * 60 * 24 * 365));
@@ -61,7 +62,8 @@
                 const hoursPassed = Math.floor((timePassed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutesPassed = Math.floor((timePassed % (1000 * 60 * 60)) / (1000 * 60));
                 const secondsPassed = Math.floor((timePassed % (1000 * 60)) / 1000);
-                countdownElement.setAttribute('value', `Time Up! +${yearsPassed}y ${daysPassed}d ${hoursPassed}h ${minutesPassed}m ${secondsPassed}s`);                
+                countdownElement.setAttribute('value', `Time Up! +${yearsPassed}y ${daysPassed}d ${hoursPassed}h ${minutesPassed}m ${secondsPassed}s`);
+                
                 if (now.getMonth() === eventDate.getMonth() && now.getDate() === eventDate.getDate()) {
                     const countdownText = `Happy ${yearsPassed + 1} Year Anniversary!`;
                     countdownElement.setAttribute('value', countdownText);
@@ -71,9 +73,11 @@
                         spread: 100,
                         origin: { y: 0.5 }
                     });
-                }                
+                }
+                
                 return;
             }
+            
             const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
@@ -81,60 +85,122 @@
             const countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
             countdownElement.setAttribute('value', countdownText);
         }
+
         setInterval(updateCountdown, 1000);
+
         AFRAME.registerComponent('mytarget', {
             init: function() {
                 this.el.addEventListener('targetFound', () => {
                     console.log("target found");
+
+                    const eventDate = new Date("January 14, 2026 11:00:00");
+                    const now = new Date();
+
+                    // Audio
                     const audio = document.querySelector("#musicmp3");
-                    audio.play().catch(e => console.log("Audio play failed:", e));                     
-                    // VIDEO
+
+                    // Video
                     const baseVideo = document.querySelector("#Base-video");
-                    baseVideo.currentTime = 0;
-                    baseVideo.play().catch(e => console.log("Video play failed:", e));
-                    // Reset countdown visibility
+
+                    // Countdown text
                     const countdownEl = document.querySelector("#countdown");
+
+                    // Post-event panel and label
+                    const postEventPanel = document.querySelector("#post-event-panel");
+                    const postEventLabel = document.querySelector("#post-event-label");
+
+                    // Hide all initially
                     countdownEl.setAttribute("visible", false);
+                    postEventPanel.setAttribute("visible", false);
+                    postEventLabel.setAttribute("visible", false);
                     document.querySelector("#locationbutton1").setAttribute("visible", false);
                     document.querySelector("#locationbutton2").setAttribute("visible", false);
                     document.querySelector("#whatsappbutton").setAttribute("visible", false);
-                    document.querySelector("#coupleNamebutton").setAttribute("visible",false);
-                    // Listen once for video end
-                    baseVideo.onended = () => {
-                    countdownEl.setAttribute("visible", true);
-                    updateCountdown(); 
-                    // Show location and WhatsApp icons after video
-                    document.querySelector("#locationbutton1").setAttribute("visible", true);
-                    document.querySelector("#locationbutton2").setAttribute("visible", true);
-                    document.querySelector("#whatsappbutton").setAttribute("visible", true);
-                    document.querySelector("#coupleNamebutton").setAttribute("visible",true);                    
-                    };
+                    document.querySelector("#coupleNamebutton").setAttribute("visible", false);
 
+                    if (now < eventDate) {
+                        // BEFORE EVENT: Play audio and video
+                        audio.play().catch(e => console.log("Audio play failed:", e));
+                        baseVideo.currentTime = 0;
+                        baseVideo.play().catch(e => console.log("Video play failed:", e));
+
+                        // On video end, show countdown and icons
+                        baseVideo.onended = () => {
+                            countdownEl.setAttribute("visible", true);
+                            updateCountdown();
+                            document.querySelector("#locationbutton1").setAttribute("visible", true);
+                            document.querySelector("#locationbutton2").setAttribute("visible", true);
+                            document.querySelector("#whatsappbutton").setAttribute("visible", true);
+                            document.querySelector("#coupleNamebutton").setAttribute("visible", true);
+                        };
+
+                    } else {
+                        // AFTER EVENT: Don't play video or audio
+                        audio.pause();
+                        baseVideo.pause();
+
+                        // Show post-event panel and label with time passed
+                        postEventPanel.setAttribute("visible", true);
+                        postEventLabel.setAttribute("visible", true);
+
+                        // Update time passed every second
+                        const updatePassedTime = () => {
+                            const now = new Date();
+                            const timePassed = now - eventDate;
+                            const yearsPassed = Math.floor(timePassed / (1000 * 60 * 60 * 24 * 365));
+                            const daysPassed = Math.floor((timePassed % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24));
+                            const hoursPassed = Math.floor((timePassed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            const minutesPassed = Math.floor((timePassed % (1000 * 60 * 60)) / (1000 * 60));
+                            const secondsPassed = Math.floor((timePassed % (1000 * 60)) / 1000);
+
+                            const passedText = `Event ended. Time since: ${yearsPassed}y ${daysPassed}d ${hoursPassed}h ${minutesPassed}m ${secondsPassed}s`;
+                            postEventLabel.setAttribute("value", passedText);
+                        };
+
+                        updatePassedTime(); // initial call
+                        this.passedInterval = setInterval(updatePassedTime, 1000);
+                    }
+
+                    // Confetti on target found
                     const emojis = ['💖','💘','💕','❤️','💞','💝','💖','💓','❣️'];
                     const shape = confetti.shapeFromText({ text: emojis[Math.floor(Math.random() * emojis.length)], scalar: 2 });
                     confetti({
-                    particleCount: 250,
-                    spread: 100,
-                    origin: { y: 0.6 },
-                    shapes: [shape]
+                        particleCount: 250,
+                        spread: 100,
+                        origin: { y: 0.6 },
+                        shapes: [shape]
                     });
+
                     setTimeout(() => {
-                        showPortfolio(() => {                     
-                        });
+                        showPortfolio(() => { });
                     }, 300);
-                });   
+                });
+
                 this.el.addEventListener('targetLost', () => {
                     const audio = document.querySelector("#musicmp3");
                     audio.pause();
-                
+
                     const baseVideo = document.querySelector("#Base-video");
                     baseVideo.pause();
 
                     const countdownEl = document.querySelector("#countdown");
-                    countdownEl.setAttribute("visible", false);    
+                    countdownEl.setAttribute("visible", false);
+
+                    const postEventPanel = document.querySelector("#post-event-panel");
+                    const postEventLabel = document.querySelector("#post-event-label");
+
+                    postEventPanel.setAttribute("visible", false);
+                    postEventLabel.setAttribute("visible", false);
+
+                    // Clear the interval updating the passed time
+                    if (this.passedInterval) {
+                        clearInterval(this.passedInterval);
+                        this.passedInterval = null;
+                    }
                 });
             }
         });
+
         window.addEventListener('load', () => {
             const sceneEl = document.querySelector('a-scene');
             sceneEl.addEventListener('loaded', () => {
@@ -142,7 +208,7 @@
                 document.querySelector('#locationbutton2').addEventListener('click', openGoogleMapsHall);
                 document.querySelector('#whatsappbutton').addEventListener('click', openWhatsapp);
             });
-        });       
+        });
     </script>    
     <style>
         body {
@@ -247,31 +313,32 @@
                     <a-entity id="portfolio-item0">
                         <a-video src="#Base-video" position="0 0 0.1" width="0.84" height="0.54" autoplay="true" muted="true" preload="auto"></a-video>
                         
+                        <a-plane id="post-event-panel" visible="false" position="0 0 0.1" height="0.54" width="0.84" color="#fff" material="opacity: 0.8"></a-plane>
+
+                        <a-text id="post-event-label" visible="false" value="" color="black" width="0.9" align="center" position="0 0 0.11" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
+
                         <!--<a-image id="coupleNamebutton" class="" src="#CoupleName" position="0 0 0.2" height="0.9" width="1.4"></a-image>-->
                         <a-text id="coupleNamebutton" class="" value="Lavin & Sujitha" color="black" width="1" align="center" position="0 -0.1 0.35" shader="msdf"
-                        font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/freehand/Freehand.json"></a-text> 
+                        font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/firasans/FiraSans-BlackItalic.json"></a-text> 
                         
                         <a-text id="countdown" class="" value="" color="black" width="1" align="center"
                         position="0.0 0.1 0.2" geometry="primitive:plane; height: 0.1; width: 0.3;"
                         material="opacity: 0.0" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>   
                         
-                        <a-image visible=false id="locationbutton1" class="clickable" src="#Clocation" alpha-test="0.5" position="-0.23 -0.2 0.2" height="0.025" width="0.025"
+                        <a-image visible="false" id="locationbutton1" class="clickable" src="#Clocation" alpha-test="0.5" position="-0.23 -0.2 0.2" height="0.025" width="0.025"
                         animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
 
-                        <a-text value="Church" position="-0.18 -0.22 0.2" width="0.2" color="black" align="left"
-                        font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
+                        <a-text visible="false" value="Church" position="-0.23 -0.22 0.2" width="0.3" color="black" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
                         
-                        <a-image visible=false id="locationbutton2" class="clickable" src="#Clocation"  position="-0.04 -0.2 0.2" height="0.025" width="0.025"
+                        <a-image visible="false" id="locationbutton2" class="clickable" src="#Clocation"  position="-0.04 -0.2 0.2" height="0.025" width="0.025"
                         animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
 
-                        <a-text value="Hall" position="-0.01 -0.22 0.2" width="0.2" color="black" align="left"
-                        font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
+                        <a-text visible="false" value="Hall" position="-0.04 -0.22 0.2" width="0.3" color="black" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
 
-                        <a-image visible=false id="whatsappbutton" class="clickable" src="#whatsappicon" position="0.15 -0.2 0.2" height="0.025" width="0.025"
+                        <a-image visible="false" id="whatsappbutton" class="clickable" src="#whatsappicon" position="0.15 -0.2 0.2" height="0.025" width="0.025"
                         animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>  
 
-                        <a-text value="contact" position="0.17 -0.22 0.2" width="0.2" color="black" align="left"
-                        font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>                                                                                                                                                                                                                             
+                        <a-text visible="false" value="contact" position="0.15 -0.22 0.2" width="0.3" color="black" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>                                                                                                                                                                                                                             
                     </a-entity>
                 </a-entity>
             </a-entity>
