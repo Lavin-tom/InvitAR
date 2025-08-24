@@ -82,6 +82,16 @@
             const v = n % 100;
             return (s[(v - 20) % 10] || s[v] || s[0]);
         }
+        function callConfetti(){
+            const emojis = ['💖','💘','💕','❤️','💞','💝','💖','💓','❣️'];
+            const shape = confetti.shapeFromText({ text: emojis[Math.floor(Math.random() * emojis.length)], scalar: 2 });
+                confetti({
+                    particleCount: 250,
+                    spread: 100,
+                    origin: { y: 0.6 },
+                    shapes: [shape]
+                });
+        }
         // Countdown to Event
         function updateCountdown() {
             const eventDate = new Date("January 14, 2026 11:00:00");
@@ -101,6 +111,7 @@
 
         AFRAME.registerComponent('mytarget', {
             init: function() {
+                let confettiTriggered = false;  
                 this.el.addEventListener('targetFound', () => {
                     console.log("target found");
 
@@ -175,39 +186,26 @@
                             const minutesPassed = Math.floor((timePassed % (1000 * 60 * 60)) / (1000 * 60));
                             const secondsPassed = Math.floor((timePassed % (1000 * 60)) / 1000);
 
-                            let passedText;
-
+                            let passedText;  
                             if (now.getMonth() === eventDate.getMonth() && now.getDate() === eventDate.getDate()) {
                                 const anniversaryNumber = yearsPassed + 1;
                                 passedText = `Happy ${anniversaryNumber}${getOrdinal(anniversaryNumber)} Anniversary, Lavin & Sujitha! 💖`;
                                 
                                 // Confetti celebration
-                                confetti({
-                                    particleCount: 200,
-                                    spread: 100,
-                                    origin: { y: 0.5 }
-                                });
+                                if (!confettiTriggered) {
+                                    callConfetti();
+                                confettiTriggered = true;
+                                }
                             } else {
                                 passedText = `We've been together for ${yearsPassed}y ${daysPassed}d ${hoursPassed}h ${minutesPassed}m ${secondsPassed}s `;
                             }
-
                             postEventLabel.setAttribute("value", passedText);
                         };
-
                         updatePassedTime(); // initial call
                         this.passedInterval = setInterval(updatePassedTime, 1000);
                     }
-
                     // Confetti on target found
-                    const emojis = ['💖','💘','💕','❤️','💞','💝','💖','💓','❣️'];
-                    const shape = confetti.shapeFromText({ text: emojis[Math.floor(Math.random() * emojis.length)], scalar: 2 });
-                    confetti({
-                        particleCount: 250,
-                        spread: 100,
-                        origin: { y: 0.6 },
-                        shapes: [shape]
-                    });
-
+                    callConfetti();
                     setTimeout(() => {
                         showPortfolio(() => { });
                     }, 300);
