@@ -116,8 +116,8 @@
                 this.el.addEventListener('targetFound', () => {
                     console.log("target found");
 
-                    //const eventDate = new Date("January 14, 2026 11:00:00");
-                    const eventDate = new Date(Date.now() - 5 * 60 * 1000); //testing of post event logic
+                    const eventDate = new Date("January 14, 2026 11:00:00");
+                    //const eventDate = new Date(Date.now() - 5 * 60 * 1000); //testing of post event logic
                     const now = new Date();
 
                     // Audio
@@ -352,9 +352,10 @@
                     <a-entity id="portfolio-item0">
                         <a-video src="#Base-video" position="0 0 0.1" width="0.84" height="0.54" autoplay="true" muted="true" preload="auto"></a-video>
                         
-                        <a-plane id="post-event-panel" visible="false" position="0 0 0.1" height="0.54" width="0.84" color="#fff" material="opacity: 0.8"></a-plane>
+                        <a-plane id="post-event-panel" visible="false" position="0 0 0.1" height="0.54" width="0.84" color="#fff" material="opacity: 0.95"></a-plane>
 
-                        <a-text id="post-event-label" visible="false" value="" color="black" width="0.9" align="center" position="0 0 0.11" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
+                        <a-text id="post-event-label" visible="false" value="" color="CF0A45" width="0.9" align="center" position="0 0 0.11" 
+                        font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/firasans/FiraSans-BlackItalic.json"></a-text>
 
                         <a-text id="coupleNamebutton" class="" value="Lavin & Sujitha" color="#CF0A45" width="1" align="center" position="0 0.0 0.21" shader="msdf"
                         font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/firasans/FiraSans-BlackItalic.json"></a-text> 
