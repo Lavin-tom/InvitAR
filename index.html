@@ -112,6 +112,7 @@
         AFRAME.registerComponent('mytarget', {
             init: function() {
                 let confettiTriggered = false;  
+                const aVideoEl = document.querySelector("a-video");
                 this.el.addEventListener('targetFound', () => {
                     console.log("target found");
 
@@ -170,7 +171,7 @@
                         // AFTER EVENT: Don't play video or audio
                         //audio.pause();
                         baseVideo.pause();
-                        baseVideo.setAttribute("visible", false); 
+                        document.querySelector("a-video").setAttribute("visible", false); 
 
                         // Show post-event panel and label with time passed
                         postEventPanel.setAttribute("visible", true);
