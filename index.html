@@ -143,7 +143,13 @@
                     document.querySelector("#coupleNamebutton").setAttribute("visible", false);
                     document.querySelector("#locationbutton3").setAttribute("visible", false);
                     document.querySelector("#Calendarbutton").setAttribute("visible", false);
-                    document.querySelector('#icons-panel').setAttribute("visible",false);
+                    document.querySelector('#icons-panel').setAttribute("visible",false);                    
+                    document.querySelector("#text-hall").setAttribute("visible", false);
+                    document.querySelector("#text-church").setAttribute("visible", false);
+                    document.querySelector("#text-contact").setAttribute("visible", false);  
+                    document.querySelector("#text-event").setAttribute("visible", false);
+                    document.querySelector("#text-reception").setAttribute("visible", false);
+                    document.querySelector("#icons-panel").setAttribute("visible", false);                    
 
                     if (now < eventDate) {
                         // BEFORE EVENT: Play audio and video
@@ -229,7 +235,7 @@
 
                     postEventPanel.setAttribute("visible", false);
                     postEventLabel.setAttribute("visible", false);
-
+                     
                     // Clear the interval updating the passed time
                     if (this.passedInterval) {
                         clearInterval(this.passedInterval);
@@ -366,7 +372,7 @@
                         position="0.0 0.1 0.2" geometry="primitive:plane; height: 0.1; width: 0.3;"
                         material="opacity: 0.0" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>   
 
-                        <a-plane id="icons-panel" visible="false" position="0 -0.148 0.1" height="0.08" width="0.84" color="#fff" material="opacity: 0.9"></a-plane>                        
+                        <a-plane id="icons-panel" visible="false" position="0 -0.148 0.1" height="0.1" width="0.84" color="#fff" material="opacity: 0.95"></a-plane>                        
                         
                         <a-image visible="false" id="locationbutton1" class="clickable" src="#Clocation" alpha-test="0.5" position="-0.2883 -0.15 0.2" height="0.025" width="0.025"
                         animation="property: scale; to: 1.4 1.4 1.4; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
