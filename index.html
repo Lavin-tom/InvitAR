@@ -77,35 +77,17 @@
             const googleMapsUrl = `https://maps.app.goo.gl/RYkDX36Jk4QCZmjw5`;
             window.open(googleMapsUrl, '_blank');
         }
+        function getOrdinal(n) {
+            const s = ["th", "st", "nd", "rd"];
+            const v = n % 100;
+            return (s[(v - 20) % 10] || s[v] || s[0]);
+        }
         // Countdown to Event
         function updateCountdown() {
             const eventDate = new Date("January 14, 2026 11:00:00");
             const now = new Date();
             const timeDiff = eventDate - now;
             const countdownElement = document.querySelector("#countdown");
-            
-            if (timeDiff <= 0) {
-                const timePassed = now - eventDate;
-                const yearsPassed = Math.floor(timePassed / (1000 * 60 * 60 * 24 * 365));
-                const daysPassed = Math.floor((timePassed % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24));
-                const hoursPassed = Math.floor((timePassed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutesPassed = Math.floor((timePassed % (1000 * 60 * 60)) / (1000 * 60));
-                const secondsPassed = Math.floor((timePassed % (1000 * 60)) / 1000);
-                countdownElement.setAttribute('value', `Time Up! +${yearsPassed}y ${daysPassed}d ${hoursPassed}h ${minutesPassed}m ${secondsPassed}s`);
-                
-                if (now.getMonth() === eventDate.getMonth() && now.getDate() === eventDate.getDate()) {
-                    const countdownText = `Happy ${yearsPassed + 1} Year Anniversary!`;
-                    countdownElement.setAttribute('value', countdownText);
-                    // Anniversary confetti
-                    confetti({
-                        particleCount: 200,
-                        spread: 100,
-                        origin: { y: 0.5 }
-                    });
-                }
-                
-                return;
-            }
             
             const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -177,6 +159,7 @@
                         // AFTER EVENT: Don't play video or audio
                         //audio.pause();
                         baseVideo.pause();
+                        baseVideo.setAttribute("visible", false); 
 
                         // Show post-event panel and label with time passed
                         postEventPanel.setAttribute("visible", true);
@@ -192,7 +175,22 @@
                             const minutesPassed = Math.floor((timePassed % (1000 * 60 * 60)) / (1000 * 60));
                             const secondsPassed = Math.floor((timePassed % (1000 * 60)) / 1000);
 
-                            const passedText = `Event ended. Time since: ${yearsPassed}y ${daysPassed}d ${hoursPassed}h ${minutesPassed}m ${secondsPassed}s`;
+                            let passedText;
+
+                            if (now.getMonth() === eventDate.getMonth() && now.getDate() === eventDate.getDate()) {
+                                const anniversaryNumber = yearsPassed + 1;
+                                passedText = `Happy ${anniversaryNumber}${getOrdinal(anniversaryNumber)} Anniversary, Lavin & Sujitha! 💖`;
+                                
+                                // Confetti celebration
+                                confetti({
+                                    particleCount: 200,
+                                    spread: 100,
+                                    origin: { y: 0.5 }
+                                });
+                            } else {
+                                passedText = `We've been together for ${yearsPassed}y ${daysPassed}d ${hoursPassed}h ${minutesPassed}m ${secondsPassed}s `;
+                            }
+
                             postEventLabel.setAttribute("value", passedText);
                         };
 
