@@ -40,21 +40,27 @@
                 'BEGIN:VEVENT',
                 'UID:lavin-sujitha-wedding@yourdomain.com',
                 'DTSTAMP:20250823T100000Z',
-                'DTSTART:20250114T113000Z',
-                'DTEND:20250114T130000Z',
+                'DTSTART:20260114T053000Z', 
+                'DTEND:20260114T073000Z',    
                 'SUMMARY:Lavin & Sujitha Wedding Day',
                 'DESCRIPTION:Join us for a beautiful celebration of love!',
                 'LOCATION:Jerusalem Mar Thoma Syrian Church, Koothrapally',
+                'URL:https://maps.app.goo.gl/3M8UD9NZdfzCyPJd6',
+                'BEGIN:VALARM',
+                'TRIGGER:-PT1H',
+                'ACTION:DISPLAY',
+                'DESCRIPTION:Join us for a beautiful celebration of love!',
+                'END:VALARM',
                 'END:VEVENT',
                 'END:VCALENDAR'
-            ].join('\r\n'); // Use CRLF as per RFC 5545
+            ].join('\r\n');
 
             const blob = new Blob([icsContent], { type: 'text/calendar' });
             const url = URL.createObjectURL(blob);
 
             const link = document.createElement("a");
             link.href = url;
-            link.download = "lavin-sujitha-wedding.ics";
+            link.download = "Lavin-Sujitha-wedding.ics";
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -352,7 +358,7 @@
 
                         <a-text id="post-event-label" visible="false" value="" color="black" width="0.9" align="center" position="0 0 0.11" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
 
-                        <a-text id="coupleNamebutton" class="" value="Lavin & Sujitha" color="#1EC5E3" width="1" align="center" position="0 0.0 0.21" shader="msdf"
+                        <a-text id="coupleNamebutton" class="" value="Lavin & Sujitha" color="#CF0A45" width="1" align="center" position="0 0.0 0.21" shader="msdf"
                         font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/firasans/FiraSans-BlackItalic.json"></a-text> 
                         
                         <a-text id="countdown" class="" value="" color="#18F099" width="1" align="center"
@@ -362,27 +368,27 @@
                         <a-image visible="false" id="locationbutton1" class="clickable" src="#Clocation" alpha-test="0.5" position="-0.2883 -0.15 0.2" height="0.025" width="0.025"
                         animation="property: scale; to: 1.6 1.6 1.6; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
 
-                        <a-text visible="false"  id="text-church" value="💒Wedding Venue" position="-0.3083 -0.17 0.2" width="0.3" color="#2B1722" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
+                        <a-text visible="false"  id="text-church" value="Wedding Venue" position="-0.3083 -0.17 0.2" width="0.3" color="#2B1722" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
                         
                         <a-image visible="false" id="locationbutton2" class="clickable" src="#Clocation"  position="-0.1442 -0.15 0.2" height="0.025" width="0.025"
                         animation="property: scale; to: 1.6 1.6 1.6; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
 
-                        <a-text visible="false" id="text-hall" value="🎉Reception" position="-0.1642 -0.17 0.2" width="0.3" color="#2B1722" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
+                        <a-text visible="false" id="text-hall" value="Reception" position="-0.1642 -0.17 0.2" width="0.3" color="#2B1722" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
 
                         <a-image visible="false" id="whatsappbutton" class="clickable" src="#whatsappicon" position="0.0 -0.15 0.2" height="0.025" width="0.025"
                         animation="property: scale; to: 1.6 1.6 1.6; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>  
 
-                        <a-text visible="false" id="text-contact" value="📲whatsapp" position="-0.02 -0.17 0.2" width="0.3" color="#2B1722" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>                                                                                                                                                                                                                             
+                        <a-text visible="false" id="text-contact" value="whatsapp" position="-0.02 -0.17 0.2" width="0.3" color="#2B1722" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>                                                                                                                                                                                                                             
                         
                         <a-image visible="false" id="Calendarbutton" class="clickable" src="#Calendar" position="0.1442 -0.15 0.2" height="0.025" width="0.025"
                         animation="property: scale; to: 1.6 1.6 1.6; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>  
 
-                        <a-text visible="false" id="text-event" value="📅Calender" position="0.1242 -0.17 0.2" width="0.3" color="#2B1722" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>                    
+                        <a-text visible="false" id="text-event" value="Calender" position="0.1242 -0.17 0.2" width="0.3" color="#2B1722" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>                    
                         
                         <a-image visible="false" id="locationbutton3" class="clickable" src="#Clocation" position="0.2883 -0.15 0.2" height="0.025" width="0.025"
                         animation="property: scale; to: 1.6 1.6 1.6; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>  
 
-                        <a-text visible="false" id="text-reception" value="🛎️Reception" position="0.2683 -0.17 0.2" width="0.3" color="#2B1722" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>                    
+                        <a-text visible="false" id="text-reception" value="Reception" position="0.2683 -0.17 0.2" width="0.3" color="#2B1722" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>                    
                     </a-entity>
                 </a-entity>
             </a-entity>
