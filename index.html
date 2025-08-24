@@ -27,23 +27,27 @@
         };
         function openWhatsapp() {
             const phoneNumber = "+919539827508"; 
-            const message = "Hey Lavin & Sujitha! Excited for your big day! ❤️";
+            const message = "Hey Lavin & Sujitha! Excited for your big day! ♥️";
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
         }
         function openCalendar() {
-            const icsContent = `
-        BEGIN:VCALENDAR
-        VERSION:2.0
-        BEGIN:VEVENT
-        SUMMARY:Lavin & Sujitha Wedding Day
-        DESCRIPTION:Join us for a beautiful celebration of love!
-        LOCATION:Jerusalem Mar Thoma Syrian Church, Koothrapally
-        DTSTART:20250114T113000Z
-        DTEND:20250114T130000Z
-        END:VEVENT
-        END:VCALENDAR
-            `.trim();
+            const icsContent = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'CALSCALE:GREGORIAN',
+                'METHOD:PUBLISH',
+                'BEGIN:VEVENT',
+                'UID:lavin-sujitha-wedding@yourdomain.com',
+                'DTSTAMP:20250823T100000Z',
+                'DTSTART:20250114T113000Z',
+                'DTEND:20250114T130000Z',
+                'SUMMARY:Lavin & Sujitha Wedding Day',
+                'DESCRIPTION:Join us for a beautiful celebration of love!',
+                'LOCATION:Jerusalem Mar Thoma Syrian Church, Koothrapally',
+                'END:VEVENT',
+                'END:VCALENDAR'
+            ].join('\r\n'); // Use CRLF as per RFC 5545
 
             const blob = new Blob([icsContent], { type: 'text/calendar' });
             const url = URL.createObjectURL(blob);
@@ -149,15 +153,17 @@
                         baseVideo.onended = () => {
                             countdownEl.setAttribute("visible", true);
                             updateCountdown();
+                            document.querySelector("#coupleNamebutton").setAttribute("visible", true);                            
                             document.querySelector("#locationbutton1").setAttribute("visible", true);
                             document.querySelector("#locationbutton2").setAttribute("visible", true);
                             document.querySelector("#whatsappbutton").setAttribute("visible", true);
-                            document.querySelector("#coupleNamebutton").setAttribute("visible", true);
+                            document.querySelector("#locationbutton3").setAttribute("visible", true);
+                            document.querySelector("#Calendarbutton").setAttribute("visible", true); 
                             document.querySelector("#text-hall").setAttribute("visible", true);
                             document.querySelector("#text-church").setAttribute("visible", true);
-                            document.querySelector("#text-contact").setAttribute("visible", true); 
-                            document.querySelector("#locationbutton3").setAttribute("visible", true);
-                            document.querySelector("#Calendarbutton").setAttribute("visible", true);                           
+                            document.querySelector("#text-contact").setAttribute("visible", true);  
+                            document.querySelector("#text-event").setAttribute("visible", true);
+                            document.querySelector("#text-reception").setAttribute("visible", true);                                                                                  
                         };
 
                     } else {
