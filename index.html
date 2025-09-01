@@ -97,8 +97,7 @@
             const eventDate = new Date("January 14, 2026 11:00:00");
             const now = new Date();
             const timeDiff = eventDate - now;
-            const countdownElement = document.querySelector("#countdown");
-            
+            const countdownElement = document.querySelector("#countdown");   
             const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
@@ -115,7 +114,6 @@
                 const aVideoEl = document.querySelector("a-video");
                 this.el.addEventListener('targetFound', () => {
                     console.log("target found");
-
                     const eventDate = new Date("January 14, 2026 11:00:00");
                     //const eventDate = new Date(Date.now() - 5 * 60 * 1000); //testing of post event logic
                     const now = new Date();
@@ -156,7 +154,6 @@
                         audio.play().catch(e => console.log("Audio play failed:", e));
                         baseVideo.currentTime = 0;
                         baseVideo.play().catch(e => console.log("Video play failed:", e));
-
                         // On video end, show countdown and icons
                         baseVideo.onended = () => {
                             countdownEl.setAttribute("visible", true);
@@ -180,11 +177,9 @@
                         //audio.pause();
                         baseVideo.pause();
                         document.querySelector("a-video").setAttribute("visible", false); 
-
                         // Show post-event panel and label with time passed
                         postEventPanel.setAttribute("visible", true);
                         postEventLabel.setAttribute("visible", true);
-
                         // Update time passed every second
                         const updatePassedTime = () => {
                             const now = new Date();
@@ -199,7 +194,6 @@
                             if (now.getMonth() === eventDate.getMonth() && now.getDate() === eventDate.getDate()) {
                                 const anniversaryNumber = yearsPassed + 1;
                                 passedText = `Happy ${anniversaryNumber}${getOrdinal(anniversaryNumber)} Anniversary, Lavin & Sujitha! 💖`;
-                                
                                 // Confetti celebration
                                 if (!confettiTriggered) {
                                     callConfetti();
@@ -372,8 +366,6 @@
                         <a-text id="countdown" class="" value="" color="#1132C2" width="1" align="center"
                         position="0.0 0.1 0.2" geometry="primitive:plane; height: 0.1; width: 0.3;"
                         material="opacity: 0.0" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>   
-
-                                                
                         
                         <a-image visible="false" id="locationbutton1" class="clickable" src="#Clocation" alpha-test="0.5" position="-0.2883 -0.15 0.25" height="0.025" width="0.025"
                         animation="property: scale; to: 1.4 1.4 1.4; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
