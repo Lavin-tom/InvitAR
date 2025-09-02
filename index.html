@@ -54,10 +54,8 @@
                 'END:VEVENT',
                 'END:VCALENDAR'
             ].join('\r\n');
-
             const blob = new Blob([icsContent], { type: 'text/calendar' });
             const url = URL.createObjectURL(blob);
-
             const link = document.createElement("a");
             link.href = url;
             link.download = "Lavin-Sujitha-wedding.ics";
@@ -105,9 +103,7 @@
             const countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
             countdownElement.setAttribute('value', countdownText);
         }
-
         setInterval(updateCountdown, 1000);
-
         AFRAME.registerComponent('mytarget', {
             init: function() {
                 let confettiTriggered = false;  
@@ -117,20 +113,15 @@
                     const eventDate = new Date("January 14, 2026 11:00:00");
                     //const eventDate = new Date(Date.now() - 5 * 60 * 1000); //testing of post event logic
                     const now = new Date();
-
                     // Audio
                     const audio = document.querySelector("#musicmp3");
-
                     // Video
                     const baseVideo = document.querySelector("#Base-video");
-
                     // Countdown text
                     const countdownEl = document.querySelector("#countdown");
-
                     // Post-event panel and label
                     const postEventPanel = document.querySelector("#post-event-panel");
                     const postEventLabel = document.querySelector("#post-event-label");
-
                     // Hide all initially
                     countdownEl.setAttribute("visible", false);
                     postEventPanel.setAttribute("visible", false);
@@ -148,7 +139,6 @@
                     document.querySelector("#text-event").setAttribute("visible", false);
                     document.querySelector("#text-reception").setAttribute("visible", false);
                     //document.querySelector("#icons-panel").setAttribute("visible", false);                    
-
                     if (now < eventDate) {
                         // BEFORE EVENT: Play audio and video
                         audio.play().catch(e => console.log("Audio play failed:", e));
@@ -217,19 +207,14 @@
                 this.el.addEventListener('targetLost', () => {
                     const audio = document.querySelector("#musicmp3");
                     audio.pause();
-
                     const baseVideo = document.querySelector("#Base-video");
                     baseVideo.pause();
-
                     const countdownEl = document.querySelector("#countdown");
                     countdownEl.setAttribute("visible", false);
-
                     const postEventPanel = document.querySelector("#post-event-panel");
                     const postEventLabel = document.querySelector("#post-event-label");
-
                     postEventPanel.setAttribute("visible", false);
                     postEventLabel.setAttribute("visible", false);
-                     
                     // Clear the interval updating the passed time
                     if (this.passedInterval) {
                         clearInterval(this.passedInterval);
@@ -238,7 +223,6 @@
                 });
             }
         });
-
         window.addEventListener('load', () => {
             const sceneEl = document.querySelector('a-scene');
             sceneEl.addEventListener('loaded', () => {
