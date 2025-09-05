@@ -378,9 +378,50 @@
                     </a-entity>
                 </a-entity>
             </a-entity>
-            <a-entity id="mytarget1" mytarget mindar-image-target="targetIndex: 1" smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5">
-             <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
-           </a-entity>      
+            <a-entity id="mytarget" mytarget mindar-image-target="targetIndex: 1" smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5">
+                <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
+                    <a-entity id="portfolio-item0">
+                        <a-video src="#Base-video" position="0 0 0.1" width="0.84" height="0.54" autoplay="true" muted="true" preload="auto"></a-video>
+                        
+                        <a-plane id="post-event-panel" visible="false" position="0 0 0.1" height="0.54" width="0.84" color="#fff" material="opacity: 0.95"></a-plane>
+
+                        <a-text id="post-event-label" visible="false" value="" color="CF0A45" width="0.9" align="center" position="0 0 0.11" 
+                        font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/firasans/FiraSans-BlackItalic.json"></a-text>
+
+                        <a-text id="coupleNamebutton" class="" value="Lavin & Sujitha" color="#CF0A45" width="1" align="center" position="0 0.0 0.21" shader="msdf"
+                        font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/firasans/FiraSans-BlackItalic.json"
+                        animation="property: scale; to: 1.1 1.1 1.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-text> 
+                        
+                        <a-text id="countdown" class="" value="" color="#1132C2" width="1" align="center"
+                        position="0.0 0.1 0.2" geometry="primitive:plane; height: 0.1; width: 0.3;"
+                        material="opacity: 0.0" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>   
+                        
+                        <a-image visible="false" id="locationbutton1" class="clickable" src="#Clocation" alpha-test="0.5" position="-0.2883 -0.15 0.25" height="0.025" width="0.025"
+                        animation="property: scale; to: 1.4 1.4 1.4; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
+
+                        <a-text visible="false"  id="text-church" value="JMC Kply" position="-0.3100 -0.175 0.25" width="0.3" color="#DC143C" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
+                        
+                        <a-image visible="false" id="locationbutton2" class="clickable" src="#Clocation"  position="-0.1442 -0.15 0.25" height="0.025" width="0.025"
+                        animation="property: scale; to: 1.4 1.4 1.4; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
+
+                        <a-text visible="false" id="text-hall" value="St.Mary's" position="-0.1659 -0.175 0.2" width="0.3" color="#DC143C" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
+
+                        <a-image visible="false" id="whatsappbutton" class="clickable" src="#whatsappicon" position="0.0 -0.15 0.25" height="0.025" width="0.025"
+                        animation="property: scale; to: 1.4 1.4 1.4; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>  
+
+                        <a-text visible="false" id="text-contact" value="whatsApp" position="-0.0220 -0.175 0.25" width="0.3" color="#DC143C" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>                                                                                                                                                                                                                             
+                        
+                        <a-image visible="false" id="Calendarbutton" class="clickable" src="#Calendar" position="0.1442 -0.15 0.25" height="0.025" width="0.025"
+                        animation="property: scale; to: 1.4 1.4 1.4; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>  
+
+                        <a-text visible="false" id="text-event" value="Calendar" position="0.1245 -0.175 0.25" width="0.3" color="#DC143C" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>                    
+                        
+                        <a-image visible="false" id="locationbutton3" class="clickable" src="#Clocation" position="0.2883 -0.15 0.25" height="0.025" width="0.025"
+                        animation="property: scale; to: 1.4 1.4 1.4; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>  
+
+                        <a-text visible="false" id="text-reception" value="NDM Mahal" position="0.2685 -0.175 0.25" width="0.3" color="#DC143C" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>                    
+                    </a-entity>
+                </a-entity>
             </a-entity>
         </a-scene>
     </div>
