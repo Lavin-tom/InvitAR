@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lavin & Sujitha — AR Wedding Invite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- A-Frame + MindAR -->
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="script/mindar-image-aframe.prod.js"></script>
+
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body { margin: 0; overflow: hidden; }
+
+        /* Smooth fade animations */
+        .fade-in { animation: fadeIn 0.8s forwards; }
+        .fade-out { animation: fadeOut 0.6s forwards; }
+        @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+        @keyframes fadeOut { from { opacity: 1 } to { opacity: 0 } }
+
+        /* Scanning Overlay */
+        #scan-overlay {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 10;
+            background: rgba(0,0,0,0.3);
+        }
+        #scan-overlay.hidden { display: none; }
+        #scan-overlay img {
+            width: 70%;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Scan Overlay -->
+<div id="scan-overlay" class="hidden">
+    <img src="assets/FrontPage.jpg" />
+</div>
+
+<!-- Main AR Scene -->
+<a-scene mindar-image="imageTargetSrc: targets.mind; uiScanning: #scan-overlay"
+         embedded
+         renderer="colorManagement: true, physicallyCorrectLights"
+         vr-mode-ui="enabled: false"
+         device-orientation-permission-ui="enabled: false">
+
+    <a-assets>
+        <video id="baseVideo" src="assets/BaseTemplate.mp4" preload="auto"></video>
+        <audio id="bgMusic" src="assets/emotional-piano-music-256262.mp3" preload="auto"></audio>
+
+        <img id="iconMaps" src="assets/google-maps.png">
+        <img id="iconWhatsApp" src="assets/whatsapp.png">
+        <img id="iconCalendar" src="assets/calendar.png">
+    </a-assets>
+
+    <a-camera position="0 0 0" cursor="rayOrigin: mouse" raycaster="objects: .clickable"></a-camera>
+
+    <a-entity id="target" mindar-image-target="targetIndex: 0"></a-entity>
+
+</a-scene>
+
+<script>
+/* ============================================================
+   GLOBAL STATE
+============================================================ */
+let lastVideoTime = 0;
+let videoEnded = false;
+
+/* ============================================================
+   UTILS
+============================================================ */
+function fadeIn(el){ el.setAttribute("visible",true); el.classList.add("fade-in"); }
+function fadeOut(el){ el.classList.add("fade-out"); setTimeout(()=>el.setAttribute("visible",false),600); }
+
+function confettiBurst(){
+    const emojis = ['💖','💘','💕','💞','💝','💓','❣️'];
+    const shape = confetti.shapeFromText({ text: emojis[Math.floor(Math.random()*emojis.length)], scalar: 2 });
+    confetti({ particleCount: 250, spread: 120, shapes:[shape] });
+}
+
+/* ============================================================
+   CREATE UI ELEMENTS (Compact)
+============================================================ */
+function createText(value, opts = {}) {
+    const t = document.createElement("a-text");
+    t.setAttribute("value", value);
+    t.setAttribute("align", "center");
+    t.setAttribute("width", "1.2");
+    t.setAttribute("position", `0 ${opts.y || 0} 0.01`);
+    t.setAttribute("color", opts.color || "#FFF");
+    t.setAttribute("visible", opts.visible ?? false);
+    return t;
+}
+
+function createButton(x, label, icon) {
+    const wrap = document.createElement("a-entity");
+
+    const img = document.createElement("a-image");
+    img.setAttribute("src", icon);
+    img.setAttribute("height", "0.06");
+    img.setAttribute("width", "0.06");
+    img.setAttribute("class", "clickable");
+    img.setAttribute("position", `${x} -0.10 0.15`);
+    img.setAttribute("visible", false);
+
+    const text = document.createElement("a-text");
+    text.setAttribute("value", label);
+    text.setAttribute("color", "#DC143C");
+    text.setAttribute("align", "center");
+    text.setAttribute("width", "0.6");
+    text.setAttribute("position", `${x} -0.145 0.15`);
+    text.setAttribute("visible", false);
+
+    wrap.btn = img;
+    wrap.label = text;
+    wrap.appendChild(img);
+    wrap.appendChild(text);
+
+    return wrap;
+}
+
+function buildUI(root) {
+    const ui = {};
+    ui.name = createText("Lavin & Sujitha", { y: 0.22, color:"#CF0A45" });
+    ui.countdown = createText("", { y: 0.12, color:"#1132C2" });
+
+    ui.btnChurch = createButton(-0.30,"JMC Kply","#iconMaps");
+    ui.btnHall   = createButton(-0.15,"St.Mary's","#iconMaps");
+    ui.btnWA     = createButton(0.00,"WhatsApp","#iconWhatsApp");
+    ui.btnCal    = createButton(0.15,"Calendar","#iconCalendar");
+    ui.btnRec    = createButton(0.30,"NDM Mahal","#iconMaps");
+
+    Object.values(ui).forEach(val => {
+        if (val instanceof HTMLElement) root.appendChild(val);
+        else root.appendChild(val.btn), root.appendChild(val.label);
+    });
+
+    return ui;
+}
+
+/* ============================================================
+   COUNTDOWN
+============================================================ */
+const eventDate = new Date("January 14, 2026 11:00:00");
+
+function updateCountdown(ui){
+    const now = new Date();
+    const diff = eventDate - now;
+
+    if(diff <= 0){
+        ui.countdown.setAttribute("value","It's Today ❤️");
+        return;
+    }
+
+    const d = Math.floor(diff/86400000);
+    const h = Math.floor((diff%86400000)/3600000);
+    const m = Math.floor((diff%3600000)/60000);
+    const s = Math.floor((diff%60000)/1000);
+
+    ui.countdown.setAttribute("value",`${d}d ${h}h ${m}m ${s}s`);
+}
+
+/* ============================================================
+   MAIN LOGIC
+============================================================ */
+window.addEventListener("load",()=>{
+
+    const target = document.querySelector("#target");
+    const video = document.querySelector("#baseVideo");
+    const music = document.querySelector("#bgMusic");
+
+    const ui = buildUI(target);
+
+    /* Button Actions */
+    ui.btnChurch.btn.addEventListener("click",()=>open("https://maps.app.goo.gl/3M8UD9NZdfzCyPJd6"));
+    ui.btnHall.btn.addEventListener("click",()=>open("https://maps.app.goo.gl/EkU42vjUJ82Gnher8"));
+    ui.btnRec.btn.addEventListener("click",()=>open("https://maps.app.goo.gl/RYkDX36Jk4QCZmjw5"));
+    ui.btnWA.btn.addEventListener("click",()=>open("https://wa.me/+919539827508"));
+    ui.btnCal.btn.addEventListener("click",()=>downloadICS());
+
+    function showUI(){
+        [ui.name, ui.countdown,
+         ui.btnChurch.btn, ui.btnChurch.label,
+         ui.btnHall.btn, ui.btnHall.label,
+         ui.btnRec.btn, ui.btnRec.label,
+         ui.btnWA.btn, ui.btnWA.label,
+         ui.btnCal.btn, ui.btnCal.label
+        ].forEach(el=>fadeIn(el));
+    }
+
+    /* Target Found */
+    target.addEventListener("targetFound",()=>{
+
+        if(videoEnded){
+            music.play();
+            showUI();
+            return;
+        }
+
+        video.currentTime = lastVideoTime;
+        video.play().catch(()=>{});
+        music.play().catch(()=>{});
+
+        video.onended = ()=>{
+            videoEnded = true;
+            showUI();
+        };
+    });
+
+    /* Target Lost */
+    target.addEventListener("targetLost",()=>{
+        if(!videoEnded){
+            lastVideoTime = video.currentTime;
+            video.pause();
+        }
+        music.pause();
+    });
+
+    setInterval(()=>updateCountdown(ui),1000);
+
+});
+</script>
+
+<!-- Register Service Worker (Offline caching enabled) -->
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("service-worker.js")
+            .then(() => console.log("Service Worker Registered"))
+            .catch(err => console.log("SW Registration Failed:", err));
+    });
+}
+</script>
+
+</body>
+</html>
