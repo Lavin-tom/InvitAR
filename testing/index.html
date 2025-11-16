@@ -10,11 +10,11 @@
 
     <!-- A-Frame + MindAR -->
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-    <script src="script/mindar-image-aframe.prod.js"></script>
+    <script src="../script/mindar-image-aframe.prod.js"></script>
 
     <!-- Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
     <style>
         body { margin: 0; overflow: hidden; }
 
@@ -46,7 +46,7 @@
 
 <!-- Scan Overlay -->
 <div id="scan-overlay" class="hidden">
-    <img src="assets/FrontPage.jpg" />
+    <img src="../assets/FrontPage.jpg" />
 </div>
 
 <!-- Main AR Scene -->
@@ -57,12 +57,12 @@
          device-orientation-permission-ui="enabled: false">
 
     <a-assets>
-        <video id="baseVideo" src="assets/BaseTemplate.mp4" preload="auto"></video>
-        <audio id="bgMusic" src="assets/emotional-piano-music-256262.mp3" preload="auto"></audio>
+        <video id="baseVideo" src="../assets/BaseTemplate.mp4" preload="auto"></video>
+        <audio id="bgMusic" src="../assets/emotional-piano-music-256262.mp3" preload="auto"></audio>
 
-        <img id="iconMaps" src="assets/google-maps.png">
-        <img id="iconWhatsApp" src="assets/whatsapp.png">
-        <img id="iconCalendar" src="assets/calendar.png">
+        <img id="iconMaps" src="../assets/google-maps.png">
+        <img id="iconWhatsApp" src="../assets/whatsapp.png">
+        <img id="iconCalendar" src="../assets/calendar.png">
     </a-assets>
 
     <a-camera position="0 0 0" cursor="rayOrigin: mouse" raycaster="objects: .clickable"></a-camera>
