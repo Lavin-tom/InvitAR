@@ -4,8 +4,6 @@
     <title>Lavin & Sujitha</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="../script/mindar-image-aframe.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@pqina/flip/dist/tick.min.js"></script>
@@ -13,14 +11,8 @@
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
 
     <script>
-
-        /* ---------------------------------
-           GLOBAL STATE (NEW)
-        ----------------------------------*/
-        let videoCurrentTime = 0;       // NEW: Save last paused position
-        let videoHasPlayedFully = false; // NEW: Prevent replay after full play
-
-        /* ---------------------------------*/
+        let videoCurrentTime = 0;
+        let videoHasPlayedFully = false;
 
         const showPortfolio = (done) => {
             const portfolio = document.querySelector("#portfolio-panel");
@@ -39,8 +31,7 @@
         function openWhatsapp() {
             const phoneNumber = "+919539827508"; 
             const message = "Hey Lavin & Sujitha! Excited for your big day! ♥️";
-            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
+            window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
         }
 
         function openCalendar() {
@@ -96,28 +87,22 @@
         }
         setInterval(updateCountdown, 1000);
 
-        /* =======================================================================
-           UPDATED MINDAR EVENT HANDLER
-        ======================================================================= */
         AFRAME.registerComponent('mytarget', {
             init: function() {
-
                 let confettiTriggered = false;
 
                 this.el.addEventListener('targetFound', () => {
-                    console.log("target found");
-
                     const eventDate = new Date("January 14, 2026 11:00:00");
                     const now = new Date();
 
                     const audio = document.querySelector("#musicmp3");
                     const baseVideo = document.querySelector("#Base-video");
+                    const videoOverlay = document.querySelector("#video-white-bg");
 
                     const countdownEl = document.querySelector("#countdown");
                     const postEventPanel = document.querySelector("#post-event-panel");
                     const postEventLabel = document.querySelector("#post-event-label");
 
-                    // Hide everything first
                     countdownEl.setAttribute("visible", false);
                     postEventPanel.setAttribute("visible", false);
                     postEventLabel.setAttribute("visible", false);
@@ -130,48 +115,28 @@
                     ];
                     uiIDs.forEach(id => document.querySelector(id).setAttribute("visible", false));
 
-                    /* =============================================================
-                       CASE 1 — BEFORE EVENT DATE
-                    ============================================================= */
                     if (now < eventDate) {
-
-                        /* ---------------------------------------------------------
-                           SUBCASE A — Video already finished once (NO REPLAY)
-                        ----------------------------------------------------------*/
-                        if (videoHasPlayedFully) {
-                            // Show UI + play audio
-                            audio.play().catch(()=>{});
-                            countdownEl.setAttribute("visible", true);
-                            updateCountdown();
-
-                            uiIDs.forEach(id=>document.querySelector(id).setAttribute("visible",true));
-                            return;
-                        }
-
-                        /* ---------------------------------------------------------
-                           SUBCASE B — Resume video from saved position
-                        ----------------------------------------------------------*/
+                        videoOverlay.setAttribute("visible", false); // Hide white overlay
                         audio.play().catch(()=>{});
-
-                        baseVideo.currentTime = videoCurrentTime;  // ← Resume
+                        baseVideo.currentTime = videoCurrentTime;
                         baseVideo.play().catch(()=>{});
 
                         baseVideo.onended = () => {
                             videoHasPlayedFully = true;
                             videoCurrentTime = 0;
 
+                            // Hide video and show white background
+                            baseVideo.parentElement.setAttribute("visible", false);
+                            videoOverlay.setAttribute("visible", true);
+
                             countdownEl.setAttribute("visible", true);
                             updateCountdown();
                             uiIDs.forEach(id=>document.querySelector(id).setAttribute("visible",true));
                         };
-
-                    }
-                    else {
-                        /* =============================================================
-                           CASE 2 — AFTER EVENT DATE
-                        ============================================================= */
+                    } else {
                         baseVideo.pause();
-                        document.querySelector("a-video").setAttribute("visible", false);
+                        baseVideo.parentElement.setAttribute("visible", false);
+                        videoOverlay.setAttribute("visible", true);
 
                         postEventPanel.setAttribute("visible", true);
                         postEventLabel.setAttribute("visible", true);
@@ -187,25 +152,20 @@
                             const s = Math.floor((diff % (60*1000)) / 1000);
 
                             let text;
-
                             if (now.getDate() === eventDate.getDate() &&
                                 now.getMonth() === eventDate.getMonth()) {
-
                                 const ann = y + 1;
                                 text = `Happy ${ann}${getOrdinal(ann)} Anniversary, Lavin & Sujitha! 💖`;
-
                                 if (!confettiTriggered) {
                                     callConfetti();
                                     confettiTriggered = true;
                                 }
-
                             } else {
                                 text = `We've been together for ${y}y ${d}d ${h}h ${m}m ${s}s`;
                             }
 
                             postEventLabel.setAttribute("value", text);
                         };
-
                         updatePassed();
                         this.passedInterval = setInterval(updatePassed, 1000);
                     }
@@ -214,16 +174,12 @@
                     setTimeout(()=> showPortfolio(()=>{}), 300);
                 });
 
-                /* ============================================================
-                   UPDATED targetLost HANDLER
-                ============================================================ */
                 this.el.addEventListener('targetLost', () => {
                     const audio = document.querySelector("#musicmp3");
                     const baseVideo = document.querySelector("#Base-video");
+                    const videoOverlay = document.querySelector("#video-white-bg");
 
-                    // SAVE last position BEFORE pausing  (IMPORTANT)
                     videoCurrentTime = baseVideo.currentTime;
-
                     audio.pause();
                     baseVideo.pause();
 
@@ -231,12 +187,15 @@
                     document.querySelector("#post-event-panel").setAttribute("visible", false);
                     document.querySelector("#post-event-label").setAttribute("visible", false);
 
+                    // Reset overlay when target lost
+                    baseVideo.parentElement.setAttribute("visible", true);
+                    videoOverlay.setAttribute("visible", false);
+
                     if (this.passedInterval) {
                         clearInterval(this.passedInterval);
                         this.passedInterval = null;
                     }
                 });
-
             }
         });
 
@@ -250,52 +209,18 @@
                 document.querySelector('#Calendarbutton').addEventListener('click', openCalendar);
             });
         });
-
     </script>
-    
+
     <style>
         body { margin: 0; }
         .example-container { overflow: hidden; position: absolute; width:100%; height:100%; }
-        #countdown { font-family:'Orbitron',monospace; font-weight:bold; }
-        .clickable:hover { opacity: 0.9; cursor:pointer; }
-        #example-scanning-overlay { display:flex; align-items:center; justify-content:center;
-            position:absolute; left:0; right:0; top:0; bottom:0; background:transparent; z-index:2; }
-        @media (min-aspect-ratio:1/1){ #example-scanning-overlay .inner{ width:50vh; height:50vh; }}
-        @media (max-aspect-ratio:1/1){ #example-scanning-overlay .inner{ width:80vw; height:80vw; }}
-        #example-scanning-overlay .inner{
-            display:flex; align-items:center; justify-content:center; position:relative;
-            background:linear-gradient(to right, white 10px, transparent 10px) 0 0,
-                       linear-gradient(to right, white 10px, transparent 10px) 0 100%,
-                       linear-gradient(to left, white 10px, transparent 10px) 100% 0,
-                       linear-gradient(to left, white 10px, transparent 10px) 100% 100%,
-                       linear-gradient(to bottom, white 10px, transparent 10px) 0 0,
-                       linear-gradient(to bottom, white 10px, transparent 10px) 100% 0,
-                       linear-gradient(to top, white 10px, transparent 10px) 0 100%,
-                       linear-gradient(to top, white 10px, transparent 10px) 100% 100%;
-            background-repeat:no-repeat; background-size:40px 40px;
-        }
-        #example-scanning-overlay.hidden { display:none; }
-        #example-scanning-overlay img{ opacity:0.6; width:70%; height:auto; }
-        #example-scanning-overlay .inner .scanline{
-            position:absolute; width:100%; height:10px; background:white; animation:move 2s linear infinite;
-        }
-        @keyframes move{ 0%,100%{top:0;} 50%{top:calc(100% - 10px);} }
     </style>
 </head>
 
 <body>
     <div class="example-container">
-
-        <div id="example-scanning-overlay" class="hidden">
-            <div class="inner">
-                <img src="../assets/FrontPage.jpg"/>
-                <div class="scanline"></div>
-            </div>
-        </div>
-
-        <!-- ===================== A FRAME SCENE ============================== -->
         <a-scene
-            mindar-image="imageTargetSrc: targets.mind; showStats: false; uiScanning: #example-scanning-overlay;"
+            mindar-image="imageTargetSrc: targets.mind; showStats: false;"
             embedded color-space="sRGB"
             renderer="colorManagement:true, physicallyCorrectLights"
             vr-mode-ui="enabled:false"
@@ -303,100 +228,33 @@
 
             <a-assets>
                 <video id="Base-video" src="../assets/BaseTemplate.mp4" autoplay="false" loop="false"></video>
-                <img id="BaseImageND" src="../assets/Cardback.jpg"/>        
-                <img id="Clocation" src="../assets/google-maps.png"/>
-                <img id="whatsappicon" src="../assets/whatsapp.png"/>  
-                <img id="Calendar" src="../assets/calendar.png"/>                                                               
                 <audio id="musicmp3" preload="auto" src="../assets/emotional-piano-music-256262.mp3"></audio>
             </a-assets>
 
-            <a-camera position="0 0 0" look-controls="enabled:false" 
-                cursor="fuse:false; rayOrigin:mouse;" 
-                raycaster="far:10000; objects:.clickable"></a-camera>
+            <a-camera position="0 0 0" look-controls="enabled:false"></a-camera>
 
-            <a-entity id="mytarget0" mytarget mindar-image-target="targetIndex:0"
-                      smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5">
-
+            <a-entity id="mytarget0" mytarget mindar-image-target="targetIndex:0">
                 <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
-                    <a-entity id="portfolio-item0">
 
-                        <!-- Video -->
-                        <a-video src="#Base-video" position="0 0 0.1" width="0.84" height="0.54"
-                                 autoplay="false" muted="true" preload="auto"></a-video>
-                        
-                        <!-- Post-event -->
-                        <a-plane id="post-event-panel" visible="false" position="0 0 0.1" 
-                                 height="0.54" width="0.84" color="#fff" material="opacity:0.95"></a-plane>
+                    <!-- Video -->
+                    <a-video src="#Base-video" position="0 0 0.1" width="0.84" height="0.54"
+                             autoplay="false" muted="true" preload="auto"></a-video>
 
-                        <a-text id="post-event-label" visible="false" value="" color="#CF0A45" width="0.9"
-                                align="center" position="0 0 0.11"
-                                font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/firasans/FiraSans-BlackItalic.json"></a-text>
+                    <!-- White background overlay (hidden by default) -->
+                    <a-plane id="video-white-bg" visible="false" position="0 0 0.1"
+                             width="0.84" height="0.54" color="#ffffff"></a-plane>
 
-                        <!-- Couple Name -->
-                        <a-text id="coupleNamebutton" visible="false" value="Lavin & Sujitha"
-                                color="#CF0A45" width="1" align="center"
-                                position="0 0.0 0.21" shader="msdf"
-                                font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/firasans/FiraSans-BlackItalic.json"
-                                animation="property:scale; to:1.1 1.1 1.1; dur:1000; easing:easeInOutQuad; loop:true; dir:alternate"></a-text> 
+                    <!-- Buttons and labels -->
+                    <a-entity id="countdown" visible="true" text="value: Loading...; color:#000; align:center" position="0 0.35 0.1"></a-entity>
+                    <a-entity id="post-event-panel" visible="false" position="0 0.2 0.1"></a-entity>
+                    <a-entity id="post-event-label" visible="false" text="value: ; color:#000; align:center" position="0 0.2 0.1"></a-entity>
 
-                        <!-- Countdown -->
-                        <a-text id="countdown" visible="false" value="" color="#1132C2" width="1" 
-                                align="center" position="0.0 0.1 0.2"
-                                geometry="primitive:plane; height:0.1; width:0.3;"
-                                material="opacity:0.0"
-                                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>   
-
-                        <!-- Church -->
-                        <a-image visible="false" id="locationbutton1" class="clickable" src="#Clocation"
-                                 position="-0.2883 -0.15 0.25" height="0.025" width="0.025"
-                                 animation="property:scale; to:1.4 1.4 1.4; dur:1000; easing:easeInOutQuad; loop:true; dir:alternate"></a-image>
-
-                        <a-text visible="false" id="text-church" value="JMC Kply"
-                                position="-0.3100 -0.175 0.25" width="0.3"
-                                color="#DC143C" align="left"
-                                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
-
-                        <!-- Hall -->
-                        <a-image visible="false" id="locationbutton2" class="clickable" src="#Clocation"
-                                 position="-0.1442 -0.15 0.25" height="0.025" width="0.025"
-                                 animation="property:scale; to:1.4 1.4 1.4; dur:1000; easing:easeInOutQuad; loop:true; dir:alternate"></a-image>
-
-                        <a-text visible="false" id="text-hall" value="St.Mary's"
-                                position="-0.1659 -0.175 0.25" width="0.3"
-                                color="#DC143C" align="left"
-                                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
-
-                        <!-- WhatsApp -->
-                        <a-image visible="false" id="whatsappbutton" class="clickable" src="#whatsappicon"
-                                 position="0.0 -0.15 0.25" height="0.025" width="0.025"
-                                 animation="property:scale; to:1.4 1.4 1.4; dur:1000; easing:easeInOutQuad; loop:true; dir:alternate"></a-image>
-
-                        <a-text visible="false" id="text-contact" value="WhatsApp"
-                                position="-0.0220 -0.175 0.25" width="0.3"
-                                color="#DC143C" align="left"
-                                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
-
-                        <!-- Calendar -->
-                        <a-image visible="false" id="Calendarbutton" class="clickable" src="#Calendar"
-                                 position="0.1442 -0.15 0.25" height="0.025" width="0.025"
-                                 animation="property:scale; to:1.4 1.4 1.4; dur:1000; easing:easeInOutQuad; loop:true; dir:alternate"></a-image>
-
-                        <a-text visible="false" id="text-event" value="Calendar"
-                                position="0.1245 -0.175 0.25" width="0.3"
-                                color="#DC143C" align="left"
-                                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
-
-                        <!-- Reception -->
-                        <a-image visible="false" id="locationbutton3" class="clickable" src="#Clocation"
-                                 position="0.2883 -0.15 0.25" height="0.025" width="0.025"
-                                 animation="property:scale; to:1.4 1.4 1.4; dur:1000; easing:easeInOutQuad; loop:true; dir:alternate"></a-image>
-
-                        <a-text visible="false" id="text-reception" value="NDM Mahal"
-                                position="0.2685 -0.175 0.25" width="0.3"
-                                color="#DC143C" align="left"
-                                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
-
-                    </a-entity>
+                    <!-- Example buttons -->
+                    <a-box id="locationbutton1" visible="false" position="-0.3 0 -0.1" depth="0.02" height="0.05" width="0.1" color="#FF0000"></a-box>
+                    <a-box id="locationbutton2" visible="false" position="-0.15 0 -0.1" depth="0.02" height="0.05" width="0.1" color="#00FF00"></a-box>
+                    <a-box id="locationbutton3" visible="false" position="0 0 -0.1" depth="0.02" height="0.05" width="0.1" color="#0000FF"></a-box>
+                    <a-box id="whatsappbutton" visible="false" position="0.15 0 -0.1" depth="0.02" height="0.05" width="0.1" color="#FFFF00"></a-box>
+                    <a-box id="Calendarbutton" visible="false" position="0.3 0 -0.1" depth="0.02" height="0.05" width="0.1" color="#FF00FF"></a-box>
                 </a-entity>
             </a-entity>
         </a-scene>
