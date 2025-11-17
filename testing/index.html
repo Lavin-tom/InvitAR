@@ -1,263 +1,267 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lavin & Sujitha</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-    <script src="../script/mindar-image-aframe.prod.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@pqina/flip/dist/tick.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar/dist/mindar-image-aframe.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">    
+<style>
+    body { margin: 0; }
 
-    <script>
-        let videoCurrentTime = 0;
-        let videoHasPlayedFully = false;
+    /* AR scene full width/height */
+    a-scene { width: 100%; height: 100%; }
 
-        const showPortfolio = (done) => {
-            const portfolio = document.querySelector("#portfolio-panel");
-            let y = -0.5;
-            portfolio.setAttribute("visible", true);
-            const id = setInterval(() => {
-                y += 0.008;
-                if (y >= 0) {
-                    clearInterval(id);
-                    setTimeout(done, 500);
-                }
-                portfolio.setAttribute("position", `0 ${y} -0.01`);
-            }, 10);
-        };
+    /* Buttons responsive layout */
+    @media (max-width: 768px) {
+        a-box { width: 0.08; height: 0.04; }
+        #countdown { position: 0 0.3 0.1; }
+    }
 
-        function openWhatsapp() {
-            const phoneNumber = "+919539827508"; 
-            const message = "Hey Lavin & Sujitha! Excited for your big day! ♥️";
-            window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+    @media (max-width: 480px) {
+        a-box { width: 0.06; height: 0.03; }
+        #countdown { position: 0 0.25 0.1; font-size: 0.8em; }
+    }
+
+    /* Touch-friendly button styles */
+    a-box {
+        cursor: pointer;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    a-box:active {
+        transform: scale(1.1);
+        box-shadow: 0 6px 8px rgba(0,0,0,0.3);
+    }
+
+    /* Fade-in effect for white overlay */
+    .fade-in { animation: fadeIn 1s forwards; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .example-container {
+        font-family: 'Playfair Display', serif;
+        background: linear-gradient(135deg, #fffaf0, #fdf6f0);
+        padding: 10px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    a-box {
+        border-radius: 8px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    a-box:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 10px rgba(255, 182, 193, 0.6);
+    }
+	
+</style>
+
+</head>
+<body>
+
+<div class="example-container">
+    <a-scene mindar-image="imageTargetSrc: targets.mind; showStats: false;" embedded color-space="sRGB"
+             renderer="colorManagement:true, physicallyCorrectLights" vr-mode-ui="enabled:false"
+             device-orientation-permission-ui="enabled:false">
+
+        <a-assets>
+            <video id="Base-video" src="../assets/BaseTemplate.mp4" autoplayp3" preload="auto" src="../assets/emotional-pianoets>
+
+        <a-camera position="0 0 0" look-controls="enabled:false"></a-camera>
+
+        <a-entity id="mytarget0" mytarget mindar-image-target="targetIndex:0">
+            <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
+
+                <!-- Video -->
+                <a-video src="#Base-video" position="0 0 0.1" width="0.84" height="0.54"
+                         autoplay="false" muted="true" preloadosition="0 0 0.1"
+                         width="0.84" height="0.54" color="#ffffff"></a-plane>
+
+                <!-- Countdown and Post-event -->
+                <a-entity id="countdown" visible="true" text="value: Loading...; color:#6B4E3D; align:center" position="0 0.35 0.1"></a-entity>
+                <a-entity id="post-event-panel" visible="false" position="0 0.2 0.1"></a-entity>
+                <a-entity id="post-event-label" visible="false" text="value: ; color:#6B4E3D; align:center" position="0 0.2 0.1"></a-entity>
+
+                <!-- Buttons -->
+                <a-box id="locationbutton1" visible="false" position="-0.3 0 -0.1" depth="0.02" height="0.05" width="0.1" color="#FADADD"></a-box>
+                <a-box id="locationbutton2" visible="false" position="-0.15 0 -0.1" depth="0.02" height="0.05" width="0.1" color="#E8D3C3"></a-box>
+                <a-box id="locationbutton3" visible="false" position="0 0 -0.1" depth="0.02" height="0.05" width="0.1" color="#D4B5A7"></a-box>
+                <a-box id="whatsappbutton" visible="false" position="0.15 0 -0.1" depth="0.02" height="0.05" width="0.1" color="#F7E7CE"></a-box>
+                <a-box id="Calendarbutton" visible="false" position="0.3 0 -0.1" depth="0.02" height="0.05" width="0.1" color="#CBBEB5"></a-box>
+            </a-entity>
+        </a-entity>
+    </a-scene>
+</div>
+
+<script>
+let videoCurrentTime = 0.0;
+let videoHasPlayedFully = false;
+
+const showPortfolio = (done) => {
+    const portfolio = document.querySelector("#portfolio-panel");
+    let y = -0.5;
+    portfolio.setAttribute("visible", true);
+    const id = setInterval(() => {
+        y += 0.008;
+        if (y >= 0) {
+            clearInterval(id);
+            setTimeout(done, 500);
         }
+        portfolio.setAttribute("position", `0 ${y} -0.01`);
+    }, 10);
+};
 
-        function openCalendar() {
-            const icsContent = [
-                'BEGIN:VCALENDAR','VERSION:2.0','CALSCALE:GREGORIAN','METHOD:PUBLISH','BEGIN:VEVENT',
-                'UID:lavin-sujitha-wedding@yourdomain.com',
-                'DTSTAMP:20250823T100000Z',
-                'DTSTART:20260114T053000Z', 
-                'DTEND:20260114T073000Z',    
-                'SUMMARY:Lavin & Sujitha Wedding Day',
-                'DESCRIPTION:Join us for a beautiful celebration of love!',
-                'LOCATION:Jerusalem Mar Thoma Syrian Church, Koothrapally',
-                'URL:https://maps.app.goo.gl/3M8UD9NZdfzCyPJd6',
-                'BEGIN:VALARM','TRIGGER:-PT1H','ACTION:DISPLAY',
-                'DESCRIPTION:Join us for a beautiful celebration of love!','END:VALARM','END:VEVENT','END:VCALENDAR'
-            ].join('\r\n');
-            const blob = new Blob([icsContent], { type: 'text/calendar' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = "Lavin-Sujitha-wedding.ics";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
+function openWhatsapp() {
+    const phoneNumber = "+919539827508";
+    const message = "Hey Lavin & Sujitha! Excited for your big day! ♥️";
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+}
 
-        function openGoogleMapsChurch() { window.open(`https://maps.app.goo.gl/3M8UD9NZdfzCyPJd6`, '_blank'); }
-        function openGoogleMapsHall() { window.open(`https://maps.app.goo.gl/EkU42vjUJ82Gnher8`, '_blank'); }
-        function openGoogleMapsReception() { window.open(`https://maps.app.goo.gl/RYkDX36Jk4QCZmjw5`, '_blank'); }
+function openCalendar() {
+    const icsContent = [
+        'BEGIN:VCALENDAR','VERSION:2.0','CALSCALE:GREGORIAN','METHOD:PUBLISH','BEGIN:VEVENT',
+        'UID:lavin-sujitha-wedding@yourdomain.com','DTSTAMP:20250823T100000Z','DTSTART:20260114T053000Z','DTEND:20260114T073000Z',
+        'SUMMARY:Lavin & Sujitha Wedding Day','DESCRIPTION:Join us for a beautiful celebration of love!',
+        'LOCATION:Jerusalem Mar Thoma Syrian Church, Koothrapally','URL:https://maps.app.goo.gl/3M8UD9NZdfzCyPJd6',
+        'BEGIN:VALARM','TRIGGER:-PT1H','ACTION:DISPLAY','DESCRIPTION:Join us for a beautiful celebration of love!','END:VALARM','END:VEVENT','END:VCALENDAR'
+    ].join('
+');
+    const blob = new Blob([icsContent], { type: 'text/calendar' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "Lavin-Sujitha-wedding.ics";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
 
-        function getOrdinal(n) {
-            const s = ["th", "st", "nd", "rd"];
-            const v = n % 100;
-            return (s[(v - 20) % 10] || s[v] || s[0]);
-        }
+function openGoogleMapsChurch() { window.open(`https://maps.app.goo.gl/3M8UD9NZdfzCyPJd6`, '_blank'); }
+function openGoogleMapsHall() { window.open(`https://maps.app.goo.gl/EkU42vjUJ82Gnher8`, '_blank'); }
+function openGoogleMapsReception() { window.open(`https://maps.app.goo.gl/RYkDX36Jk4QCZmjw5`, '_blank'); }
 
-        function callConfetti(){
-            const emojis = ['💖','💘','💕','❤️','💞','💝','💖','💓','❣️'];
-            const shape = confetti.shapeFromText({ text: emojis[Math.floor(Math.random() * emojis.length)], scalar: 2 });
-            confetti({ particleCount: 250, spread: 100, origin: { y: 0.6 }, shapes: [shape] });
-        }
+function getOrdinal(n) {
+    const s = ["th", "st", "nd", "rd"];
+    const v = n % 100;
+    return (s[(v - 20) % 10] || s[v] || s[0]);
+}
 
-        function updateCountdown() {
+function callConfetti(){
+    const emojis = ['💖','💘','💕','❤️','💞','💝','💖','💓','❣️'];
+    const shape = confetti.shapeFromText({ text: emojis[Math.floor(Math.random() * emojis.length)], scalar: 2 });
+    confetti({ particleCount: 250, spread: 100, origin: { y: 0.6 }, shapes: [shape] });
+}
+
+function updateCountdown() {
+    const eventDate = new Date("January 14, 2026 11:00:00");
+    const now = new Date();
+    const timeDiff = eventDate - now;
+    const countdownElement = document.querySelector("#countdown");
+    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+    countdownElement.setAttribute('value', `${days}d ${hours}h ${minutes}m ${seconds}s`);
+}
+setInterval(updateCountdown, 1000);
+
+AFRAME.registerComponent('mytarget', {
+    init: function() {
+        let confettiTriggered = false;
+        this.el.addEventListener('targetFound', () => {
             const eventDate = new Date("January 14, 2026 11:00:00");
             const now = new Date();
-            const timeDiff = eventDate - now;
-            const countdownElement = document.querySelector("#countdown");   
-            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-            countdownElement.setAttribute('value', `${days}d ${hours}h ${minutes}m ${seconds}s`);
-        }
-        setInterval(updateCountdown, 1000);
+            const audio = document.querySelector("#musicmp3");
+            const baseVideo = document.querySelector("#Base-video");
+            const videoOverlay = document.querySelector("#video-white-bg");
+            const countdownEl = document.querySelector("#countdown");
+            const postEventPanel = document.querySelector("#post-event-panel");
+            const postEventLabel = document.querySelector("#post-event-label");
+            countdownEl.setAttribute("visible", false);
+            postEventPanel.setAttribute("visible", false);
+            postEventLabel.setAttribute("visible", false);
+            const uiIDs = ["#locationbutton1", "#locationbutton2", "#locationbutton3", "#whatsappbutton", "#Calendarbutton"];
+            uiIDs.forEach(id => document.querySelector(id).setAttribute("visible", false));
 
-        AFRAME.registerComponent('mytarget', {
-            init: function() {
-                let confettiTriggered = false;
-
-                this.el.addEventListener('targetFound', () => {
-                    const eventDate = new Date("January 14, 2026 11:00:00");
+            if (now < eventDate) {
+                videoOverlay.setAttribute("visible", false);
+                audio.play().catch(()=>{});
+                baseVideo.currentTime = videoCurrentTime;
+                baseVideo.play().catch(()=>{});
+                baseVideo.onended = () => {
+                    videoHasPlayedFully = true;
+                    videoCurrentTime = 0;
+                    baseVideo.parentElement.setAttribute("visible", false);
+                    videoOverlay.setAttribute("visible", true);
+                    countdownEl.setAttribute("visible", true);
+                    updateCountdown();
+                    uiIDs.forEach(id=>document.querySelector(id).setAttribute("visible",true));
+                };
+            } else {
+                baseVideo.pause();
+                baseVideo.parentElement.setAttribute("visible", false);
+                videoOverlay.setAttribute("visible", true);
+                postEventPanel.setAttribute("visible", true);
+                postEventLabel.setAttribute("visible", true);
+                const updatePassed = () => {
                     const now = new Date();
-
-                    const audio = document.querySelector("#musicmp3");
-                    const baseVideo = document.querySelector("#Base-video");
-                    const videoOverlay = document.querySelector("#video-white-bg");
-
-                    const countdownEl = document.querySelector("#countdown");
-                    const postEventPanel = document.querySelector("#post-event-panel");
-                    const postEventLabel = document.querySelector("#post-event-label");
-
-                    countdownEl.setAttribute("visible", false);
-                    postEventPanel.setAttribute("visible", false);
-                    postEventLabel.setAttribute("visible", false);
-
-                    const uiIDs = [
-                        "#locationbutton1", "#locationbutton2", "#locationbutton3",
-                        "#whatsappbutton", "#Calendarbutton", "#coupleNamebutton",
-                        "#text-hall", "#text-church", "#text-contact",
-                        "#text-event", "#text-reception"
-                    ];
-                    uiIDs.forEach(id => document.querySelector(id).setAttribute("visible", false));
-
-                    if (now < eventDate) {
-                        videoOverlay.setAttribute("visible", false); // Hide white overlay
-                        audio.play().catch(()=>{});
-                        baseVideo.currentTime = videoCurrentTime;
-                        baseVideo.play().catch(()=>{});
-
-                        baseVideo.onended = () => {
-                            videoHasPlayedFully = true;
-                            videoCurrentTime = 0;
-
-                            // Hide video and show white background
-                            baseVideo.parentElement.setAttribute("visible", false);
-                            videoOverlay.setAttribute("visible", true);
-
-                            countdownEl.setAttribute("visible", true);
-                            updateCountdown();
-                            uiIDs.forEach(id=>document.querySelector(id).setAttribute("visible",true));
-                        };
+                    const diff = now - eventDate;
+                    const y = Math.floor(diff / (365*24*60*60*1000));
+                    const d = Math.floor((diff % (365*24*60*60*1000)) / (24*60*60*1000));
+                    const h = Math.floor((diff % (24*60*60*1000)) / (60*60*1000));
+                    const m = Math.floor((diff % (60*60*1000)) / (60*1000));
+                    const s = Math.floor((diff % (60*1000)) / 1000);
+                    let text;
+                    if (now.getDate() === eventDate.getDate() && now.getMonth() === eventDate.getMonth()) {
+                        const ann = y + 1;
+                        text = `Happy ${ann}${getOrdinal(ann)} Anniversary, Lavin & Sujitha! 💖`;
+                        if (!confettiTriggered) { callConfetti(); confettiTriggered = true; }
                     } else {
-                        baseVideo.pause();
-                        baseVideo.parentElement.setAttribute("visible", false);
-                        videoOverlay.setAttribute("visible", true);
-
-                        postEventPanel.setAttribute("visible", true);
-                        postEventLabel.setAttribute("visible", true);
-
-                        const updatePassed = () => {
-                            const now = new Date();
-                            const diff = now - eventDate;
-
-                            const y = Math.floor(diff / (365*24*60*60*1000));
-                            const d = Math.floor((diff % (365*24*60*60*1000)) / (24*60*60*1000));
-                            const h = Math.floor((diff % (24*60*60*1000)) / (60*60*1000));
-                            const m = Math.floor((diff % (60*60*1000)) / (60*1000));
-                            const s = Math.floor((diff % (60*1000)) / 1000);
-
-                            let text;
-                            if (now.getDate() === eventDate.getDate() &&
-                                now.getMonth() === eventDate.getMonth()) {
-                                const ann = y + 1;
-                                text = `Happy ${ann}${getOrdinal(ann)} Anniversary, Lavin & Sujitha! 💖`;
-                                if (!confettiTriggered) {
-                                    callConfetti();
-                                    confettiTriggered = true;
-                                }
-                            } else {
-                                text = `We've been together for ${y}y ${d}d ${h}h ${m}m ${s}s`;
-                            }
-
-                            postEventLabel.setAttribute("value", text);
-                        };
-                        updatePassed();
-                        this.passedInterval = setInterval(updatePassed, 1000);
+                        text = `We've been together for ${y}y ${d}d ${h}h ${m}m ${s}s`;
                     }
-
-                    callConfetti();
-                    setTimeout(()=> showPortfolio(()=>{}), 300);
-                });
-
-                this.el.addEventListener('targetLost', () => {
-                    const audio = document.querySelector("#musicmp3");
-                    const baseVideo = document.querySelector("#Base-video");
-                    const videoOverlay = document.querySelector("#video-white-bg");
-
-                    videoCurrentTime = baseVideo.currentTime;
-                    audio.pause();
-                    baseVideo.pause();
-
-                    document.querySelector("#countdown").setAttribute("visible", false);
-                    document.querySelector("#post-event-panel").setAttribute("visible", false);
-                    document.querySelector("#post-event-label").setAttribute("visible", false);
-
-                    // Reset overlay when target lost
-                    baseVideo.parentElement.setAttribute("visible", true);
-                    videoOverlay.setAttribute("visible", false);
-
-                    if (this.passedInterval) {
-                        clearInterval(this.passedInterval);
-                        this.passedInterval = null;
-                    }
-                });
+                    postEventLabel.setAttribute("value", text);
+                };
+                updatePassed();
+                this.passedInterval = setInterval(updatePassed, 1000);
             }
+            callConfetti();
+            setTimeout(()=> showPortfolio(()=>{}), 300);
         });
 
-        window.addEventListener('load', () => {
-            const sceneEl = document.querySelector('a-scene');
-            sceneEl.addEventListener('loaded', () => {
-                document.querySelector('#locationbutton1').addEventListener('click', openGoogleMapsChurch);
-                document.querySelector('#locationbutton2').addEventListener('click', openGoogleMapsHall);
-                document.querySelector('#whatsappbutton').addEventListener('click', openWhatsapp);
-                document.querySelector('#locationbutton3').addEventListener('click', openGoogleMapsReception);
-                document.querySelector('#Calendarbutton').addEventListener('click', openCalendar);
-            });
+        this.el.addEventListener('targetLost', () => {
+            const audio = document.querySelector("#musicmp3");
+            const baseVideo = document.querySelector("#Base-video");
+            const videoOverlay = document.querySelector("#video-white-bg");
+            videoCurrentTime = parseFloat(baseVideo.currentTime.toFixed(3));
+            audio.pause();
+            baseVideo.pause();
+            document.querySelector("#countdown").setAttribute("visible", false);
+            document.querySelector("#post-event-panel").setAttribute("visible", false);
+            document.querySelector("#post-event-label").setAttribute("visible", false);
+            baseVideo.parentElement.setAttribute("visible", true);
+            videoOverlay.setAttribute("visible", false);
+            if (this.passedInterval) { clearInterval(this.passedInterval); this.passedInterval = null; }
         });
-    </script>
+    }
+});
 
-    <style>
-        body { margin: 0; }
-        .example-container { overflow: hidden; position: absolute; width:100%; height:100%; }
-    </style>
-</head>
-
-<body>
-    <div class="example-container">
-        <a-scene
-            mindar-image="imageTargetSrc: targets.mind; showStats: false;"
-            embedded color-space="sRGB"
-            renderer="colorManagement:true, physicallyCorrectLights"
-            vr-mode-ui="enabled:false"
-            device-orientation-permission-ui="enabled:false">
-
-            <a-assets>
-                <video id="Base-video" src="../assets/BaseTemplate.mp4" autoplay="false" loop="false"></video>
-                <audio id="musicmp3" preload="auto" src="../assets/emotional-piano-music-256262.mp3"></audio>
-            </a-assets>
-
-            <a-camera position="0 0 0" look-controls="enabled:false"></a-camera>
-
-            <a-entity id="mytarget0" mytarget mindar-image-target="targetIndex:0">
-                <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
-
-                    <!-- Video -->
-                    <a-video src="#Base-video" position="0 0 0.1" width="0.84" height="0.54"
-                             autoplay="false" muted="true" preload="auto"></a-video>
-
-                    <!-- White background overlay (hidden by default) -->
-                    <a-plane id="video-white-bg" visible="false" position="0 0 0.1"
-                             width="0.84" height="0.54" color="#ffffff"></a-plane>
-
-                    <!-- Buttons and labels -->
-                    <a-entity id="countdown" visible="true" text="value: Loading...; color:#000; align:center" position="0 0.35 0.1"></a-entity>
-                    <a-entity id="post-event-panel" visible="false" position="0 0.2 0.1"></a-entity>
-                    <a-entity id="post-event-label" visible="false" text="value: ; color:#000; align:center" position="0 0.2 0.1"></a-entity>
-
-                    <!-- Example buttons -->
-                    <a-box id="locationbutton1" visible="false" position="-0.3 0 -0.1" depth="0.02" height="0.05" width="0.1" color="#FF0000"></a-box>
-                    <a-box id="locationbutton2" visible="false" position="-0.15 0 -0.1" depth="0.02" height="0.05" width="0.1" color="#00FF00"></a-box>
-                    <a-box id="locationbutton3" visible="false" position="0 0 -0.1" depth="0.02" height="0.05" width="0.1" color="#0000FF"></a-box>
-                    <a-box id="whatsappbutton" visible="false" position="0.15 0 -0.1" depth="0.02" height="0.05" width="0.1" color="#FFFF00"></a-box>
-                    <a-box id="Calendarbutton" visible="false" position="0.3 0 -0.1" depth="0.02" height="0.05" width="0.1" color="#FF00FF"></a-box>
-                </a-entity>
-            </a-entity>
-        </a-scene>
-    </div>
+window.addEventListener('load', () => {
+    const sceneEl = document.querySelector('a-scene');
+    sceneEl.addEventListener('loaded', () => {
+        document.querySelector('#locationbutton1').addEventListener('click', openGoogleMapsChurch);
+        document.querySelector('#locationbutton2').addEventListener('click', openGoogleMapsHall);
+        document.querySelector('#whatsappbutton').addEventListener('click', openWhatsapp);
+        document.querySelector('#locationbutton3').addEventListener('click', openGoogleMapsReception);
+        document.querySelector('#Calendarbutton').addEventListener('click', openCalendar);
+    });
+});
+</script>
 </body>
 </html>
