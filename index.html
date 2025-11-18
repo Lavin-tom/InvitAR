@@ -322,8 +322,17 @@
                 <div class="scanline"></div>
             </div>
         </div>      
-        <a-scene mindar-image="imageTargetSrc: targets.mind; showStats: false; uiScanning: #example-scanning-overlay;" embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights"
-            vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+	    <a-scene mindar-image="imageTargetSrc: targets.mind; 
+						   autoStart: true; 
+						   warmupTolerance: 5; 
+						   missTolerance: 12; 
+						   filterMinCF: 0.001; 
+						   filterBeta: 0.001; 
+						   showStats: false;"
+			 embedded color-space="sRGB"
+			 renderer="colorManagement:true, physicallyCorrectLights"
+			 vr-mode-ui="enabled:false"
+			 device-orientation-permission-ui="enabled:false">
             <a-assets>
                 <video id="Base-video" src="assets/BaseTemplate.mp4" autoplay="true" loop="false"></video>                
                 <img id="BaseImageND" src="assets/Cardback.jpg"/>        
