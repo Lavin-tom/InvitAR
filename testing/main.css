@@ -1,50 +1,122 @@
-    body { margin: 0; }
+:root {
+    --primary-color: #fff;
+    --accent-color: #ff4081;
+    --font-family: 'Orbitron', monospace;
+}
 
-    /* AR scene full width/height */
-    a-scene { width: 100%; height: 100%; }
+body {
+    margin: 0;
+    font-family: var(--font-family);
+    background: #f9f9f9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
 
-    /* Buttons responsive layout */
-    @media (max-width: 768px) {
-        a-box { width: 0.08; height: 0.04; }
-        #countdown { position: 0 0.3 0.1; }
-    }
+.example-container {
+    text-align: center;
+    padding: 20px;
+    max-width: 600px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
 
-    @media (max-width: 480px) {
-        a-box { width: 0.06; height: 0.03; }
-        #countdown { position: 0 0.25 0.1; font-size: 0.8em; }
-    }
+header h1 {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+}
 
-    /* Touch-friendly button styles */
-    a-box {
-        cursor: pointer;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+.subtitle {
+    font-size: 1.2rem;
+    color: #666;
+}
 
-    a-box:active {
-        transform: scale(1.1);
-        box-shadow: 0 6px 8px rgba(0,0,0,0.3);
-    }
+.countdown-section {
+    margin: 20px 0;
+}
 
-    /* Fade-in effect for white overlay */
-    .fade-in { animation: fadeIn 1s forwards; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+#countdown {
+    font-weight: bold;
+    font-size: 1.8rem;
+    color: var(--accent-color);
+}
 
-    .example-container {
-        font-family: 'Playfair Display', serif;
-        background: linear-gradient(135deg, #fffaf0, #fdf6f0);
-        padding: 10px;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    }
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
 
-    a-box {
-        border-radius: 8px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+.clickable {
+    padding: 12px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent-color);
+    color: #fff;
+    font-weight: bold;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
 
-    a-box:hover {
-        transform: scale(1.1);
-        box-shadow: 0 0 10px rgba(255, 182, 193, 0.6);
-    }
+.clickable:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+footer {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+#example-scanning-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(4px);
+    z-index: 2;
+}
+
+#example-scanning-overlay .inner {
+    aspect-ratio: 1 / 1;
+    width: min(50vh, 80vw);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+#example-scanning-overlay img {
+    opacity: 0.7;
+    width: 70%;
+    height: auto;
+}
+
+.scanline {
+    position: absolute;
+    width: 100%;
+    height: 8px;
+    background: var(--accent-color);
+    animation: move 2s linear infinite;
+}
+
+@keyframes move {
+    0%, 100% { top: 0%; }
+    50% { top: calc(100% - 8px); }
+}
+
+.hidden {
+    display: none !important;
