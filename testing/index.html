@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-    <script src="script/mindar-image-aframe.prod.js"></script>
+    <script src="../script/mindar-image-aframe.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@pqina/flip/dist/tick.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <link rel="shortcut icon" type="image/png" href="assets/favicon.png"> 
@@ -34,12 +34,12 @@
 			 vr-mode-ui="enabled:false"
 			 device-orientation-permission-ui="enabled:false">
             <a-assets>
-                <video id="Base-video" src="assets/BaseTemplate.mp4" autoplay="true" loop="false"></video>                
-                <img id="BaseImageND" src="assets/Cardback.jpg"/>        
-                <img id="Clocation" src="./assets/google-maps.png"/>
-                <img id="whatsappicon" src="./assets/whatsapp.png"/>  
-                <img id="Calendar" src="./assets/calendar.png"/>                                                               
-                <audio id="musicmp3" preload="auto" src="./assets/emotional-piano-music-256262.mp3"></audio>
+                <video id="Base-video" src="../assets/BaseTemplate.mp4" autoplay="true" loop="false"></video>                
+                <img id="BaseImageND" src="../assets/Cardback.jpg"/>        
+                <img id="Clocation" src="../assets/google-maps.png"/>
+                <img id="whatsappicon" src="../assets/whatsapp.png"/>  
+                <img id="Calendar" src="../assets/calendar.png"/>                                                               
+                <audio id="musicmp3" preload="auto" src="../assets/emotional-piano-music-256262.mp3"></audio>
             </a-assets>
             <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable"></a-camera>
             <a-entity id="mytarget0" mytarget mindar-image-target="targetIndex: 0" smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5">
