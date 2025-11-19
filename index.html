@@ -145,7 +145,7 @@
                     if (now < eventDate) {
                         // BEFORE EVENT: Play audio and video
                         audio.play().catch(e => console.log("Audio play failed:", e));
-                    baseVideo.currentTime = videoCurrentTime;
+                        baseVideo.currentTime = videoCurrentTime;
                         baseVideo.play().catch(e => console.log("Video play failed:", e));
                         // On video end, show countdown and icons
                         baseVideo.onended = () => {
@@ -211,14 +211,14 @@
 
                 this.el.addEventListener('targetLost', () => {
                     const audio = document.querySelector("#musicmp3");
-					videoCurrentTime = parseFloat(video.currentTime.toFixed(3));
-                    audio.pause();
                     const baseVideo = document.querySelector("#Base-video");
-                    baseVideo.pause();
+                    audio.pause();
+                    baseVideo.pause();                    
+					videoCurrentTime = parseFloat(baseVideo.currentTime.toFixed(3));
                     const countdownEl = document.querySelector("#countdown");
-                    countdownEl.setAttribute("visible", false);
                     const postEventPanel = document.querySelector("#post-event-panel");
                     const postEventLabel = document.querySelector("#post-event-label");
+                    countdownEl.setAttribute("visible", false);
                     postEventPanel.setAttribute("visible", false);
                     postEventLabel.setAttribute("visible", false);
                     // Clear the interval updating the passed time
@@ -322,7 +322,7 @@
 </head>
 <body>
     <div class="example-container">
-        <div id="example-scanning-overlay" class="hidden">
+        <div id="example-scanning-overlay">
             <div class="inner">
                 <img src="./assets/FrontPage.jpg" />
                 <div class="scanline"></div>
