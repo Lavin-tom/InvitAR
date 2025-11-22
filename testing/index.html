@@ -10,7 +10,7 @@
     <script src="../script/mindar-image-aframe.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@pqina/flip/dist/tick.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-    <link rel="shortcut icon" type="image/png" href="assets/favicon.png">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
     <script>
         const showPortfolio = (done) => {
             const portfolio = document.querySelector("#portfolio-panel");
@@ -141,6 +141,7 @@
                     document.querySelector("#text-contact").setAttribute("visible", false);  
                     document.querySelector("#text-event").setAttribute("visible", false);
                     document.querySelector("#text-reception").setAttribute("visible", false);
+                    document.querySelector("#invite-msg").setAttribute("visible", false);
                     //document.querySelector("#icons-panel").setAttribute("visible", false);                    
                     if (now < eventDate) {
                         // BEFORE EVENT: Play audio and video
@@ -164,6 +165,7 @@
                             document.querySelector("#text-contact").setAttribute("visible", true);  
                             document.querySelector("#text-event").setAttribute("visible", true);
                             document.querySelector("#text-reception").setAttribute("visible", true);
+                            document.querySelector("#invite-msg").setAttribute("visible", true);
                             //document.querySelector("#icons-panel").setAttribute("visible", true);                                                                                   
                         };
 
@@ -361,8 +363,10 @@
                         <a-text id="post-event-label" visible="false" value="" color="CF0A45" width="0.9" align="center" position="0 0 0.11" 
                         font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/firasans/FiraSans-BlackItalic.json"></a-text>
 
+                        <a-text visible="false"  id="invite-msg" value="We joyfully invite you to the wedding celebration of" position="0 0.20 0.25" width="0.3" color="#A3BFA8" align="center" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
+
                         <a-text id="coupleNamebutton" class="" value="Lavin & Sujitha" color="#F9C6C9" width="1" align="center" position="0 0.0 0.21" shader="msdf"
-                        font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/delius/Delius-Regular.json"
+                        font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/allura/Allura-Regular.json"
                         animation="property: scale; to: 1.1 1.1 1.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-text> 
                         
                         <a-text id="countdown" class="" value="" color="#FFD700" width="1" align="center"
