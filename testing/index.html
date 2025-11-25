@@ -40,8 +40,8 @@
                 'BEGIN:VEVENT',
                 'UID:lavin-sujitha-wedding@yourdomain.com',
                 'DTSTAMP:20250823T100000Z',
-        'DTSTART;TZID=Asia/Kolkata:20260114T113000',
-        'DTEND;TZID=Asia/Kolkata:20260114T133000',
+                'DTSTART;TZID=Asia/Kolkata:20260114T113000',
+                'DTEND;TZID=Asia/Kolkata:20260114T133000',
                 'SUMMARY:Lavin & Sujitha Wedding Day',
                 'DESCRIPTION:Join us for a beautiful celebration of love!',
                 'LOCATION:Jerusalem Mar Thoma Syrian Church, Koothrapally',
@@ -136,11 +136,6 @@
                     document.querySelector("#locationbutton3").setAttribute("visible", false);
                     document.querySelector("#Calendarbutton").setAttribute("visible", false);
                     //document.querySelector('#icons-panel').setAttribute("visible",false);                    
-                    document.querySelector("#text-hall").setAttribute("visible", false);
-                    document.querySelector("#text-church").setAttribute("visible", false);
-                    document.querySelector("#text-contact").setAttribute("visible", false);  
-                    document.querySelector("#text-event").setAttribute("visible", false);
-                    document.querySelector("#text-reception").setAttribute("visible", false);
                     document.querySelector("#invite-msg").setAttribute("visible", false);
                     //document.querySelector("#icons-panel").setAttribute("visible", false);                    
                     if (now < eventDate) {
@@ -160,13 +155,7 @@
                             document.querySelector("#whatsappbutton").setAttribute("visible", true);
                             document.querySelector("#locationbutton3").setAttribute("visible", true);
                             document.querySelector("#Calendarbutton").setAttribute("visible", true); 
-                            //document.querySelector("#text-hall").setAttribute("visible", true);
-                            //document.querySelector("#text-church").setAttribute("visible", true);
-                            //document.querySelector("#text-contact").setAttribute("visible", true);  
-                            //document.querySelector("#text-event").setAttribute("visible", true);
-                            //document.querySelector("#text-reception").setAttribute("visible", true);
-                            document.querySelector("#invite-msg").setAttribute("visible", true);
-                            //document.querySelector("#icons-panel").setAttribute("visible", true);                                                                                   
+                            document.querySelector("#invite-msg").setAttribute("visible", true);                                                                                  
                         };
 
                     } else {
@@ -363,35 +352,26 @@
                         <a-text id="post-event-label" visible="false" value="" color="CF0A45" width="0.9" align="center" position="0 0 0.11" 
                         font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/firasans/FiraSans-BlackItalic.json"></a-text>
 
-                        <a-text visible="false"  id="invite-msg" value="We joyfully invite you to the wedding celebration of" position="0 0.15 0.25" width="0.3" color="#0A1A3A" align="center" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"  whiteSpace="none"></a-text>
+                        <a-text visible="false"  id="invite-msg" value="We joyfully invite you to the wedding celebration of" position="0 0.16 0.25" width="0.3" color="#0A1A3A" align="center" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"  whiteSpace="none"></a-text>
 
-                        <a-text id="coupleNamebutton" class="" value="Lavin & Sujitha" color="#F9C6C9" width="1.5" align="center" position="0 0.0 0.21" shader="msdf"
+                        <a-text id="coupleNamebutton" class="" value="Lavin & Sujitha" color="#F9C6C9" width="1.5" align="center" position="0 0.06 0.21" shader="msdf"
                         font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/caveat/Caveat-Bold.json"
                         animation="property: scale; to: 1.1 1.1 1.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-text> 
                         
                         <a-text id="countdown" class="" value="" color="#FFD700" width="1" align="center"
-                        position="0.0 -0.1 0.2" geometry="primitive:plane; height: 0.1; width: 0.3;"
-                        material="opacity: 0.0" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>   
+                        position="0.0 -0.03 0.2" geometry="primitive:plane; height: 0.1; width: 0.3;"
+                        material="opacity: 0.0" font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/kranky/Kranky-Regular.json"></a-text>   
                         
-                        <a-image visible="false" id="locationbutton1" class="clickable" src="#Clocation" alpha-test="0.5" position="-0.2883 -0.15 0.25" height="0.025" width="0.025"></a-image>
-
-                        <a-text visible="false"  id="text-church" value="Church" position="-0.3100 -0.175 0.25" width="0.3" color="#A3BFA8" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
+                        <a-image visible="false" id="locationbutton1" class="clickable" src="#Clocation" alpha-test="0.5" position="-0.31 -0.15 0.25" height="0.025" width="0.025"></a-image>
                         
-                        <a-image visible="false" id="locationbutton2" class="clickable" src="#Hall"  position="-0.1442 -0.15 0.25" height="0.025" width="0.025"></a-image>
-
-                        <a-text visible="false" id="text-hall" value="Reception" position="-0.1659 -0.175 0.2" width="0.3" color="#A3BFA8" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
+                        <a-image visible="false" id="locationbutton2" class="clickable" src="#Hall"  position="-0.155 -0.15 0.25" height="0.025" width="0.025"></a-image>
 
                         <a-image visible="false" id="whatsappbutton" class="clickable" src="#whatsappicon" position="0.0 -0.15 0.25" height="0.025" width="0.025"></a-image>  
-
-                        <a-text visible="false" id="text-contact" value="WhatsApp" position="-0.0220 -0.175 0.25" width="0.3" color="#A3BFA8" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>                                                                                                                                                                                                                             
+                   
+                        <a-image visible="false" id="Calendarbutton" class="clickable" src="#Calendar" position="0.155 -0.15 0.25" height="0.025" width="0.025"></a-image>                   
                         
-                        <a-image visible="false" id="Calendarbutton" class="clickable" src="#Calendar" position="0.1442 -0.15 0.25" height="0.025" width="0.025"></a-image>  
-
-                        <a-text visible="false" id="text-event" value="Save the date" position="0.1245 -0.175 0.25" width="0.3" color="#A3BFA8" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>                    
-                        
-                        <a-image visible="false" id="locationbutton3" class="clickable" src="#Reception" position="0.2883 -0.15 0.25" height="0.025" width="0.025"></a-image>  
-
-                        <a-text visible="false" id="text-reception" value="Reception-Chennai" position="0.2685 -0.175 0.25" width="0.3" color="#A3BFA8" align="left" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>                    
+                        <a-image visible="false" id="locationbutton3" class="clickable" src="#Reception" position="0.31 -0.15 0.25" height="0.025" width="0.025"></a-image>  
+      
                     </a-entity>
                 </a-entity>
             </a-entity>
