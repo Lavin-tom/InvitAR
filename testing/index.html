@@ -113,8 +113,8 @@
                 const aVideoEl = document.querySelector("a-video");
                 this.el.addEventListener('targetFound', () => {
                     console.log("target found");
-                    const eventDate = new Date("January 14, 2026 11:30:00");
-                    //const eventDate = new Date(Date.now() - 5 * 60 * 1000); //testing of post event logic
+                    //const eventDate = new Date("January 14, 2026 11:30:00");
+                    const eventDate = new Date(Date.now() - 5 * 60 * 1000); //testing of post event logic
                     const now = new Date();
                     // Audio
                     const audio = document.querySelector("#musicmp3");
@@ -368,18 +368,18 @@
 			              font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/firasans/FiraSans-BlackItalic.json"></a-text>
 			
 				<a-text id="invite-msg" value="We joyfully invite you to the wedding celebration of"
-				        position="0 0.16 0.25" width="0.3" color="#C1B1C4" align="center"
+				        position="0 0.16 0.25" width="0.3" color="#1B1653" align="center"
 				        font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
 				        wrapCount="0" whiteSpace="pre">
 				</a-text>
 			
-			      <a-text id="coupleNamebutton" value="Lavin & Sujitha" color="#2D3563" width="1.2" align="center" position="0 0.06 0.21" 
+			      <a-text id="coupleNamebutton" value="Lavin & Sujitha" color="#D80009" width="1.2" align="center" position="0 0.06 0.21" 
 			              shader="msdf"
 			              font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/caveat/Caveat-Bold.json"
 			              animation="property: scale; to:1.1 1.1 1.1; dur:1000; easing:easeInOutQuad; loop:true; dir:alternate"></a-text> 
 			
 			      <!-- Countdown -->
-			      <a-text id="countdown" value="" color="#9FBFB3" width="1" align="center"
+			      <a-text id="countdown" value="" color="#3A52A7" width="1" align="center"
 			              position="0 -0.03 0.2" geometry="primitive:plane; height:0.1; width:1.3;"
 			              material="opacity:0.0" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>   
 			
