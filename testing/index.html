@@ -319,63 +319,91 @@
                 <div class="scanline"></div>
             </div>
         </div>      
-	    <a-scene mindar-image="imageTargetSrc: targets.mind; 
-						   autoStart: true; 
-						   warmupTolerance: 5; 
-						   missTolerance: 12; 
-						   filterMinCF: 0.001; 
-						   filterBeta: 0.001; 
-                           uiScanning: #example-scanning-overlay;
-						   showStats: false;"
-			 embedded color-space="sRGB"
-			 renderer="colorManagement:true, physicallyCorrectLights"
-			 vr-mode-ui="enabled:false"
-			 device-orientation-permission-ui="enabled:false">
-            <a-assets>
-                <video id="Base-video" src="../assets/BaseTemplate.mp4" autoplay="true" loop="false"></video>                
-                <img id="BaseImageND" src="../assets/Cardback.jpg"/>        
-                <img id="Clocation" src="../assets/church.svg"/>
-                <img id="whatsappicon" src="../assets/whatsapp.svg"/>  
-                <img id="Calendar" src="../assets/calendar-day.svg"/>  
-                <img id="Hall" src="../assets/concierge-bell.svg"/> 
-                <img id="Reception" src="../assets/marker.svg"/>                                                            
-                <audio id="musicmp3" preload="auto" src="../assets/emotional-piano-music-256262.mp3"></audio>
-            </a-assets>
-            <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable"></a-camera>
-            <a-entity id="mytarget0" mytarget mindar-image-target="targetIndex: 0" smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5">
-                <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
-                    <a-entity id="portfolio-item0">
-                        <a-video src="#Base-video" position="0 0 0.1" width="0.84" height="0.54" autoplay="true" muted="true" preload="auto"></a-video>
-                        
-                        <a-plane id="post-event-panel" visible="false" position="0 0 0.1" height="0.54" width="0.84" color="#fff" material="opacity: 0.95"></a-plane>
-
-                        <a-text id="post-event-label" visible="false" value="" color="CF0A45" width="0.9" align="center" position="0 0 0.11" 
-                        font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/firasans/FiraSans-BlackItalic.json"></a-text>
-
-                        <a-text visible="false"  id="invite-msg" value="We joyfully invite you to the wedding celebration of" position="0 0.16 0.25" width="0.3" color="#0A1A3A" align="center" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"  whiteSpace="none"></a-text>
-
-                        <a-text id="coupleNamebutton" class="" value="Lavin & Sujitha" color="#F9C6C9" width="1.2" align="center" position="0 0.06 0.21" shader="msdf"
-                        font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/caveat/Caveat-Bold.json"
-                        animation="property: scale; to: 1.1 1.1 1.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-text> 
-                        
-                        <a-text id="countdown" class="" value="" color="#FFD700" width="1" align="center"
-                        position="0.0 -0.03 0.2" geometry="primitive:plane; height: 0.1; width: 0.3;"
-                        material="opacity: 0.0" font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>   
-                        
-                        <a-image visible="false" id="locationbutton1" class="clickable" src="#Clocation" alpha-test="0.5" position="-0.31 -0.15 0.25" height="0.025" width="0.025"></a-image>
-                        
-                        <a-image visible="false" id="locationbutton2" class="clickable" src="#Hall"  position="-0.155 -0.15 0.25" height="0.025" width="0.025"></a-image>
-
-                        <a-image visible="false" id="whatsappbutton" class="clickable" src="#whatsappicon" position="0.0 -0.15 0.25" height="0.025" width="0.025"></a-image>  
-                   
-                        <a-image visible="false" id="Calendarbutton" class="clickable" src="#Calendar" position="0.155 -0.15 0.25" height="0.025" width="0.025"></a-image>                   
-                        
-                        <a-image visible="false" id="locationbutton3" class="clickable" src="#Reception" position="0.31 -0.15 0.25" height="0.025" width="0.025"></a-image>  
-      
-                    </a-entity>
-                </a-entity>
-            </a-entity>
-        </a-scene>
+			<a-scene mindar-image="imageTargetSrc: targets.mind; 
+			                       autoStart: true; 
+			                       warmupTolerance: 5; 
+			                       missTolerance: 12; 
+			                       filterMinCF: 0.001; 
+			                       filterBeta: 0.001; 
+			                       uiScanning: #example-scanning-overlay;
+			                       showStats: false;"
+			         embedded color-space="sRGB"
+			         renderer="antialias:true; colorManagement:true; physicallyCorrectLights:true"
+			         vr-mode-ui="enabled:false"
+			         device-orientation-permission-ui="enabled:false">
+			
+			  <!-- Assets -->
+			  <a-assets>
+			    <video id="Base-video" src="../assets/BaseTemplate.mp4" autoplay loop playsinline webkit-playsinline preload="auto"></video>                
+			    <img id="BaseImageND" src="../assets/Cardback.jpg"/>        
+			    <img id="Clocation" src="../assets/church.svg"/>
+			    <img id="whatsappicon" src="../assets/whatsapp.svg"/>  
+			    <img id="Calendar" src="../assets/calendar-day.svg"/>  
+			    <img id="Hall" src="../assets/concierge-bell.svg"/> 
+			    <img id="Reception" src="../assets/marker.svg"/>                                                            
+			    <audio id="musicmp3" preload="auto" src="../assets/emotional-piano-music-256262.mp3"></audio>
+			  </a-assets>
+			
+			  <!-- Camera -->
+			  <a-camera position="0 0 0" look-controls="enabled:false" 
+			            cursor="fuse:false; rayOrigin:mouse;" 
+			            raycaster="far:10000; objects:.clickable"></a-camera>
+			
+			  <!-- Target -->
+			  <a-entity id="mytarget0" mytarget mindar-image-target="targetIndex:0" 
+			            smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5">
+			
+			    <!-- Portfolio Panel -->
+			    <a-entity id="portfolio-panel" position="0 -0.25 -0.01" visible="false">
+			
+			      <!-- Video -->
+			      <a-video src="#Base-video" position="0 0 0.1" width="0.84" height="0.54" autoplay muted preload="auto"></a-video>
+			      
+			      <!-- Post Event Panel -->
+			      <a-plane id="post-event-panel" visible="false" position="0 0 0.1" height="0.54" width="0.84" 
+			               color="#fff" material="opacity:0.95"></a-plane>
+			
+			      <!-- Labels -->
+			      <a-text id="post-event-label" visible="false" value="" color="#CF0A45" width="0.9" align="center" position="0 0 0.11" 
+			              font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/firasans/FiraSans-BlackItalic.json"></a-text>
+			
+				<a-text id="invite-msg" value="We joyfully invite you to the wedding celebration of"
+				        position="0 0.16 0.25" width="1.2" color="#0A1A3A" align="center"
+				        font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+				        wrapCount="0" whiteSpace="pre">
+				</a-text>
+			
+			      <a-text id="coupleNamebutton" value="Lavin & Sujitha" color="#F9C6C9" width="1.2" align="center" position="0 0.06 0.21" 
+			              shader="msdf"
+			              font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/caveat/Caveat-Bold.json"
+			              animation="property: scale; to:1.1 1.1 1.1; dur:1000; easing:easeInOutQuad; loop:true; dir:alternate"></a-text> 
+			
+			      <!-- Countdown -->
+			      <a-text id="countdown" value="" color="#FFD700" width="1" align="center"
+			              position="0 -0.03 0.2" geometry="primitive:plane; height:0.1; width:0.3;"
+			              material="opacity:0.0" font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/orbitron/Orbitron-Bold.json"></a-text>   
+			
+			      <!-- Buttons Group -->
+			      <a-entity id="buttons" position="0 -0.15 0.25">
+			        <a-image id="locationbutton1" class="clickable" src="#Clocation" visible="false" height="0.05" width="0.05" position="-0.31 0 0"
+					animation__click="property: scale; to:1.2 1.2 1; dur:200; startEvents:click; easing:easeOutQuad"></a-image>
+			
+			        <a-image id="locationbutton2" class="clickable" src="#Hall" visible="false" height="0.05" width="0.05" position="-0.155 0 0"
+					animation__click="property: scale; to:1.2 1.2 1; dur:200; startEvents:click; easing:easeOutQuad"></a-image>
+					
+			        <a-image id="whatsappbutton" class="clickable" src="#whatsappicon" visible="false" height="0.05" width="0.05" position="0 0 0"
+				animation__click="property: scale; to:1.2 1.2 1; dur:200; startEvents:click; easing:easeOutQuad"></a-image>
+				  
+			        <a-image id="Calendarbutton" class="clickable" src="#Calendar" visible="false" height="0.05" width="0.05" position="0.155 0 0"
+				animation__click="property: scale; to:1.2 1.2 1; dur:200; startEvents:click; easing:easeOutQuad"></a-image>
+				                   
+			        <a-image id="locationbutton3" class="clickable" src="#Reception" visible="false" height="0.05" width="0.05" position="0.31 0 0"
+				animation__click="property: scale; to:1.2 1.2 1; dur:200; startEvents:click; easing:easeOutQuad"></a-image>  
+			      </a-entity>
+			
+			    </a-entity>
+			  </a-entity>
+			</a-scene>
     </div>
 </body>
 </html>
