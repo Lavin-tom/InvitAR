@@ -196,7 +196,7 @@
                                 confettiTriggered = true;
                                 }
                             } else {
-                                passedText = `We've been together for ${yearsPassed}y ${daysPassed}d ${hoursPassed}h ${minutesPassed}m ${secondsPassed}s `;
+                                passedText = `We've been together for\n${yearsPassed}y ${daysPassed}d ${hoursPassed}h ${minutesPassed}m ${secondsPassed}s `;
                             }
                             postEventLabel.setAttribute("value", passedText);
                         };
@@ -407,8 +407,8 @@
 								color="white" material="shader: flat; opacity:1"></a-plane>
 					
 					<!-- Labels -->
-					<a-text id="post-event-label" visible="false" value="" color="#D80009" width="1.9" align="center" position="0 0 0.12" 
-							font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/raleway/Raleway-Regular.json"></a-text>
+					<a-text id="post-event-label" visible="false" value="" color="#D80009" width="0.9" align="center" position="0 0 0.12" 
+							font="https://cdn.aframe.io/fonts/Roboto-msdf.json"></a-text>
 					
 					<a-text id="invite-msg" value="We joyfully invite you to the wedding celebration of"
 							position="0 0.16 0.25" width="0.3" color="#1B1653" align="center"
